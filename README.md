@@ -2,7 +2,7 @@
 ## Database Schema Design
 
 
-Schema: https://a.cl.ly/p9uOk95X
+Schema: https://bit.ly/3bC3zej
 Miro Whiteboard: https://miro.com/app/board/uXjVOuzz6YE=/?share_link_id=361731173926
 
 
