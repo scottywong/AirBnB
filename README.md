@@ -254,7 +254,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: users/:currentUserId/spots
+  * URL: /users/:currentUserId/spots
   * Body: none
 
 * Successful Response
@@ -549,7 +549,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: users/:currentUserId/reviews
+  * URL: /users/:currentUserId/reviews
   * Body: none
 
 * Successful Response
@@ -1252,8 +1252,8 @@ Delete an existing image.
 * Require proper authorization: Image must belong to the current user through
   the image's imageableId and imageableType
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: DELETE
+  * URL: /images/:id
   * Body: none
 
 * Successful Response
