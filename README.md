@@ -8,6 +8,7 @@ Miro Whiteboard: https://miro.com/app/board/uXjVOuzz6YE=/?share_link_id=36173117
 
 ## API Documentation
 
+## FEATURE 0: USER AUTHORIZATION
 ## All endpoints that require authentication
 
 All endpoints that require a current user to be logged in.
@@ -542,6 +543,8 @@ Deletes an existing spot.
     }
     ```
 
+## FEATURE 2: REVIEWS FEATURE
+
 ## Get all Reviews of the Current User
 
 Returns all the reviews written by the current user.
@@ -831,6 +834,8 @@ Delete an existing review.
       "statusCode": 404
     }
     ```
+    
+## FEATURE 3: BOOKINGS FEATURE
 
 ## Get all of the Current User's Bookings
 
@@ -1135,6 +1140,7 @@ Delete an existing booking.
       "statusCode": 400
     }
     ```
+## FEATURE 4: IMAGES FEATURE
 
 ## Add an Image to a Spot based on the Spot's id
 
