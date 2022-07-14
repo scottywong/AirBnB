@@ -208,7 +208,8 @@ user's information.
       }
     }
     ```
-
+    
+## FEATURE 1: SPOTS FEATURE
 ## Get all Spots
 
 Returns all the spots.
