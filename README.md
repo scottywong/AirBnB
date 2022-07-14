@@ -320,8 +320,12 @@ Returns the details of a spot specified by its id.
       "updatedAt": "2021-11-19 20:39:36" ,
       "numReviews": 5,
       "avgStarRating": 4.5,
-      "images": [
-        "image url"
+      "Images": [
+        {
+          "id": 1,
+          "imageableId": 1,
+          "url": "image url"
+        }
       ],
       "Owner": {
         "id": 1,
@@ -562,39 +566,43 @@ Returns all the reviews written by the current user.
   * Body:
 
     ```json
-    {
-      "Reviews": [
-        {
+      {
+    "Reviews": [
+      {
+        "id": 1,
+        "userId": 1,
+        "spotId": 1,
+        "review": "This was an awesome spot!",
+        "stars": 5,
+        "createdAt": "2021-11-19 20:39:36",
+        "updatedAt": "2021-11-19 20:39:36" ,
+        "User": {
           "id": 1,
-          "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
-          "stars": 5,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36" ,
-          "User": {
+          "firstName": "John",
+          "lastName": "Smith"
+        },
+        "Spot": {
+          "id": 1,
+          "ownerId": 1,
+          "address": "123 Disney Lane",
+          "city": "San Francisco",
+          "state": "California",
+          "country": "United States of America",
+          "lat": 37.7645358,
+          "lng": -122.4730327,
+          "name": "App Academy",
+          "price": 123
+        },
+        "Images": [
+          {
             "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "Spot": {
-            "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123
-          },
-          "images": [
-            "image url"
-          ]
-        }
-      ]
-    }
+            "imageableId": 1,
+            "url": "image url"
+          }
+        ],
+      }
+    ]
+  }
     ```
 
 ## Get all Reviews by a Spot's id
@@ -614,27 +622,31 @@ Returns all the reviews that belong to a spot specified by id.
   * Body:
 
     ```json
-    {
-      "Reviews": [
-        {
+      {
+    "Reviews": [
+      {
+        "id": 1,
+        "userId": 1,
+        "spotId": 1,
+        "review": "This was an awesome spot!",
+        "stars": 5,
+        "createdAt": "2021-11-19 20:39:36",
+        "updatedAt": "2021-11-19 20:39:36" ,
+        "User": {
           "id": 1,
-          "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
-          "stars": 5,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36" ,
-          "User": {
+          "firstName": "John",
+          "lastName": "Smith"
+        },
+        "Images": [
+          {
             "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "images": [
-            "image url"
-          ]
-        }
-      ]
-    }
+            "imageableId": 1,
+            "url": "image url"
+          }
+        ],
+      }
+    ]
+  }
     ```
 
 * Error response: Couldn't find a Spot with the specified id
@@ -1168,12 +1180,11 @@ Create and return a new image for a spot specified by id.
   * Body:
 
     ```json
-    {
-      "id": 1,
-      "imageableId": 1,
-      "imageableType": "Spot",
-      "url": "image url",
-    }
+      {
+    "id": 1,
+    "imageableId": 1,
+    "url": "image url",
+  }
     ```
 
 * Error response: Couldn't find a Spot with the specified id
@@ -1218,7 +1229,6 @@ Create and return a new image for a review specified by id.
     {
       "id": 1,
       "imageableId": 1,
-      "imageableType": "Review",
       "url": "image url",
     }
     ```
@@ -1255,8 +1265,7 @@ Create and return a new image for a review specified by id.
 Delete an existing image.
 
 * Require Authentication: true
-* Require proper authorization: Image must belong to the current user through
-  the image's imageableId and imageableType
+* Require proper authorization: Image must belong to the current user 
 * Request
   * Method: DELETE
   * URL: /images/:id
