@@ -79,7 +79,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /users
+  * URL: /users/login
   * Headers:
     * Content-Type: application/json
   * Body:
