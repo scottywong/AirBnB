@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async login({ credential, password }) {
+      console.log(credential,password)
       const { Op } = require('sequelize');
       const user = await User.scope('loginUser').findOne({
         where: {
@@ -62,6 +63,14 @@ module.exports = (sequelize, DataTypes) => {
             }
           }
         }
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull:false
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull:false
       },
       email: {
         type: DataTypes.STRING,
