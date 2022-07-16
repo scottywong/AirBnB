@@ -12,11 +12,22 @@ const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
-    .withMessage('Please provide a valid email.'),
+    .withMessage('Invalid Email'),
   check('password')
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
     .withMessage('Password must be 6 characters or more.'),
+  handleValidationErrors
+];
+
+const validateLogin = [
+  check('email')
+    .exists({ checkFalsy: true })
+    .notEmpty()
+    .withMessage('Invalid Email.'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a password.'),
   handleValidationErrors
 ];
 
@@ -61,7 +72,7 @@ router.post('/',
   );
 
 //Login
-router.post('/login',
+router.post('/login', validateLogin,
   async (req, res, next) => {
 
     const {email, password} = req.body;
