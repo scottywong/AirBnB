@@ -1,6 +1,6 @@
 # AirBnB
 ## Database Schema Design
-
+1
 
 Schema: https://a.cl.ly/04uQxw0B
 Miro Whiteboard: https://miro.com/app/board/uXjVOuzz6YE=/?share_link_id=361731173926
