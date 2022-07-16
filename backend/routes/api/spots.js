@@ -31,7 +31,7 @@ router.get('/currentUserSpots',[requireAuth,restoreUser],
     res.json({Spots});
   });
 
-//   Get details of a Spot from an id
+/********************** Get details of a Spot from an id **********************/
 router.get('/:id', 
     async (req,res,next) => {
 
