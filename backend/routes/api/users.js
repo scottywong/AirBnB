@@ -8,20 +8,11 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-
 const validateSignup = [
   check('email')
     .exists({ checkFalsy: true })
     .isEmail()
     .withMessage('Please provide a valid email.'),
-  check('username')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 4 })
-    .withMessage('Please provide a username with at least 4 characters.'),
-  check('username')
-    .not()
-    .isEmail()
-    .withMessage('Username cannot be an email.'),
   check('password')
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
@@ -30,27 +21,50 @@ const validateSignup = [
 ];
 
 // Sign up
-router.post(
-    '/',
+router.post('/',
     validateSignup,
-    async (req, res) => {
-      const { firstName,lastName, email, password, username } = req.body;
-      const user = await User.signup({ email, username, password });
+    async (req, res, next) => {
+      const { firstName,lastName, email, password } = req.body;
+
+      //Body Validation
+      if(!email || !firstName || !lastName){
+        const err = new Error('Validation Error');
+        err.status = 400;
+        err.message = 'Validation Error';
+        err.errors = [];
   
-      await setTokenCookie(res, user);
-  
-      return res.json({
-        user
-      });
+        if(!email) err.errors.push("Invalid email");
+        if(!firstName) err.errors.push("First Name is required");
+        if(!lastName) err.errors.push("Last Name is required");
+        return next(err);
+      }
+
+      const foundUser = await User.findOne({ where:{email: email}});
+      // console.log(foundUser)
+      if(!foundUser){
+        const user = await User.signup({  firstName,lastName,email, password });
+        // console.log(user);
+
+        const token = await setTokenCookie(res, user);
+        user.dataValues['token'] = token;
+        // console.log(user);
+
+        return res.json(user);
+      
+      } else {
+        const err = new Error('User already exists')
+        err.status = '403',
+        err.errors = ['User with that email already exists']
+        return next(err);
+      }
     }
   );
 
 //Login
-router.post(
-  '/login',
+router.post('/login',
   async (req, res, next) => {
 
-    const {email, password, username} = req.body;
+    const {email, password} = req.body;
 
     if(!email || !password){
       const err = new Error('Validation Error');
@@ -64,8 +78,7 @@ router.post(
     
     }
 
-    const credential = email ? email : username; //check if credential is email or username
-    const user = await User.login({credential, password});
+    const user = await User.login({email, password});
 
     if(!user){
       const err = new Error('Invalid Credentials');
@@ -74,29 +87,21 @@ router.post(
       return next(err);
     }
 
-    // await setTokenCookie(res, user);
-    
-    return res.json({
-      user
-    });
+    await setTokenCookie(res, user);  // Sends a JWT Cookie
+    return res.json(user);
   }
 );
 
-
 //Get the Current User
-  router.get('/:currentUserId',requireAuth, async(req,res) => {
+  router.get('/:currentUserId',requireAuth, 
+  async(req,res) => {
 
     const user = await User.findByPk(req.params.currentUserId);
    
     res.json({
-      id: user.id,
-      firstName: user.firstName,
-      lasttName: user.lastName,
-      email: user.email
+      user
    });
 
   });
-
-
 
   module.exports = router;

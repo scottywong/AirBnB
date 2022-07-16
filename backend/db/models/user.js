@@ -22,15 +22,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
 
-    static async login({ credential, password }) {
-      console.log(credential,password)
+    static async login({ email, password }) {
+      
+      console.log(email);
       const { Op } = require('sequelize');
       const user = await User.scope('loginUser').findOne({
         where: {
-          [Op.or]: {
-            username: credential,
-            email: credential
-          }
+            email: email
         }
       });
       if (user && user.validatePassword(password)) {
@@ -38,10 +36,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static async signup({ username, email, password }) {
+    static async signup({ firstName,lastName, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
-        username,
+        firstName,
+        lastName,
         email,
         hashedPassword
       });
@@ -52,18 +51,18 @@ module.exports = (sequelize, DataTypes) => {
   
   User.init(
     {
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [4, 30],
-          isNotEmail(value) {
-            if (Validator.isEmail(value)) {
-              throw new Error("Cannot be an email.");
-            }
-          }
-        }
-      },
+      // username: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   validate: {
+      //     len: [4, 30],
+      //     isNotEmail(value) {
+      //       if (Validator.isEmail(value)) {
+      //         throw new Error("Cannot be an email.");
+      //       }
+      //     }
+      //   }
+      // },
       firstName: {
         type: DataTypes.STRING,
         allowNull:false
