@@ -53,7 +53,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:currentUserId
+  * URL: /users/
   * Body: none
 
 * Successful Response
@@ -255,7 +255,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:currentUserId/spots
+  * URL: /spots/currentUserSpots
   * Body: none
 
 * Successful Response
@@ -355,7 +355,7 @@ Creates and returns a new spot.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /spots
+  * URL: /spots/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -556,7 +556,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:currentUserId/reviews
+  * URL: /reviews/currentUserReviews
   * Body: none
 
 * Successful Response
@@ -856,7 +856,7 @@ Return all the bookings that the current user has made.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:currentUserId/bookings
+  * URL: /bookings/currentUserBookings
   * Body: none
 
 * Successful Response
