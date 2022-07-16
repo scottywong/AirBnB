@@ -1,8 +1,8 @@
 // backend/routes/api/users.js
 const express = require('express');
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
+const { User, Spot } = require('../../db/models');
 const router = express.Router();
 
 const { check } = require('express-validator');
@@ -98,21 +98,21 @@ router.post('/login', validateLogin,
       return next(err);
     }
 
-    await setTokenCookie(res, user);  // Sends a JWT Cookie
+    
+    const token = await setTokenCookie(res, user);
+    user.dataValues['token'] = token;  // Sends a JWT Cookie
     return res.json(user);
   }
 );
 
 //Get the Current User
-  router.get('/:currentUserId',requireAuth, 
+router.get('/',[requireAuth,restoreUser], 
   async(req,res) => {
-
-    const user = await User.findByPk(req.params.currentUserId);
-   
-    res.json({
-      user
-   });
-
+    const { user } = req;
+    
+    res.json({user});
   });
+
+
 
   module.exports = router;

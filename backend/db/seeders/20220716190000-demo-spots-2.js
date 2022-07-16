@@ -12,33 +12,33 @@ module.exports = {
      * }], {});
     */
    await queryInterface.bulkInsert('Spots', [{
-      ownerId: 1,
+      ownerId: 2,
       address: '123 Main St',
-      city: 'New York',
-      state: 'NY',
+      city: 'Chicago',
+      state: 'IL',
       country: 'USA',
-      lat: 40.7128,
-      lng: -74.0060,
-      name: 'The NY Spot',
+      lat: 41.8781136,
+      lng: -87.6297982,
+      name: 'The CHI Spot',
       description: 'This is a great spot',
-      price: 100,
+      price: 150,
       previewImage: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
       numReviews: 0,
-      avgStarRating: null
+      avgStarRating: 2
    },{
-      ownerId: 1,
+      ownerId: 2,
       address: '456 Sesame St',
-      city: 'San Francisco',
+      city: 'Los Angeles',
       state: 'CA',
       country: 'USA',
-      lat: 37.7749,
-      lng: -122.4194,
-      name: 'The SF Spot',
+      lat: 34.0522342,
+      lng: -118.2436849,
+      name: 'The LA Spot',
       description: 'This is a really great spot',
       price: 200,
       previewImage: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
       numReviews: 0,
-      avgStarRating: 4.5
+      avgStarRating: 3
    }], {});
    },
 
