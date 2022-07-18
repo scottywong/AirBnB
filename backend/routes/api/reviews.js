@@ -9,7 +9,6 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const { Op } = require("sequelize");
 
 /**********************Get all Reviews of the Current User**********************/
 
@@ -41,13 +40,15 @@ async (req, res) => {
     );
 })
 
-/**********************Create a Review for a Spot based on the Spot's id**********************/
-router.post('/', [requireAuth, restoreUser],
+/**********************Edit a Review**********************/
 
+router.post('/:id',[requireAuth,restoreUser],
 async (req,res,next) => {
 
-    const { user } = req;
-    const {spotId, review, stars} = req.params;
+    const {user} = req;
+    const {review, stars} = req.body;
+    const foundReview = await Review.findOne({where: {id: req.params.id}});
+
     if(!review || !stars || (stars < 1 || stars > 5)){
 
         const err = new Error('Validation Error');
@@ -59,48 +60,72 @@ async (req,res,next) => {
         if(!review) err.errors.push(`Review text is required`);
         if(!stars || (stars < 1 || stars > 5)) err.errors.push(`Stars must be an integer from 1 to 5`);
         return next(err);
-    } 
 
-    const spot = Spot.findOne({where: {id: spotId}});
-    const existingReview = Review.findOne({where: {
-        [Op.and]: [
-        {spotId: spotId},
-        {userId: user.id}
-         ]
-        }
-    });
+    } else if(!foundReview){
 
-    if(!spot){
-        const err = new Error(`Spot couldn't be found`);
+        const err = new Error(`Review couldn't be found`);
         err.status = 404;
-        err.message = `Spot couldn't be found`;
+        err.message = `Review couldn't be found`;
         err.statusCode = 404;
         return next(err);
-    } else if(!existingReview) {
-        const err = new Error(`User already has a review for this spot`);
-        err.status = 404;
-        err.message = `User already has a review for this spot`;
-        err.statusCode = 404;
+
+    } else if(user.id !== foundReview.userId){
+
+        const err = new Error(`Review must belong to the current user`);
+        err.status = 403;
+        err.message = `Forbidden`;
+        err.statusCode = 403;
+        return next(err);
+
+
+    } else {
+        
+        await Review.update({ 
+            "review": review,
+            "stars": stars
+        },{where : {id: foundReview.id}});
+
+        const updatedReview = await Review.findOne({where: {id: foundReview.id}})
+
+        res.statusCode = 201;
+        res.json(updatedReview);
+
+    }
+
+});
+
+/**********************Delete a Review**********************/
+router.delete('/:id',[requireAuth,restoreUser],
+async (req,res,next) => {
+
+    const review = await Review.findOne({where: {id:req.params.id}});
+    if(!review){
+        const err = new Error(`Couldn't find a Review with the specified id`);
+        err.message = `Review couldn't be found`,
+        err.status = 404,
+        err.statusCode = 404
         return next(err);
     } else {
 
-        const createReview = await Review.create({
-
-            userId: user.id,
-            spotId: spotId,
-            review: review,
-            stars: stars
-
-    });
-
-    res.statusCode = 201;
-    res.json(createReview);
+        console.log(req)
+        const {user} = req;
+        if(user.id !== review.userId){
+            const err = new Error('Authorization Error');
+            err.status = 403;
+            err.statusCode = 403; 
+            err.message = "Forbidden";
+            return next(err);
     
+        }
+
+        await Review.destroy({where : {id: review.id}});
+        res.json({
+            message: "Successfully deleted",
+            statusCode : 200
+        });
+
     }
+
 });
-
-/**********************Edit a Review**********************/
-
-/**********************Delete a Review**********************/
 
 module.exports = router;

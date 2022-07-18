@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Image extends Model {
     /**
@@ -17,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
 
     }
 
-    static getReviewImages() {
+    static getReviewImages(reviewIds) {
+
       return Image.findAll({where: {imageableType: 'Review'}});
     }
     static getSpotImages() {
