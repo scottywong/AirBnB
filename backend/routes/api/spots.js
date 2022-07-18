@@ -8,6 +8,8 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+const { Op } = require("sequelize");
+
 /**********************Get All Spots**********************/
 router.get('/', requireAuth, async(req,res) => {
 
@@ -232,6 +234,69 @@ async (req, res, next) => {
         });
 
         res.json(reviews);
+    }
+});
+
+/**********************Create a Review for a Spot based on the Spot's id**********************/
+router.post('/:id/reviews', [requireAuth, restoreUser],
+
+async (req,res,next) => {
+
+    const { user } = req;
+    const {review, stars} = req.body;
+    const {id} = req.params;
+
+    
+
+    if(!review || !stars || (stars < 1 || stars > 5)){
+       
+
+        const err = new Error('Validation Error');
+        err.status = 400;
+        err.message = 'Validation Error';
+        err.statusCode = 400,
+        err.errors = [];
+
+        if(!review) err.errors.push(`Review text is required`);
+        if(!stars || (stars < 1 || stars > 5)) err.errors.push(`Stars must be an integer from 1 to 5`);
+        return next(err);
+    } 
+
+    const spot = Spot.findOne({where: {id: id}});
+    const existingReview = await Review.findOne({where: {
+        [Op.and]: [
+        {spotId: id},
+        {userId: user.id}
+         ]
+        }
+    });
+
+    if(!spot){
+        const err = new Error(`Spot couldn't be found`);
+        err.status = 404;
+        err.message = `Spot couldn't be found`;
+        err.statusCode = 404;
+        return next(err);
+    } else if(existingReview) {
+        const err = new Error(`User already has a review for this spot`);
+        err.status = 404;
+        err.message = `User already has a review for this spot`;
+        err.statusCode = 404;
+        return next(err);
+    } else {
+
+        const createReview = await Review.create({
+
+            userId: user.id,
+            spotId: id,
+            review: review,
+            stars: stars
+
+    });
+
+    res.statusCode = 201;
+    res.json(createReview);
+
     }
 });
 
