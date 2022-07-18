@@ -2,7 +2,7 @@
 const express = require('express');
 
 const { setTokenCookie, requireAuth , restoreUser} = require('../../utils/auth');
-const { User, Spot } = require('../../db/models');
+const { User, Spot, Review, Image} = require('../../db/models');
 const router = express.Router();
 
 const { check } = require('express-validator');
@@ -197,5 +197,42 @@ async (req,res,next)=> {
         
 });
 
+/**********************Get all Reviews by a Spot's id (SPOT?)**********************/
+
+// const images = await Image.getReviewImages();
+
+//     //Loop through each review to attach existing image
+//     reviews.forEach(review => {
+
+//         let reviewImages = images.filter(el => el.imageableId === review.spotId);
+//         // console.log('reviewImages: ', reviewImages);
+//         review.dataValues['Images'] = reviewImages;
+
+router.get('/:id/reviews', 
+async (req, res, next) => {
+
+    const foundSpot = await Spot.findOne({where: {id: req.params.id}});
+    if(!foundSpot){
+
+        const err = new Error(`Spot coudn't be found`);
+        err.status = 404;
+        return next(err);
+
+    } else {
+        const images = await Image.getReviewImages();
+
+        let reviews = await Review.findAll({
+            where: {spotId: req.params.id}
+        });
+
+        reviews.forEach(review => {
+
+                    let reviewImages = images.filter(el => el.imageableId === review.spotId);
+                    review.dataValues['Images'] = reviewImages;
+        });
+
+        res.json(reviews);
+    }
+});
 
 module.exports = router;
