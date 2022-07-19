@@ -11,11 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-      Booking.belongsTo(models.Spot,{
+      Booking.belongsTo(models.Spot, {
         foreignKey: 'spotId'
-      });
-      
-      Booking.belongsTo(models.User,{
+      });      
+      Booking.belongsTo(models.User, {
         foreignKey: 'userId'
       });
     }
@@ -49,7 +48,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull:false
+      allowNull:false,
+      validate: {
+        checkEndDate(value) {
+          if (value <= this.startDate) {
+            throw new Error("End Date must be after Start Date");
+          }
+        }
+      }
     }
   }, {
     sequelize,

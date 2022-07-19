@@ -12,7 +12,7 @@ module.exports = {
      * }], {});
     */
    await queryInterface.bulkInsert('Spots', [{
-      ownerId: 2,
+      ownerId: 1,
       address: '123 Main St',
       city: 'Chicago',
       state: 'IL',
@@ -26,7 +26,7 @@ module.exports = {
       numReviews: 0,
       avgStarRating: 2
    },{
-      ownerId: 2,
+      ownerId: 1,
       address: '456 Sesame St',
       city: 'Los Angeles',
       state: 'CA',
@@ -50,6 +50,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
      const Op = Sequelize.Op;
-     return queryInterface.bulkDelete('Spots');
+     await queryInterface.bulkDelete('Spots');
   }
 };

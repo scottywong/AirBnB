@@ -20,10 +20,15 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       User.hasMany(models.Spot, {
-        foreignKey: "ownerId"
+        foreignKey: "ownerId", 
+        onDelete: 'cascade', 
+        hooks: true
       });
-
-      User.belongsToMany(models.Spot, {through: models.Booking });
+      User.hasMany(models.Booking, {
+        foreignKey: "userId", 
+        onDelete: 'cascade', 
+        hooks: true
+      });
     }
 
     static async login({ email, password }) {
@@ -67,6 +72,12 @@ module.exports = (sequelize, DataTypes) => {
       //     }
       //   }
       // },
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
       firstName: {
         type: DataTypes.STRING,
         allowNull:false

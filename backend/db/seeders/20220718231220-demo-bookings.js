@@ -11,18 +11,21 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+
+    const insertDate = new Date("2021-11-19");
+
    await queryInterface.bulkInsert('Bookings',[{
-    "spotId": 15,
+    "spotId": 1,
     "userId": 1,
     "startDate": "2021-11-19",
-    "endDate": "2021-11-19",
+    "endDate": "2021-11-20",
     "createdAt": "2021-11-19 20:39:36",
     "updatedAt": "2021-11-19 20:39:36"
    },{
-    "spotId": 16,
+    "spotId": 2,
     "userId": 1,
     "startDate": "2022-11-19",
-    "endDate": "2022-11-19",
+    "endDate": "2022-11-20",
     "createdAt": "2021-11-19 20:39:36",
     "updatedAt": "2021-11-19 20:39:36"
    }],{});
@@ -37,6 +40,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
 
-      await queryInterface.bulkDelete('Bookings', null, {truncate: true, cascade: true });
+      await queryInterface.bulkDelete('Bookings', null,{});
   }
 };

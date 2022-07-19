@@ -50,6 +50,6 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
      const Op = Sequelize.Op;
-     return queryInterface.bulkDelete('Spots');
+     await queryInterface.bulkDelete('Spots', null,{});
   }
 };

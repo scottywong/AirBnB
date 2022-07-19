@@ -9,7 +9,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
 
-    queryInterface.changeColumn('Reviews','userId',
+    await queryInterface.changeColumn('Reviews','userId',
     {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -20,7 +20,7 @@ module.exports = {
 
     });
 
-    queryInterface.changeColumn('Reviews','spotId', 
+    await queryInterface.changeColumn('Reviews','spotId', 
     {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -38,5 +38,8 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+     await queryInterface.dropTable('Reviews');
   }
+
+  
 };
