@@ -21,10 +21,11 @@ module.exports = (sequelize, DataTypes) => {
 
     }
 
-    static getReviewImages(reviewIds) {
+    static getReviewImages() {
 
       return Image.findAll({where: {imageableType: 'Review'}});
     }
+    
     static getSpotImages() {
       return Image.findAll({where: {imageableType: 'Spot'}});
     }

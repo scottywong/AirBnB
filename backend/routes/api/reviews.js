@@ -126,4 +126,47 @@ async (req,res,next) => {
 
 });
 
+/**********************Add an Image to a Review based on the Review's id**********************/
+
+router.post('/:id/images', [requireAuth, restoreUser],
+async (req,res,next) => {
+
+    const { user } = req;
+    const {id} = req.params;
+    const {url} = req.body;
+    const foundReview = await Review.findOne({where: {id: id},include: Image});
+
+    if(!foundReview){
+
+        const err = new Error(`Spot couldn't be found`);
+        err.status = 404;
+        return next(err);
+
+    } else if(user.id !== foundReview.userId){
+
+        const err = new Error(`Review must belong to the current user`);
+        err.message = 'Forbidden';
+        err.status = 403;
+        return next(err);
+
+    } else if(foundReview.Images.length > 10){
+
+        const err = new Error(`Maximum number of images for this resource was reached`);
+        err.message = 'Maximum number of images for this resource was reached';
+        err.status = 400;
+        return next(err);
+
+    } else {
+        
+        const createImage = await Image.create({
+            imageableId: foundReview.id,
+            imageableType: 'Review',
+            url: url
+        });
+
+        res.json(createImage);
+
+    }
+
+});
 module.exports = router;

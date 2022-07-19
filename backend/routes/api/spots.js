@@ -398,4 +398,40 @@ async (req,res,next) => {
 
 });
 
+/**********************Add an Image to a Spot based on the Spot's id**********************/
+router.post('/:id/images', [requireAuth, restoreUser],
+async (req,res,next) => {
+
+    const { user } = req;
+    const {id} = req.params;
+    const {url} = req.body;
+    const foundSpot = await Spot.findOne({where: {id: id}});
+
+    if(!foundSpot){
+
+        const err = new Error(`Spot couldn't be found`);
+        err.status = 404;
+        return next(err);
+
+    } else if(user.id !== foundSpot.ownerId){
+
+        const err = new Error(`Spot must belong to the current user`);
+        err.message = 'Forbidden';
+        err.status = 403;
+        return next(err);
+
+    } else {
+        
+        const createImage = await Image.create({
+            imageableId: foundSpot.id,
+            imageableType: 'Spot',
+            url: url
+        });
+
+        res.json(createImage);
+
+    }
+
+});
+
 module.exports = router;
