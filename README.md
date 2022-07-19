@@ -681,7 +681,7 @@ Create and return a new review for a spot specified by id.
     ```
 
 * Successful Response
-  * Status Code: 200
+  * Status Code: 201
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -969,8 +969,14 @@ Create and return a new booking from a spot specified by id.
 * Require proper authorization: Spot must NOT belong to the current user
 * Request
   * Method: POST
-  * URL: /bookings
-  * Body: none
+  * URL: /:id/bookings
+  * Body: 
+
+    ```json
+    {
+    "startDate": "2021-11-19",
+    "endDate": "2021-11-20"
+    }
 
 * Successful Response
   * Status Code: 200
@@ -987,6 +993,21 @@ Create and return a new booking from a spot specified by id.
       "endDate": "2021-11-19",
       "createdAt": "2021-11-19 20:39:36",
       "updatedAt": "2021-11-19 20:39:36"
+    }
+    ```
+* Error response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "endDate": "endDate cannot be on or before startDate"
+      }
     }
     ```
 
@@ -1057,6 +1078,21 @@ Update and return an existing booking.
       "updatedAt": "2021-11-20 10:06:40"
     }
     ```
+* Error response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "endDate": "endDate cannot come before startDate"
+      }
+    }
+    ```
 
 * Error response: Couldn't find a Booking with the specified id
   * Status Code: 404
@@ -1072,7 +1108,7 @@ Update and return an existing booking.
     ```
 
 * Error response: Can't edit a booking that's past the end date
-  * Status Code: 400
+  * Status Code: 403
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1080,7 +1116,7 @@ Update and return an existing booking.
     ```json
     {
       "message": "Past bookings can't be modified",
-      "statusCode": 400
+      "statusCode": 403
     }
     ```
 
@@ -1148,7 +1184,7 @@ Delete an existing booking.
     ```json
     {
       "message": "Bookings that have been started can't be deleted",
-      "statusCode": 400
+      "statusCode": 403
     }
     ```
 ## FEATURE 4: IMAGES FEATURE
@@ -1247,7 +1283,7 @@ Create and return a new image for a review specified by id.
 
 * Error response: Cannot add any more images because there is a maximum of 10
   images per resource
-  * Status Code: 400
+  * Status Code: 403
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1255,7 +1291,7 @@ Create and return a new image for a review specified by id.
     ```json
     {
       "message": "Maximum number of images for this resource was reached",
-      "statusCode": 400
+      "statusCode": 403
     }
     ```
 
@@ -1363,8 +1399,8 @@ Return spots filtered by query parameters.
         "minLat": "Minimum latitude is invalid",
         "minLng": "Maximum longitude is invalid",
         "maxLng": "Minimum longitude is invalid",
-        "minPrice": "Maximum price must be greater than 0",
-        "maxPrice": "Minimum price must be greater than 0"
+        "minPrice": "Maximum price must be greater than or equal to 0",
+        "maxPrice": "Minimum price must be greater than or equal to 0"
       }
     }
     ```
