@@ -3,9 +3,6 @@ const {
   Model
 } = require('sequelize');
 
-// const {Image} = require('../../db/models');
-// const { Op } = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
     /**
@@ -29,16 +26,6 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
 
-    // getImages(){
-    //   return Image.findAll({
-    //     where: {
-    //       [Op.and]: [
-    //       {imageableType: 'Review'},
-    //       {imageableId: this.id}
-    //       ]
-    //     }
-    //   });
-    // }
   }
   Review.init({
     userId: {

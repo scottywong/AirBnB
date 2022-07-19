@@ -8,7 +8,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const { Op } = require("sequelize");
+const { Op, STRING } = require("sequelize");
 const sequelize = require("sequelize");
 
 /**********************Get All Spots**********************/
@@ -346,9 +346,6 @@ async (req,res,next) => {
     const {id} = req.params;
     const foundSpot = Spot.findOne({where: {id: id}});
 
-    startDate = new Date(startDate);
-    endDate = new Date(endDate);
-
     if(!foundSpot){
 
         const err = new Error(`Spot couldn't be found`);
@@ -368,9 +365,10 @@ async (req,res,next) => {
             where:{
                 [Op.and]: [
                 {spotId: id},
-                {startDate: {[Op.lte]: endDate}},
-                {endDate: {[Op.gte]: startDate}}
-                ]
+                {[Op.or]: [
+                    { startDate: { [Op.between]: [req.body.startDate, req.body.endDate] } },
+                    { endDate: { [Op.between]: [req.body.startDate, req.body.endDate] } }
+                ]}]
             }
         });
 
@@ -421,7 +419,6 @@ async (req,res,next) => {
         return next(err);
 
     } else {
-        
         const createImage = await Image.create({
             imageableId: foundSpot.id,
             imageableType: 'Spot',
