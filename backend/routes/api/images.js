@@ -14,11 +14,9 @@ router.delete('/:id', [requireAuth,restoreUser],
 async (req, res, next) =>{
 
     const {user} = req;
-    const foundIamge = await Image.findOne({where: {id: req.params.id},include: [Spot,Review]});
-    
-    console.log(foundIamge);
+    const foundImage = await Image.findOne({where: {id: req.params.id},include: [Spot,Review]});
 
-    if(!foundIamge){
+    if(!foundImage){
 
         const err = new Error(`Image couldn't be found`);
         err.status = 404;
@@ -26,20 +24,42 @@ async (req, res, next) =>{
         err.statusCode = 404;
         return next(err);
 
-    } else if(true){
+    } else if(foundImage.imageableType === 'Spot'){
         
-        // if(user.id !== foundImage.userId){
+        if(user.id !== foundImage.Spot.ownerId){
+            const err = new Error(`Image must belong to the current user`);
+            err.status = 404;
+            return next(err);
 
-        // const err = new Error(`Review must belong to the current user`);
-        // err.status = 403;
-        // err.message = `Forbidden`;
-        // err.statusCode = 403;
-        // return next(err);
-        // }
+        } else {
 
+            await foundImage.destroy();
+            res.json({
+                "message": "Successfully deleted",
+            "statusCode": 200
+            });
 
+        }
 
-    }
+    } else if(foundImage.imageableType === 'Review'){
+       
+        if(user.id !== foundImage.Review.userId){
+            const err = new Error(`Image must belong to the current user`);
+            err.status = 404;
+            return next(err);
+
+        } else {
+
+            await foundImage.destroy();
+            res.json({
+                "message": "Successfully deleted",
+            "statusCode": 200
+            });
+
+        }
+
+    } 
+
 });
 
 
