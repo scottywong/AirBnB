@@ -29,7 +29,6 @@ async (req, res) => {
     reviews.forEach(review => {
 
         let reviewImages = images.filter(el => el.imageableId === review.spotId);
-        // console.log('reviewImages: ', reviewImages);
         review.dataValues['Images'] = reviewImages;
     });
 
@@ -107,7 +106,6 @@ async (req,res,next) => {
         return next(err);
     } else {
 
-        console.log(req)
         const {user} = req;
         if(user.id !== review.userId){
             const err = new Error('Authorization Error');

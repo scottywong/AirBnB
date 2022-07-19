@@ -379,14 +379,6 @@ async (req,res,next) => {
             const err = new Error(`Sorry, this spot is already booked for the specified dates`);
             err.message = 'Sorry, this spot is already booked for the specified dates';
             err.status = 403;
-            
-            // console.log(bookings.startDate)
-            // console.log(startDate.toDateString())
-            // console.log(bookings.startDate === startDate.toDateString());
-            // // (StartDate1 <= EndDate2) and (StartDate2 <= EndDate1)
-            // if(bookings.startDate < endDate || bookings.startDate === startDate ) err.errors.push("Start date conflicts with an existing booking");
-            // // if(bookings.endDate >=) err.errors.push("End date conflicts with an existing booking");
-        
             return next(err);
 
         } else {
@@ -402,9 +394,8 @@ async (req,res,next) => {
 
         }
 
-        }
+    }
 
-        
 });
 
 module.exports = router;
