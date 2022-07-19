@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'spotId'
       });
       
+      Booking.belongsTo(models.User,{
+        foreignKey: 'userId'
+      });
     }
   }
   Booking.init({
@@ -51,6 +54,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Booking',
+    scopes: {
+      publicBookings: {
+        attributes: { include: ["spotId","startDate","endDate"] }
+      }
+    }
   });
   return Booking;
 };

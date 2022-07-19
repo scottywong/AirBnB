@@ -900,7 +900,7 @@ Return all the bookings for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /spots/:spotId/bookings
+  * URL: /spots/:id/bookings
   * Body: none
 
 * Successful Response: If you ARE NOT the owner of the spot.
