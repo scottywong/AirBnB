@@ -118,16 +118,44 @@ async (req, res, next) => {
 router.delete('/:id',[requireAuth,restoreUser],
 async (req, res, next) => {
     const {user} = req;
-    const {startDate,endDate} = req.body;
     const {id} = req.params;
+    const booking = await Booking.findOne({where: {id: id}});
+    const today = new Date();
+    const bookingDate = new Date(booking.startDate);
+    
+    if(!booking){
 
-    const booking = await Booking.findOne({
-        where: {
-            id: id
-        }
-    });
+        const err = new Error(`Booking couldn't be found`);
+        err.status = 404;
+        err.message = `Booking couldn't be found`;
+        err.statusCode = 404;
+        return next(err);
 
+     } else if(user.id !== booking.userId){
 
+        const err = new Error(`Booking must belong to the current user`);
+        err.status = 403;
+        err.message = `Forbidden`;
+        err.statusCode = 403;
+        return next(err);
+
+    } else if(bookingDate.valueOf() - today.valueOf() < 0){
+
+        const err = new Error(`Bookings that have been started can't be deleted`);
+        err.status = 403;
+        err.message = `Bookings that have been started can't be deleted`;
+        err.statusCode = 403;
+        return next(err);
+    } else {
+
+        await booking.destroy();
+
+        res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        });
+
+    }
 });
 
 
