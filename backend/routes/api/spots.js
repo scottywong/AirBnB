@@ -348,9 +348,9 @@ async (req,res,next) => {
         return next(err);
     } else if(existingReview) {
         const err = new Error(`User already has a review for this spot`);
-        err.status = 404;
+        err.status = 403;
         err.message = `User already has a review for this spot`;
-        err.statusCode = 404;
+        err.statusCode = 403;
         return next(err);
     } else {
 
