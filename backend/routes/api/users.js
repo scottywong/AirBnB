@@ -113,6 +113,4 @@ router.get('/',[requireAuth,restoreUser],
     res.json({user});
   });
 
-
-
   module.exports = router;
