@@ -28,7 +28,7 @@ async (req, res, next) =>{
         
         if(user.id !== foundImage.Spot.ownerId){
             const err = new Error(`Image must belong to the current user`);
-            err.status = 404;
+            err.status = 403;
             return next(err);
 
         } else {
@@ -45,7 +45,7 @@ async (req, res, next) =>{
        
         if(user.id !== foundImage.Review.userId){
             const err = new Error(`Image must belong to the current user`);
-            err.status = 404;
+            err.status = 403;
             return next(err);
 
         } else {

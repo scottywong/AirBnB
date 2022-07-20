@@ -12,7 +12,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 /**********************Get all Reviews of the Current User**********************/
 
-router.get('/currentUserReviews',[requireAuth,restoreUser],
+router.get('/currentUserReviews',[restoreUser,requireAuth],
 async (req, res) => {
 
     const {user} = req;
@@ -41,7 +41,7 @@ async (req, res) => {
 
 /**********************Edit a Review**********************/
 
-router.post('/:id',[requireAuth,restoreUser],
+router.post('/:id',[restoreUser,requireAuth],
 async (req,res,next) => {
 
     const {user} = req;
@@ -94,7 +94,7 @@ async (req,res,next) => {
 });
 
 /**********************Delete a Review**********************/
-router.delete('/:id',[requireAuth,restoreUser],
+router.delete('/:id',[restoreUser,requireAuth],
 async (req,res,next) => {
 
     const review = await Review.findOne({where: {id:req.params.id}});
@@ -128,7 +128,7 @@ async (req,res,next) => {
 
 /**********************Add an Image to a Review based on the Review's id**********************/
 
-router.post('/:id/images', [requireAuth, restoreUser],
+router.post('/:id/images', [ restoreUser,requireAuth],
 async (req,res,next) => {
 
     const { user } = req;

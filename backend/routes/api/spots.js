@@ -119,7 +119,7 @@ router.get('/:id',
 });
 
 /**********************Create a Spot**********************/
-router.post('/',[requireAuth,restoreUser],
+router.post('/',[restoreUser,requireAuth],
 async (req,res,next) => {
 
     const {address,city,state,country,lat,lng,name,description,price} = req.body;
@@ -167,7 +167,7 @@ async (req,res,next) => {
 
 
 /**********************Edit a Spot**********************/
-router.post('/:id',[requireAuth,restoreUser],
+router.post('/:id',[restoreUser,requireAuth],
 async (req,res,next) => {
 
     const {address,city,state,country,lat,lng,name,description,price} = req.body;
@@ -235,7 +235,7 @@ async (req,res,next) => {
 });
 
 /**********************Delete a Spot**********************/
-router.delete('/:id', [requireAuth,restoreUser],
+router.delete('/:id', [restoreUser,requireAuth],
 async (req,res,next)=> {
     const spot = await Spot.findOne({where: {id:req.params.id}});
     if(!spot){
@@ -374,7 +374,7 @@ async (req,res,next) => {
 
 /**********************Get all Bookings for a Spot based on the Spot's id**********************/
 
-router.get('/:id/bookings', [requireAuth,restoreUser],
+router.get('/:id/bookings', [restoreUser,requireAuth],
 async (req, res, next) => {
 
     const {user} = req;
@@ -408,7 +408,7 @@ async (req, res, next) => {
 
 /**********************Create a Booking from a Spot based on the Spot's id**********************/
 
-router.post('/:id/bookings', [requireAuth, restoreUser],
+router.post('/:id/bookings', [restoreUser,requireAuth],
 
 async (req,res,next) => {
 
@@ -468,12 +468,12 @@ async (req,res,next) => {
 });
 
 /**********************Add an Image to a Spot based on the Spot's id**********************/
-router.post('/:id/images', [requireAuth, restoreUser],
+router.post('/:id/images', [restoreUser,requireAuth ],
 async (req,res,next) => {
 
     const { user } = req;
     const {id} = req.params;
-    const {url} = req.body;
+    const {url} = req.body;1
     const foundSpot = await Spot.findOne({where: {id: id}});
 
     if(!foundSpot){

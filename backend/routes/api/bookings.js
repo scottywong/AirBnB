@@ -13,7 +13,7 @@ const { Op } = require("sequelize");
 
 /**********************Get all of the Current User's Bookings**********************/
 
-router.get('/currentUserBookings',[requireAuth,restoreUser],
+router.get('/currentUserBookings',[restoreUser,requireAuth],
 async (req, res) => {
 
     const {user} = req;
@@ -33,7 +33,7 @@ async (req, res) => {
 
 /**********************Edit a Booking**********************/
 
-router.post('/:id',[requireAuth,restoreUser],
+router.post('/:id',[restoreUser,requireAuth],
 async (req, res, next) => {
     const {user} = req;
     const {startDate,endDate} = req.body;
@@ -119,7 +119,7 @@ async (req, res, next) => {
 });
 
 /**********************Delete a Booking**********************/
-router.delete('/:id',[requireAuth,restoreUser],
+router.delete('/:id',[restoreUser,requireAuth],
 async (req, res, next) => {
     const {user} = req;
     const {id} = req.params;
