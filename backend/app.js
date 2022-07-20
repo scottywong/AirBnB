@@ -42,8 +42,6 @@ if (!isProduction) {
 // backend/app.js
 const routes = require('./routes');
 
-// console.log(routes);
-
 app.use(routes); // Connect all the routes
 
 
