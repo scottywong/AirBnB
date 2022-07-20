@@ -126,7 +126,10 @@ async (req, res, next) => {
     const booking = await Booking.findOne({where: {id: id}});
     const today = new Date();
     const bookingDate = new Date(booking.startDate);
-    
+    let spot;
+    if(booking){
+        spot = Spot.findByPk(booking.spotId);
+    }
     if(!booking){
 
         const err = new Error(`Booking couldn't be found`);
@@ -135,9 +138,9 @@ async (req, res, next) => {
         err.statusCode = 404;
         return next(err);
 
-     } else if(user.id !== booking.userId){
+     } else if(user.id !== booking.userId && user.id !== spot.ownerId){
 
-        const err = new Error(`Booking must belong to the current user`);
+        const err = new Error(`Booking must belong to the current user or the Spot must belong to the current user`);
         err.status = 403;
         err.message = `Forbidden`;
         err.statusCode = 403;
