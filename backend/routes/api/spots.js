@@ -13,11 +13,8 @@ const { Op } = require("sequelize");
 /**********************Get All Spots **********************/
 router.get('/', async(req,res,next ) => {
     
-    // const{minLat, maxLat,minLng,maxLng,minPrice,maxPrice} = req.query;
-
     if(Object.keys(req.query).length > 0){
 
-        console.log('insidequery');
         const err = new Error('Validation Error');
         err.status = 400;
         err.message = 'Validation Error';
@@ -40,8 +37,8 @@ router.get('/', async(req,res,next ) => {
     };
 
    
-    const page = req.query.page === undefined ? 1 : parseInt(req.query.page);
-    const size = req.query.size === undefined ? 5 : parseInt(req.query.size);
+    const page = req.query.page === undefined ? 0 : parseInt(req.query.page);
+    const size = req.query.size === undefined ? 20 : parseInt(req.query.size);
     
     if (page >= 1 && size >= 1) {
         query.limit = size;
