@@ -151,9 +151,9 @@ async (req, res, next) => {
     } else if(bookingDate.valueOf() - today.valueOf() < 0){
 
         const err = new Error(`Bookings that have been started can't be deleted`);
-        err.status = 403;
+        err.status = 400;
         err.message = `Bookings that have been started can't be deleted`;
-        err.statusCode = 403;
+        err.statusCode = 400;
         return next(err);
     } else {
 
