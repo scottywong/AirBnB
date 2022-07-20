@@ -102,11 +102,13 @@ router.get('/:id',
     });
 
     if(!spot){
-        res.status = 404
-        res.json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-          })
+        
+        const err = new Error(`Spot couldn't be found`);
+        err.status = 404;
+        err.message = `Spot couldn't be found`;
+        err.statusCode = 404,
+        next(err);
+        
     }else{
 
         const images = await Image.getSpotImages();
