@@ -334,7 +334,6 @@ async (req,res,next) => {
 
     const spot = await Spot.findByPk(id);
     
-    console.log('spot: ', spot)
     if(spot){
         existingReview = await Review.findOne({where: {
             [Op.and]: [
@@ -382,8 +381,6 @@ async (req, res, next) => {
     const foundSpot = await Spot.findOne({where: {id: req.params.id}});
     const foundBooking = await Booking.findAll({where:{spotId: req.params.id}});
 
-    console.log(foundSpot);
-
     if(!foundSpot){
 
         const err = new Error(`Spot couldn't be found`);
@@ -418,7 +415,7 @@ async (req,res,next) => {
     const { user } = req;
     let { startDate, endDate } = req.body;
     const {id} = req.params;
-    const foundSpot = Spot.findOne({where: {id: id}});
+    const foundSpot = await Spot.findByPk(id);
 
     if(!foundSpot){
 
