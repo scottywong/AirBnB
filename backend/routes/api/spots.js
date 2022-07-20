@@ -280,7 +280,9 @@ async (req,res,next)=> {
 router.get('/:id/reviews', 
 async (req, res, next) => {
 
-    const foundSpot = await Spot.findOne({where: {id: req.params.id}});
+    const foundSpot = await Spot.findOne({
+        where: {id: req.params.id}});
+
     if(!foundSpot){
 
         const err = new Error(`Spot couldn't be found`);
@@ -291,7 +293,9 @@ async (req, res, next) => {
         const images = await Image.getReviewImages();
 
         let reviews = await Review.findAll({
-            where: {spotId: req.params.id}
+            where: {spotId: req.params.id},
+            include: 
+                {model: User}
         });
 
         reviews.forEach(review => {
