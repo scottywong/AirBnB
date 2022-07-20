@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Booking',
     scopes: {
       publicBookings: {
-        attributes: { include: ["spotId","startDate","endDate"] }
+        attributes: { include: ["spotId","startDate","endDate"] , exclude: ["id","createdAt", "updatedAt"] }
       }
     }
   });
