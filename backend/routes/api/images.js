@@ -10,7 +10,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 /**********************Delete an Image**********************/
-router.delete('/:id', [requireAuth,restoreUser],
+router.delete('/:id', [restoreUser,requireAuth],
 async (req, res, next) =>{
 
     const {user} = req;

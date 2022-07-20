@@ -57,14 +57,15 @@ router.get('/', async(req,res,next ) => {
     return res.json({
         spots,
         page: page,
-        size: size
+        size: size,
+        remainingResults: spots.length - size 
     });
     
 
 });
 
 /**********************Get all Spots owned by the Current User**********************/
-router.get('/currentUserSpots',[requireAuth,restoreUser], 
+router.get('/currentUserSpots',[restoreUser,requireAuth], 
 
     async(req,res) => {
 
