@@ -94,8 +94,12 @@ router.get('/:id',
     const spot = await Spot.findOne({
         where: {
             id: req.params.id   
+        },
+        include: {
+            model: User,
+            as: 'Owner'
         }
-        });
+    });
 
     if(!spot){
         res.status = 404
