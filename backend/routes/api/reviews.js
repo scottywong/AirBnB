@@ -18,8 +18,7 @@ async (req, res) => {
     let reviews = await Review.findAll({
         where: {
             userId: user.id
-        },
-        include: [User,Spot]
+        }
     });
 
     const images = await Image.getReviewImages();

@@ -69,13 +69,22 @@ router.get('/currentUserSpots',[requireAuth,restoreUser],
     async(req,res) => {
 
     const { user } = req;
-    const Spots = await Spot.findAll({
+    const spots = await Spot.findAll({
         where: {
         ownerId: user.id
         }
     });
 
-    res.json({Spots});
+    const images = await Image.getSpotImages();
+    console.log(images);
+
+    spots.forEach( oneSpot => {
+
+                let spotImages = images.filter(el => el.imageableId === oneSpot.id);
+                oneSpot.dataValues['Images'] = spotImages;
+    });
+
+    res.json({spots});
   });
 
 /********************** Get details of a Spot from an id **********************/
@@ -84,10 +93,8 @@ router.get('/:id',
 
     const spot = await Spot.findOne({
         where: {
-            id: req.params.id,
-            
-        },
-        include: Image
+            id: req.params.id   
+        }
         });
 
     if(!spot){
@@ -97,6 +104,10 @@ router.get('/:id',
             "statusCode": 404
           })
     }else{
+
+        const images = await Image.getSpotImages();
+        let spotImages = images.filter(el => el.imageableId === spot.id);
+        spot.dataValues['Images'] = spotImages;
         res.json(spot);
     }
 });
