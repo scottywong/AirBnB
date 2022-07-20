@@ -109,8 +109,11 @@ router.post('/login', validateLogin,
 router.get('/',[requireAuth,restoreUser], 
   async(req,res) => {
     const { user } = req;
+
+    const token = await setTokenCookie(res, user);
+    user.dataValues['token'] = token;
     
-    res.json({user});
+    return res.json({user});
   });
 
   module.exports = router;
