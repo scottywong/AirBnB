@@ -84,7 +84,8 @@ router.get('/:id',
 
     const spot = await Spot.findOne({
         where: {
-            id: req.params.id
+            id: req.params.id,
+            include: Image
         }
         });
 
