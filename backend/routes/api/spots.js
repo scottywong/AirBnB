@@ -8,18 +8,65 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const { Op, STRING } = require("sequelize");
-const sequelize = require("sequelize");
+const { Op } = require("sequelize");
 
-/**********************Get All Spots**********************/
-router.get('/', requireAuth, async(req,res) => {
+/**********************Get All Spots **********************/
+router.get('/', async(req,res,next ) => {
+    
+    // const{minLat, maxLat,minLng,maxLng,minPrice,maxPrice} = req.query;
 
-    const spots = await Spot.findAll()
-    return res.json(spots);
+    if(Object.keys(req.query).length > 0){
+
+        console.log('insidequery');
+        const err = new Error('Validation Error');
+        err.status = 400;
+        err.message = 'Validation Error';
+        err.statusCode = 400,
+        err.errors = [];
+
+        if(req.query.page < 0) err.errors.push('Page must be greater or equal to 0');
+        if(req.query.size < 0) err.errors.push('Size must be greater or equal to 0');
+        if(req.query.maxLat && req.query.maxLat.indexOf(".") == -1) err.errors.push('Maximum Latitude is invalid. Must be decimal');
+        if(req.query.minLat && req.query.minLat.indexOf(".") == -1) err.errors.push('Minimum Longiutude is invalid. Must be decimal');
+        if(req.query.minPrice  < 0) err.errors.push('Minimum Price must be greater or equal to 0');
+        if(req.query.maxPrice  < 0) err.errors.push('Maximum Price must be greater or equal to 0');
+        if(err.errors.length > 0) return next(err);
+
+    }
+
+    let query = {
+        where: {},
+        include: []
+    };
+
+   
+    const page = req.query.page === undefined ? 1 : parseInt(req.query.page);
+    const size = req.query.size === undefined ? 5 : parseInt(req.query.size);
+    
+    if (page >= 1 && size >= 1) {
+        query.limit = size;
+        query.offset = size * (page - 1);
+    }
+
+    if(req.query.minLat) query.where.lat =  {[Op.gte] :parseInt(req.query.minLat)};
+    if(req.query.maxLat) query.where.lat =  {[Op.lte] :parseInt(req.query.maxLat)};
+    if(req.query.minLng) query.where.lng =  {[Op.gte] :parseInt(req.query.minLng)};
+    if(req.query.maxLng) query.where.lng = {[Op.lte] :parseInt(req.query.maxLng)};
+    if(req.query.minPrice) query.where.price = {[Op.gte] : parseInt(req.query.minPrice )};
+    if(req.query.maxPrice) query.where.price = {[Op.lte] : parseInt(req.query.maxPrice)};
+
+    const spots = await Spot.findAll(query);
+
+    return res.json({
+        spots,
+        page: page,
+        size: size
+    });
+    
 
 });
 
-//Get all Spots owned by the Current User
+/**********************Get all Spots owned by the Current User**********************/
 router.get('/currentUserSpots',[requireAuth,restoreUser], 
 
     async(req,res) => {
