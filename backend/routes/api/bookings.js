@@ -123,12 +123,14 @@ router.delete('/:id',[requireAuth,restoreUser],
 async (req, res, next) => {
     const {user} = req;
     const {id} = req.params;
-    const booking = await Booking.findOne({where: {id: id}});
-    const today = new Date();
-    const bookingDate = new Date(booking.startDate);
+    const booking = await Booking.findByPk(id);
+    let today;
+    let bookingDate;
     let spot;
     if(booking){
-        spot = Spot.findByPk(booking.spotId);
+        today = new Date();
+        bookingDate = new Date(booking.startDate);
+        spot = await Spot.findByPk(booking.spotId);
     }
     if(!booking){
 
