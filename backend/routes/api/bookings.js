@@ -55,8 +55,12 @@ async (req, res, next) => {
         }
     });
  
-    const today = new Date();
-    const bookingDate = new Date(booking.endDate);
+    let today;
+    let bookingDate;
+    if(booking) {
+        today = new Date();
+        bookingDate = new Date(booking.endDate);
+    }
 
     // console.log('booking Date', booking.endDate)
     // console.log('bookingDate')
