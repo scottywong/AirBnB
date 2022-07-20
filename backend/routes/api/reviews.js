@@ -9,6 +9,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+
 /**********************Get all Reviews of the Current User**********************/
 
 router.get('/currentUserReviews',[requireAuth,restoreUser],
@@ -18,7 +19,8 @@ async (req, res) => {
     let reviews = await Review.findAll({
         where: {
             userId: user.id
-        }
+        },
+        include: [User,Spot]
     });
 
     const images = await Image.getReviewImages();
