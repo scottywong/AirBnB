@@ -196,6 +196,7 @@ async (req,res,next) => {
         const {user} = req;
         const spotId = parseInt(req.params.id);
         const spot = await Spot.findOne({where:{id: spotId}});
+
         if(!spot){
             const err = new Error(`Spot couldn't be found`);
             err.message = `Spot couldn't be found`;
@@ -212,7 +213,7 @@ async (req,res,next) => {
 
         }
 
-        let updatedSpot = await Spot.update({          
+        await Spot.update({          
             ownerId: user.id,
             address: address,
             city: city,
@@ -225,8 +226,8 @@ async (req,res,next) => {
             price: price
         },{where : {id: spot.id}});
 
-        await updatedSpot.save();
-        
+        const updatedSpot = await Spot.findOne({where: {id: spot.id}});
+
         res.statusCode = 201;
         res.json(updatedSpot);
     }
