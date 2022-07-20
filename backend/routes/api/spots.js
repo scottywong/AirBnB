@@ -213,6 +213,7 @@ async (req,res,next) => {
 
         }
 
+        //.save() ---- switch
         await Spot.update({          
             ownerId: user.id,
             address: address,
@@ -309,7 +310,7 @@ async (req, res, next) => {
 });
 
 /**********************Create a Review for a Spot based on the Spot's id**********************/
-router.post('/:id/reviews', [requireAuth, restoreUser],
+router.post('/:id/reviews', [restoreUser,requireAuth],
 
 async (req,res,next) => {
 
@@ -331,15 +332,18 @@ async (req,res,next) => {
         return next(err);
     } 
 
-    const spot = Spot.findOne({where: {id: id}});
-    const existingReview = await Review.findOne({where: {
-        [Op.and]: [
-        {spotId: id},
-        {userId: user.id}
-         ]
-        }
-    });
-
+    const spot = await Spot.findByPk(id);
+    
+    console.log('spot: ', spot)
+    if(spot){
+        existingReview = await Review.findOne({where: {
+            [Op.and]: [
+            {spotId: id},
+            {userId: user.id}
+            ]
+            }
+        });
+    }
     if(!spot){
         const err = new Error(`Spot couldn't be found`);
         err.status = 404;
