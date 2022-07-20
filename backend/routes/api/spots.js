@@ -52,14 +52,12 @@ router.get('/', async(req,res,next ) => {
     if(req.query.minPrice) query.where.price = {[Op.gte] : parseInt(req.query.minPrice )};
     if(req.query.maxPrice) query.where.price = {[Op.lte] : parseInt(req.query.maxPrice)};
 
-    const totalSpots = await Spot.findAll();
     const spots = await Spot.findAll(query);
 
     return res.json({
         spots,
         page: page,
-        size: size,
-        remainingResults: totalSpots.length - spots.length 
+        size: size
     });
     
 
