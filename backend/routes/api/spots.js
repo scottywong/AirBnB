@@ -102,7 +102,7 @@ router.get('/:id',
     });
 
     if(!spot){
-        
+
         const err = new Error(`Spot couldn't be found`);
         err.status = 404;
         err.message = `Spot couldn't be found`;
@@ -212,7 +212,7 @@ async (req,res,next) => {
 
         }
 
-        await Spot.update({          
+        let updatedSpot = await Spot.update({          
             ownerId: user.id,
             address: address,
             city: city,
@@ -225,8 +225,10 @@ async (req,res,next) => {
             price: price
         },{where : {id: spot.id}});
 
+        await updatedSpot.save();
+        
         res.statusCode = 201;
-        res.json(spot);
+        res.json(updatedSpot);
     }
 });
 
