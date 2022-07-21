@@ -21,8 +21,8 @@ router.get('/', async(req,res,next ) => {
         err.statusCode = 400,
         err.errors = [];
 
-        if(req.query.page < 0 || !isNaN(req.query.page)) err.errors.push('Page must be greater or equal to 0');
-        if(req.query.size < 0 || !isNaN(req.query.size)) err.errors.push('Size must be greater or equal to 0');
+        if(req.query.page < 0 || isNaN(req.query.page)) err.errors.push('Page must be greater or equal to 0');
+        if(req.query.size < 0 || isNaN(req.query.size)) err.errors.push('Size must be greater or equal to 0');
         if(req.query.maxLat && req.query.maxLat.indexOf(".") == -1) err.errors.push('Maximum Latitude is invalid. Must be decimal');
         if(req.query.minLat && req.query.minLat.indexOf(".") == -1) err.errors.push('Minimum Longiutude is invalid. Must be decimal');
         if(req.query.minPrice  < 0) err.errors.push('Minimum Price must be greater or equal to 0');
