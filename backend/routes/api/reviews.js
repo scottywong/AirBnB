@@ -138,7 +138,7 @@ async (req,res,next) => {
 
     if(!foundReview){
 
-        const err = new Error(`Spot couldn't be found`);
+        const err = new Error(`Review couldn't be found`);
         err.status = 404;
         return next(err);
 
