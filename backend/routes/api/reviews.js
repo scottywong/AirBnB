@@ -158,11 +158,13 @@ async (req,res,next) => {
 
     } else {
         
-        const createImage = await Image.create({
+        let createImage = await Image.create({
             imageableId: foundReview.id,
             imageableType: 'Review',
             url: url
         });
+
+        createImage = await Image.findByPk(createImage.id);
 
         res.json(createImage);
 

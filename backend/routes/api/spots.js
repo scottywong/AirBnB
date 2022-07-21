@@ -490,11 +490,13 @@ async (req,res,next) => {
         return next(err);
 
     } else {
-        const createImage = await Image.create({
+        let createImage = await Image.create({
             imageableId: foundSpot.id,
             imageableType: 'Spot',
             url: url
         });
+
+        createImage = await Image.findByPk(createImage.id);
 
         res.json(createImage);
 
