@@ -149,15 +149,15 @@ async (req,res,next) => {
         const spot = await Spot.create({
             
             ownerId: user.id,
-            address: "123 Disney Lane",
-            city: "San Francisco",
-            state: "California",
-            country: "United States of America",
-            lat: 37.7645358,
-            lng: -122.4730327,
-            name: "App Academy",
-            description: "Place where web developers are created",
-            price: 123
+            address: address,
+            city: city,
+            state: state,
+            country: country,
+            lat: lat,
+            lng: lng,
+            name: name,
+            description: description,
+            price: price
         });
 
         res.statusCode = 201;
