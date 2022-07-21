@@ -53,7 +53,7 @@ async (req, res, next) =>{
             await foundImage.destroy();
             res.json({
                 "message": "Successfully deleted",
-            "statusCode": 200
+                "statusCode": 200
             });
 
         }
