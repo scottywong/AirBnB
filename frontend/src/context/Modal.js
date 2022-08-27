@@ -24,8 +24,7 @@ const ModalProvider = (props) => {
         <ModalContext.Provider value={value}>
                 {props.children}
         </ModalContext.Provider>
-        <div ref={modalRef}>
-        </div>
+        <div ref={modalRef}/>
         </>
     );
 }
@@ -39,7 +38,7 @@ export const Modal = ({onClose,children}) => {
     
     return ReactDOM.createPortal(
         <div id="modal">
-            <div id="modal-background" onClick={()=> onClose()}>
+            <div id="modal-background" onClick={onClose}>
                 <div id="modal-content">
                     {children}
                 </div>
@@ -50,9 +49,5 @@ export const Modal = ({onClose,children}) => {
 
 
 }
-
-
-
-
 
 export default ModalProvider;
