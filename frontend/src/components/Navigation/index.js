@@ -4,9 +4,11 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
+import logo from '../../assets/airbnb.png';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
+
 
   let sessionLinks;
   if (sessionUser) {
@@ -23,9 +25,13 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
+    <ul className="nav-container" >
+      <NavLink exact to="/" className="home-button">
+        <a href="" className="airbnb-logo">
+          <img height="80px"className="airbnb-logo" src={logo}/>
+        </a>
+      </NavLink> 
+      <li className="link-container"> 
         {isLoaded && sessionLinks}
       </li>
     </ul>

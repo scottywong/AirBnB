@@ -1,0 +1,53 @@
+.nav-container{
+
+    border-bottom: 1px grey dotted;
+}
+.link-container{
+
+    display: inline;
+    float: right;
+    padding: 25px 20px 5px 5px;
+
+
+}
+
+.airbnb-logo{
+    display: inline;
+}
+
+ul, li{
+    list-style: none;
+}
+
+button {
+
+    color:white;
+    background-color: #ff385c;
+    border-radius: 5px;
+    padding: 5px;
+    width: max-content;
+
+}
+
+.profile-container{
+    display: block;
+    
+}
+.profile-button{
+    width: 100px;
+    height: 30px;
+    background-color: #ff385c;
+    cursor: pointer;
+    margin: 0;
+    border: 50px black;
+    border-radius: 21px;
+    transition: box-shadow 0.2s ease;
+}
+.profile-dropdown{
+    color:white;
+    background-color: rgb(149, 141, 141);
+    border:black;
+    border-radius: 5px;
+    padding: 5px;
+    width: max-content;
+}
