@@ -1,0 +1,10 @@
+.spot-item-container{
+    display:block;
+    padding: 10px 10px 10px 10px;
+    
+
+}
+.spot-item-name{
+    display:block;
+    font-weight: bold;
+}

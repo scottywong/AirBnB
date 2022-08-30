@@ -3,8 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots } from "../../store/spot"; 
 import { NavLink, Switch, Route } from "react-router-dom";
 
-
+import './SpotList.css';
 import SpotListItem from './SpotListItem';
+
+//If Path is /user/:id/spots, then
+//change Header to "Manage My Spots"
+//display only spots that I own
+
+//Otherwise show all spots
 
 const SpotList = () => {
 
@@ -14,13 +20,13 @@ const dispatch = useDispatch();
     dispatch(fetchSpots());
   },[dispatch]);
 
-const spots = useSelector(state=> state.spots.spot);
+const spots = useSelector(state=> state.spot.spot);
 console.log('hey spots', spots);
 
   return (
-    <div>
-      <h1>Spot List</h1>
-      <ol>
+    <div className="spot-list-container">
+      <h1 className="spot-list-header">Spot List</h1>
+      <ol className="spot-list">
    
         {
         spots &&
@@ -28,7 +34,11 @@ console.log('hey spots', spots);
             spots.map((spot) => {
             console.log('ze spot: ', spot);
             
-              return <li key={spot.id}><NavLink to={`/spots/${spot.id}`}>{spot.name}</NavLink></li>
+            return <li key={spot.id}>
+                      <SpotListItem spot={spot}/>
+                   </li>
+        
+              // return <li key={spot.id}><NavLink to={`/spots/${spot.id}`}>{spot.name}</NavLink></li>
             })
           )
         }
