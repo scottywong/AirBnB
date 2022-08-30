@@ -23,21 +23,23 @@ console.log('hey spots', spots);
       <ol>
    
         {
-
-        spots.map((spot) => {
-          console.log('ze spot: ', spot);
-         
-          return <li key={spot.id}><NavLink to={`/spots/${spot.id}`}>{spot.name}</NavLink></li>
-        })
-
+        spots &&
+          (
+            spots.map((spot) => {
+            console.log('ze spot: ', spot);
+            
+              return <li key={spot.id}><NavLink to={`/spots/${spot.id}`}>{spot.name}</NavLink></li>
+            })
+          )
         }
-      </ol>
 
+      </ol>
+{/* 
       <Switch>
         <Route path='/spots/:id'>
           <SpotListItem spots={spots} />
         </Route>
-      </Switch>
+      </Switch> */}
     </div>
   );
 }
