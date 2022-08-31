@@ -36,6 +36,27 @@ export const fetchSpots = () => async (dispatch) => {
     dispatch(loadSpots(spots.spots));
   };
 
+export const createSpot = (spot) => async (dispatch) => {
+    
+    let response;
+    
+    response = await csrfFetch('/api/spots/',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(spot)
+    }
+    );
+    
+    if (response.ok) {
+      const createdSpot = await response.json();
+      dispatch(create(createdSpot));
+    }
+
+};
+
 const initialState = {};
 
 console.log('initialState:', initialState)
@@ -49,13 +70,9 @@ const spotReducer = (state = initialState, action) => {
         newState = Object.assign({}, state);
         newState.spot = action.payload;
         return newState;
-    // case LOAD_OWNED_SPOTS:
-    //     newState = Object.assign({}, state);
-    //     newState.ownedSpot = action.payload;
-    //     return newState;
     case CREATE_SPOT:
         newState = Object.assign({}, state);
-        newState.spot = action.payload;
+        newState.spot = action.payload
         return newState;
     case UPDATE_SPOT:
         newState = Object.assign({}, state);

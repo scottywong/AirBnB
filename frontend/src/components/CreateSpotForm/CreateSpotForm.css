@@ -1,0 +1,11 @@
+.create-spot-form{
+    display:flex;
+    width: 400px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spot-form-input, label{
+    display: block;
+}
