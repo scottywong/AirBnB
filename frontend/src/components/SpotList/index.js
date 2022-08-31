@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots } from "../../store/spot"; 
-import { NavLink, Switch, Route } from "react-router-dom";
+// import { NavLink, Switch, Route } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import './SpotList.css';
 import SpotListItem from './SpotListItem';
 
-//If Path is /user/:id/spots, then
-//change Header to "Manage My Spots"
-//display only spots that I own
-
-//Otherwise show all spots
-
-const SpotList = () => {
+const SpotList = ({spotListType}) => {
 
 const dispatch = useDispatch();
+const {id} = useParams();
 
-  useEffect(()=> {
-    dispatch(fetchSpots());
-  },[dispatch]);
+let spots = useSelector(state=> state.spot.spot);
 
-const spots = useSelector(state=> state.spot.spot);
-console.log('hey spots', spots);
+if(id && spots){
+  
+  spots = spots.filter(spot => spot.ownerId === parseInt(id));
+  
+}
+
+useEffect(()=> {
+  dispatch(fetchSpots());
+},[dispatch]);
 
   return (
     <div className="spot-list-container">
@@ -32,24 +33,18 @@ console.log('hey spots', spots);
         spots &&
           (
             spots.map((spot) => {
-            console.log('ze spot: ', spot);
+            // console.log('ze spot: ', spot);
             
             return <li key={spot.id}>
                       <SpotListItem spot={spot}/>
                    </li>
         
-              // return <li key={spot.id}><NavLink to={`/spots/${spot.id}`}>{spot.name}</NavLink></li>
             })
           )
         }
 
       </ol>
-{/* 
-      <Switch>
-        <Route path='/spots/:id'>
-          <SpotListItem spots={spots} />
-        </Route>
-      </Switch> */}
+
     </div>
   );
 }

@@ -26,7 +26,10 @@ function App() {
             <SpotList />
           </Route>
           <Route path="/spots/:id">
-            <SpotListItem />
+            
+          </Route>
+          <Route path="/users/:id/spots">
+            <SpotList spotListType="Owned"/>
           </Route>
         </Switch>
       )}

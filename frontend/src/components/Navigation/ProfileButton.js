@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
-    console.log(user)
+    // console.log(user)
     
     const openMenu = () => {
       if (showMenu) return;

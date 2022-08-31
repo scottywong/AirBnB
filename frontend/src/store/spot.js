@@ -26,11 +26,17 @@ export const remove = (spotId) => ({
   });
   
 
-  export const fetchSpots = () => async (dispatch) => {
-    const response = await fetch('/api/spots');
-   
+export const fetchSpots = (spotListType) => async (dispatch) => {
+    let response;
+    
+    if(spotListType === 'Owned'){
+        response = await fetch('/api/spots/currentUserSpots');
+    } else {
+        response = await fetch('/api/spots');
+    }
+
     const spots = await response.json();
-    console.log('spots: ', spots);
+
     dispatch(loadSpots(spots.spots));
   };
 
@@ -47,11 +53,15 @@ const spotReducer = (state = initialState, action) => {
         newState = Object.assign({}, state);
         newState.spot = action.payload;
         return newState;
+    // case LOAD_OWNED_SPOTS:
+    //     newState = Object.assign({}, state);
+    //     newState.ownedSpot = action.payload;
+    //     return newState;
     case CREATE_SPOT:
         newState = Object.assign({}, state);
         newState.spot = action.payload;
         return newState;
-    case  UPDATE_SPOT:
+    case UPDATE_SPOT:
         newState = Object.assign({}, state);
         newState.spot = action.payload;
         return newState;
