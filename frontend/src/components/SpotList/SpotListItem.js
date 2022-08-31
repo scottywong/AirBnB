@@ -9,8 +9,9 @@ const SpotListItem = ({spot}) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(state=> state.session.user);
   let isLoaded = false;
-  
-  if(currentUser.id === spot.ownerId){
+
+  /**** Check if you own Spot, if so load "Edit" + "Delete" Nav Links */
+  if(currentUser && currentUser.id === spot.ownerId){
     isLoaded = true;
   }
 
