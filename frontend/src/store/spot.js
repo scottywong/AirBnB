@@ -26,14 +26,10 @@ export const remove = (spotId) => ({
   });
   
 
-export const fetchSpots = (spotListType) => async (dispatch) => {
+export const fetchSpots = () => async (dispatch) => {
     let response;
     
-    if(spotListType === 'Owned'){
-        response = await fetch('/api/spots/currentUserSpots');
-    } else {
-        response = await fetch('/api/spots');
-    }
+    response = await fetch('/api/spots');
 
     const spots = await response.json();
 

@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import './SpotList.css';
 import SpotListItem from './SpotListItem';
 
-const SpotList = ({spotListType}) => {
+const SpotList = () => {
 
 const dispatch = useDispatch();
 const {id} = useParams();
