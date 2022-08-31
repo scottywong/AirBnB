@@ -58,7 +58,8 @@ const CreateSpotForm = () => {
     }
 
     return (
-        <>
+        <div className="create-spot-form-container">
+        <h1> Create a New Spot</h1>
         <form className="create-spot-form" onSubmit={onSubmit}>
             <label> Address
             <input className="spot-form-input"
@@ -106,9 +107,10 @@ const CreateSpotForm = () => {
             value={price}
             onChange={(e) => setPrice(e.target.value)}/>
             </label>
+            
             <button className="submit-button"> Create Spot</button>
         </form>
-        </>
+        </div>
     )
 };
 

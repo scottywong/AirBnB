@@ -14,7 +14,9 @@ const SpotDetail = () => {
       dispatch(fetchSpots());
     },[dispatch]);
     
-    if(id && spots){
+    // console.log('isitanarray', Array.isArray(spots));
+
+    if(id && Array.isArray(spots)){
     
       foundSpot = spots.find(spot => spot.id === parseInt(id));
     

@@ -1,3 +1,9 @@
+.create-spot-form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .create-spot-form{
     display:flex;
     width: 400px;
@@ -8,4 +14,8 @@
 
 .spot-form-input, label{
     display: block;
+}
+
+.submit-button{
+    margin-top: 10px;
 }

@@ -32,31 +32,34 @@ const handleCreateButton = () => {
 };
 
   return (
-    <div className="spot-list-container">
-      {id && (
-        <>
-        <h1 className="spot-list-header">Owned Spots</h1>
-        <button onClick={handleCreateButton} className="spot-button-create">Create New Spot</button>
-        </>)}
-      {!id && (<h1 className="spot-list-header">Spot List</h1>)}
-      
-      <ol className="spot-list">
-   
-        {
-        spots &&
-          (
-            spots.map((spot) => {          
-            return <li key={spot.id}>
-                      <SpotListItem spot={spot}/>
-                   </li>
+    <> 
+        {id && (
+          <>
+          <h1 className="spot-list-header">Owned Spots</h1>
+          <button onClick={handleCreateButton} className="spot-button-create">Create New Spot</button>
+          </>)}
+          
+        {!id && (<h1 className="spot-list-header">Spot List</h1>)}
         
-            })
-          )
-        }
-
-      </ol>
-    </div>
+        <div className="spot-list-container">
+            <ol className="spot-list">
+        
+              {
+              spots &&
+                (
+                  spots.map((spot) => {          
+                  return <li key={spot.id}>
+                            <SpotListItem spot={spot}/>
+                        </li>
+              
+                  })
+                )
+              }
+            </ol>
+        </div>
+      </>
   );
+  
 }
 
 export default SpotList;
