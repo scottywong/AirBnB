@@ -1,21 +1,8 @@
 import { useState , useEffect} from "react";
 import { useDispatch , useSelector} from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { createSpot } from "../../store/spot";
+import { createSpot} from "../../store/spot";
 import './CreateSpotForm.css'
-
-// {
-//     "address": "123 Disney Lane",
-//     "city": "San Francisco",
-//     "state": "California",
-//     "country": "United States of America",
-//     "lat": 37.7645358,
-//     "lng": -122.4730327,
-//     "name": "App Academy",
-//     "description": "Place where web developers are created",
-//     "price": 123
-//   }
-  
 
 const CreateSpotForm = () => {
 
@@ -32,8 +19,6 @@ const CreateSpotForm = () => {
     const [description,setDescription] = useState('');
     const [price,setPrice] = useState('');
 
-    const createdSpot = useSelector(state=> state.spot.spot);
-
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -49,11 +34,8 @@ const CreateSpotForm = () => {
             price
         }
 
-        dispatch(createSpot(payload));
-
-        if (createdSpot) {
-        history.push(`/spots/${createdSpot.id}`);
-        }
+        return dispatch(createSpot(payload))
+        .then((res) => history.push(`/spots/${res.payload.id}`));
         
     }
 
@@ -107,7 +89,7 @@ const CreateSpotForm = () => {
             value={price}
             onChange={(e) => setPrice(e.target.value)}/>
             </label>
-            
+
             <button className="submit-button"> Create Spot</button>
         </form>
         </div>
