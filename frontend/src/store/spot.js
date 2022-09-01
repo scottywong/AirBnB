@@ -28,7 +28,6 @@ export const remove = (spotId) => ({
 
 export const fetchSpots = () => async (dispatch) => {
     let response;
-    
     response = await fetch('/api/spots');
 
     const spots = await response.json();
@@ -37,9 +36,7 @@ export const fetchSpots = () => async (dispatch) => {
   };
 
 export const createSpot = (spot) => async (dispatch) => {
-    
     let response;
-    
     response = await csrfFetch('/api/spots/',
     {
       method: 'POST',
@@ -54,6 +51,23 @@ export const createSpot = (spot) => async (dispatch) => {
       const createdSpot = await response.json();
       return dispatch(create(createdSpot));
     }
+
+};
+
+export const removeSpot = (id) => async (dispatch) => {
+  let response;
+  response = await csrfFetch(`/api/spots/${id}`,
+  {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  );
+
+  if (response.ok) {
+    return dispatch(remove(id));
+  }
 
 };
 
@@ -80,7 +94,7 @@ const spotReducer = (state = initialState, action) => {
         return newState;
     case REMOVE_SPOT:
         newState = Object.assign({}, state);
-        newState.spot = null;
+        newState.spot = newState.spot.filter(spot=> spot.id !== action.payload);
         return newState;
     default:
         return state;

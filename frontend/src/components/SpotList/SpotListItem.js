@@ -3,6 +3,7 @@ import './SpotListItem.css';
 import * as sessionActions from "../../store/session";
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { removeSpot } from '../../store/spot';
 
 const SpotListItem = ({spot}) => {
 
@@ -19,6 +20,13 @@ const SpotListItem = ({spot}) => {
     dispatch(sessionActions.restoreUser());
   }, [dispatch]);
 
+
+  const handleDelete = (e) => {
+
+    e.preventDefault();
+    
+    return dispatch(removeSpot(spot.id));
+  }
     return(
         <div className="spot-item-container">
             <br/>
@@ -30,7 +38,7 @@ const SpotListItem = ({spot}) => {
             (
             <>
             <NavLink className="spot-item-edit" to={`/spots/${spot.id}/edit`}> Edit </NavLink> 
-            <NavLink className="spot-item-delete" to={`/spots/${spot.id}`}> Delete </NavLink>  
+            <NavLink onClick={handleDelete} className="spot-item-delete" to={`/spots/${spot.id}`}> Delete </NavLink>  
             <br/>
             </>
             )   
