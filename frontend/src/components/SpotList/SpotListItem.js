@@ -16,9 +16,9 @@ const SpotListItem = ({spot}) => {
     isLoaded = true;
   }
 
-  useEffect(() => {
-    dispatch(sessionActions.restoreUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(sessionActions.restoreUser());
+  // }, [dispatch]);
 
 
   const handleDelete = (e) => {

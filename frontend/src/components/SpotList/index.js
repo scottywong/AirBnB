@@ -17,7 +17,7 @@ useEffect(()=> {
   dispatch(fetchSpots());
 },[dispatch]);
 
-if(id && spots){
+if(id && spots && Array.isArray(spots)){
 
   spots = spots.filter(spot => spot.ownerId === parseInt(id));
 
@@ -45,7 +45,7 @@ const handleCreateButton = () => {
             <ol className="spot-list">
         
               {
-              spots &&
+              spots && Array.isArray(spots) && 
                 (
                   spots.map((spot) => {          
                   return <li key={spot.id}>

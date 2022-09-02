@@ -1,0 +1,21 @@
+.edit-spot-form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.edit-spot-form{
+    display:flex;
+    width: 400px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spot-form-input, label{
+    display: block;
+}
+
+.submit-button{
+    margin-top: 10px;
+}

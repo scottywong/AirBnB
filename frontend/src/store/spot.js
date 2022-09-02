@@ -35,6 +35,16 @@ export const fetchSpots = () => async (dispatch) => {
     dispatch(loadSpots(spots.spots));
   };
 
+export const fetchSpotById = (spotId) => async (dispatch) => {
+    let response;
+    response = await fetch(`/api/spots/${spotId}`);
+
+    const oneSpot = await response.json();
+
+    dispatch(loadSpots(oneSpot));
+};
+
+
 export const createSpot = (spot) => async (dispatch) => {
     let response;
     response = await csrfFetch('/api/spots/',
@@ -51,6 +61,25 @@ export const createSpot = (spot) => async (dispatch) => {
       const createdSpot = await response.json();
       return dispatch(create(createdSpot));
     }
+
+};
+
+export const updateSpot = (spot) => async (dispatch) => {
+  let response;
+  response = await csrfFetch('/api/spots/',
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(spot)
+  }
+  );
+  
+  if (response.ok) {
+    const updatedSpot = await response.json();
+    return dispatch(update(updatedSpot));
+  }
 
 };
 
