@@ -35,7 +35,7 @@ const CreateSpotForm = () => {
         }
 
         return dispatch(createSpot(payload))
-        .then((res) => history.push(`/spots/${res.payload.id}`));
+        .then((spot) => history.push(`/spots/${spot.id}`));
         
     }
 

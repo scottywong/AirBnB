@@ -29,19 +29,24 @@ export const remove = (spotId) => ({
 export const fetchSpots = () => async (dispatch) => {
     let response;
     response = await fetch('/api/spots');
-
-    const spots = await response.json();
-
-    dispatch(loadSpots(spots.spots));
+    
+    if(response.ok){
+      const spots = await response.json();
+      dispatch(loadSpots(spots.spots));
+      return spots;
+    }
   };
 
 export const fetchSpotById = (spotId) => async (dispatch) => {
     let response;
     response = await fetch(`/api/spots/${spotId}`);
 
-    const oneSpot = await response.json();
-
-    dispatch(loadSpots(oneSpot));
+    if(response.ok){
+      const oneSpot = await response.json();
+      dispatch(loadSpots(oneSpot));
+      return oneSpot;
+    }
+    
 };
 
 
@@ -59,14 +64,15 @@ export const createSpot = (spot) => async (dispatch) => {
     
     if (response.ok) {
       const createdSpot = await response.json();
-      return dispatch(create(createdSpot));
+      dispatch(create(createdSpot));
+      return createSpot;
     }
 
 };
 
-export const updateSpot = (spot) => async (dispatch) => {
+export const updateSpot = (spot,spotId) => async (dispatch) => {
   let response;
-  response = await csrfFetch('/api/spots/',
+  response = await csrfFetch(`/api/spots/${spotId}`,
   {
     method: 'POST',
     headers: {
@@ -78,7 +84,8 @@ export const updateSpot = (spot) => async (dispatch) => {
   
   if (response.ok) {
     const updatedSpot = await response.json();
-    return dispatch(update(updatedSpot));
+    dispatch(update(updatedSpot));
+    return updatedSpot;
   }
 
 };

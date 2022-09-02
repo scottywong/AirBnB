@@ -1,8 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useSelector,useDispatch} from "react-redux";
-import { fetchSpots } from "../../store/spot";
-import { useEffect } from "react";
-import * as sessionActions from "../../store/session";
+import { fetchSpotById} from "../../store/spot";
+import { useEffect , useState} from "react";
 import { NavLink } from "react-router-dom";
 import { removeSpot } from "../../store/spot";
 import { useHistory } from "react-router-dom";
@@ -18,45 +17,46 @@ const SpotDetail = () => {
     const currentUser = useSelector(state=> state.session.user);
     let spots = useSelector(state=> state.spot.spot);
 
-    let foundSpot;
-    let isLoaded = false;
+    const [isLoaded,setIsLoaded] = useState(false);
+    const [address,setAddress] = useState('');
+    const [city,setCity] = useState('');
+    const [state, setState] = useState('');
+    const [country,setCountry] = useState('');
+    const [name,setName] = useState('');
+    const [price,setPrice] = useState('');
 
     useEffect(()=> {
-      dispatch(sessionActions.restoreUser());
-      dispatch(fetchSpots());
+      dispatch(fetchSpotById(id))
+        .then((spot)=> {
+                if(currentUser.id === spot.ownerId) setIsLoaded(true);
+                setAddress(spot.address);
+                setCity(spot.city);
+                setState(spot.state);
+                setCountry(spot.country);
+                setName(spot.name);
+                setPrice(spot.price);
+      })
     },[dispatch]);
-    
-    /**** Check if State is Array and not individual Spot ****/
-    if(id && Array.isArray(spots)){
-    
-      foundSpot = spots.find(spot => spot.id === parseInt(id));
-      
-      /**** Check if you own Spot, if so load "Edit" + "Delete" Nav Links */
-      if(currentUser && currentUser.id === foundSpot.ownerId){
-        isLoaded = true;
-      }
-    
-    }
-
+  
     const handleDelete = (e) => {
 
       e.preventDefault();
       
       return dispatch(removeSpot(id))
-        .then((res) => history.push(`/users/${currentUser.id}/spots`));
+        .then(() => history.push(`/users/${currentUser.id}/spots`));
     }
   
     return (
         <div className="spot-detail-container">
           <div className="spot-detail">
-        {foundSpot && (
+        {isLoaded && (
             <>
-                <p><b>{foundSpot.name}</b></p>
-                <p>{foundSpot.address}</p>
-                <p>{foundSpot.city}</p>
-                <p>{foundSpot.state}</p>
-                <p>{foundSpot.country}</p>
-                <p>{foundSpot.price}</p>
+                <p><b>{name}</b></p>
+                <p>{address}</p>
+                <p>{city}</p>
+                <p>{state}</p>
+                <p>{country}</p>
+                <p>{price}</p>
              </>
         )}
         </div>
@@ -64,8 +64,8 @@ const SpotDetail = () => {
         {isLoaded &&
             (
             <>
-            <NavLink className="spot-item-edit" to={`/spots/${foundSpot.id}/edit`}> Edit </NavLink> 
-            <NavLink onClick={handleDelete} className="spot-item-delete" to={`/spots/${foundSpot.id}`}> Delete </NavLink>  
+            <NavLink className="spot-item-edit" to={`/spots/${id}/edit`}> Edit </NavLink> 
+            <NavLink onClick={handleDelete} className="spot-item-delete" to={`/spots/${id}`}> Delete </NavLink>  
             <br/>
             </>
             )   
