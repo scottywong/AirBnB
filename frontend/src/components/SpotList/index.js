@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots } from "../../store/spot"; 
-// import { NavLink, Switch, Route } from "react-router-dom";
 import { useParams,  useHistory} from "react-router-dom";
 
 import './SpotList.css';

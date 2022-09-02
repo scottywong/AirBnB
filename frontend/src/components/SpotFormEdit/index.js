@@ -3,9 +3,9 @@ import { useDispatch , useSelector} from "react-redux";
 import { useHistory } from 'react-router-dom';
 import { fetchSpotById, updateSpot} from "../../store/spot";
 import { useParams } from "react-router-dom";
-import './EditSpotForm.css';
+import './SpotFormEdit.css';
 
-const EditSpotForm = () => {
+const SpotFormEdit = () => {
  
     const dispatch = useDispatch();
     const history = useHistory();
@@ -131,4 +131,4 @@ const EditSpotForm = () => {
 
 }
 
-export default EditSpotForm;
+export default SpotFormEdit;

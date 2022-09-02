@@ -5,10 +5,9 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotList from "./components/SpotList";
-import SpotListItem from "./components/SpotList/SpotListItem";
 import SpotDetail from "./components/SpotDetail";
-import CreateSpotForm from "./components/CreateSpotForm";
-import EditSpotForm from "./components/EditSpotForm";
+import SpotFormCreate from "./components/SpotFormCreate";
+import SpotFormEdit from "./components/SpotFormEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,13 +28,13 @@ function App() {
             <SpotList />
           </Route>
           <Route path="/spots/new">
-            <CreateSpotForm />
+            <SpotFormCreate />
           </Route>
           <Route exact path="/spots/:id">
             <SpotDetail />
           </Route>
           <Route path="/spots/:id/edit">
-            <EditSpotForm />
+            <SpotFormEdit />
           </Route>
           <Route path="/users/:id/spots">
             <SpotList/>
