@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import './SpotListItem.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeSpot } from '../../store/spot';
+import { removeSpot } from '../../../store/spot';
 
 const SpotListItem = ({spot}) => {
 

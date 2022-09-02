@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useSelector,useDispatch} from "react-redux";
-import { fetchSpotById} from "../../store/spot";
+import { fetchSpotById} from "../../../store/spot";
 import { useEffect , useState} from "react";
 import { NavLink } from "react-router-dom";
-import { removeSpot } from "../../store/spot";
+import { removeSpot } from "../../../store/spot";
 import { useHistory } from "react-router-dom";
 
 import './SpotDetail.css';

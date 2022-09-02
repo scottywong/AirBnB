@@ -4,10 +4,10 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import SpotList from "./components/SpotList";
-import SpotDetail from "./components/SpotDetail";
-import SpotFormCreate from "./components/SpotFormCreate";
-import SpotFormEdit from "./components/SpotFormEdit";
+import SpotList from "./components/Spot/SpotList";
+import SpotDetail from "./components/Spot/SpotDetail";
+import SpotFormCreate from "./components/Spot/SpotFormCreate";
+import SpotFormEdit from "./components/Spot/SpotFormEdit";
 
 function App() {
   const dispatch = useDispatch();
