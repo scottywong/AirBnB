@@ -5,7 +5,7 @@ import { useEffect , useState} from "react";
 import { NavLink } from "react-router-dom";
 import { removeSpot } from "../../../store/spot";
 import { useHistory } from "react-router-dom";
-
+import BookingFormCreate from '../../Booking/BookingFormCreate';
 import './SpotDetail.css';
 
 const SpotDetail = () => {
@@ -47,9 +47,9 @@ const SpotDetail = () => {
     }
   
     return (
+      <>
         <div className="spot-detail-container">
           <div className="spot-detail">
-        {isLoaded && (
             <>
                 <p><b>{name}</b></p>
                 <p>{address}</p>
@@ -58,7 +58,6 @@ const SpotDetail = () => {
                 <p>{country}</p>
                 <p>{price}</p>
              </>
-        )}
         </div>
         <div className="spot-detail-actions">
         {isLoaded &&
@@ -72,6 +71,8 @@ const SpotDetail = () => {
         }  
         </div>
         </div>
+        <BookingFormCreate spotId={id} />
+        </>
     );
 };
 

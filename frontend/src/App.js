@@ -8,6 +8,8 @@ import SpotList from "./components/Spot/SpotList";
 import SpotDetail from "./components/Spot/SpotDetail";
 import SpotFormCreate from "./components/Spot/SpotFormCreate";
 import SpotFormEdit from "./components/Spot/SpotFormEdit";
+import BookingList from "./components/Booking/BookingList";
+import BookingDetail from "./components/Booking/BookingDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,11 +23,11 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
           <Route exact path="/">
             <SpotList />
+          </Route>
+          <Route path="/signup">
+            <SignupFormPage />
           </Route>
           <Route path="/spots/new">
             <SpotFormCreate />
@@ -38,6 +40,12 @@ function App() {
           </Route>
           <Route path="/users/:id/spots">
             <SpotList/>
+          </Route>
+          <Route path="/users/:id/bookings">
+            <BookingList />
+          </Route>
+          <Route path="/bookings/:id">
+            <BookingDetail />
           </Route>
         </Switch>
       )}
