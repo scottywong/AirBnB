@@ -12,7 +12,8 @@ const BookingDetail = () => {
     const history = useHistory();
     const {id} = useParams();
 
-    const [isLoaded,setIsLoaded] = useState(false);
+    const [isLoaded,setIsLoaded] = useState('');
+    const [name,setName] = useState('');
     const [startDate,setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
@@ -23,16 +24,19 @@ const BookingDetail = () => {
         dispatch(fetchUserBookings()).then((bookings)=> {
            
             const foundBooking = bookings.Bookings.find(booking => parseInt(id) === booking.id);
-
             const startDateObj = new Date();
-            startDateObj.setTime(Date.parse(foundBooking.startDate));
-           const endDateObj = new Date();
-            endDateObj.setTime(Date.parse(foundBooking.endDate));
+            const endDateObj = new Date();
             
+            startDateObj.setTime(Date.parse(foundBooking.startDate));
+            endDateObj.setTime(Date.parse(foundBooking.endDate));
+
             if(foundBooking){
                 setIsLoaded(true);
-                setStartDate(`${startDateObj.getFullYear()}-${startDateObj.getMonth()}-${startDateObj.getDate()}`);
-                setEndDate(`${endDateObj.getFullYear()}-${endDateObj.getMonth()}-${endDateObj.getDate()}`);
+                setName(foundBooking.Spot.name);
+                setStartDate(startDateObj.toISOString().split('T')[0]);
+                setEndDate(endDateObj.toISOString().split('T')[0]);
+            } else {
+                setIsLoaded(false);
             }
         });
     },[dispatch]);
@@ -47,17 +51,22 @@ const BookingDetail = () => {
     
     return(
         <>
-        {!isLoaded && 
-        (<p> Sorry, you don't have permission to view this</p>)
-        }
-        <div>
+
+        <div className="booking-container">
             {isLoaded && 
             (
-            <div className="booking-container">
-            <h1> Booking</h1>
-            <p>{id}</p>
-            <input type='date' value={startDate}></input>
-            <p>{endDate}</p>
+            <div className="booking-detail">
+                <h1> Booking</h1>
+                <label> Name: 
+                    <input type='text' readOnly value={name}/>
+                </label>
+                <label> Start Date:  
+                    <input type='date' readOnly value={startDate}/>
+                </label>
+                <label> End Date: 
+                    <input type='date' readOnly value={endDate}/>
+                </label>
+                <br/>
             </div>
         
             )
@@ -66,14 +75,19 @@ const BookingDetail = () => {
             {isLoaded &&
             (
             <>
-            <NavLink className="booking-item-edit" to={`/bookings/${id}/edit`}> Edit </NavLink> 
-            <NavLink onClick={handleDelete} className="booking-item-delete" to={`/bookings/${id}`}> Delete </NavLink>  
+            <button className="booking-item-edit" onClick={()=> history.push(`/bookings/${id}/edit`)}> Edit </button> 
+            <button onClick={handleDelete} className="booking-item-delete" to={`/bookings/${id}`}> Delete </button>  
             <br/>
+            
             </>
             )   
         }  
             </div>
         </div>
+
+        {isLoaded===false && 
+        (<p> Sorry, you don't have permission to view this</p>)
+        }
         </>
     )
 }

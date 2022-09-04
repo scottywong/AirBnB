@@ -1,7 +1,7 @@
 import { useState , useEffect} from "react";
 import { useDispatch , useSelector} from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { fetchSpotById, updateSpot} from "../../../store/spot";
+import { fetchSpotById, removeSpot, updateSpot} from "../../../store/spot";
 import { useParams } from "react-router-dom";
 import './SpotFormEdit.css';
 
@@ -60,71 +60,89 @@ const SpotFormEdit = () => {
         
     }
 
+    const handleDelete = (e) => {
+        e.preventDefault();
+      
+        return dispatch(removeSpot(id))
+          .then(() => history.push(`/users/${currentUser.id}/spots`));
+    }
+
     return (
         <>
-
+        
         {!isLoaded &&
           <p>  Sorry, but you don't have the right permissions to edit this. </p>
         }
-
-        {isLoaded 
+        <div  className="edit-spot-form-container">
+            {isLoaded 
            &&
            (
-            <div className="edit-spot-form-container">
-            <h1> Edit Spot</h1>
-            <form className="edit-spot-form" onSubmit={handleSubmit}>
-                <label> Address
-                <input className="spot-form-input"
-                value={address}
-                onChange={(e) => e.target.value}/>
-                </label>
-                <label> City
-                <input className="spot-form-input"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}/>
-                </label>
-                <label> State
-                <input className="spot-form-input"
-                value={state}
-                onChange={(e) => setState(e.target.value)}/>
-                </label>
-                <label> Country
-                <input className="spot-form-input"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}/>
-                </label>
-                <label> Lat
-                <input className="spot-form-input"
-                value={lat}
-                onChange={(e) => setLat(e.target.value)}/>
-                </label>
-                <label> Lng
-                <input className="spot-form-input"
-                value={lng}
-                onChange={(e) => setLng(e.target.value)}/>
-                </label>
-                <label> Name
-                <input className="spot-form-input"
-                value={name}
-                onChange={(e) => setName(e.target.value)}/>
-                </label>
-                <label> Description
-                <input className="spot-form-input"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}/>
-                </label>
-                <label> Price
-                <input className="spot-form-input"
-                type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}/>
-                </label>
+            <div className="edit-spot">
+                <h1> Edit Spot</h1>
+                <form className="edit-spot-form" onSubmit={handleSubmit}>
+                    <label> Address
+                    <input className="spot-form-input"
+                    value={address}
+                    onChange={(e) => e.target.value}/>
+                    </label>
+                    <label> City
+                    <input className="spot-form-input"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}/>
+                    </label>
+                    <label> State
+                    <input className="spot-form-input"
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}/>
+                    </label>
+                    <label> Country
+                    <input className="spot-form-input"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}/>
+                    </label>
+                    <label> Lat
+                    <input className="spot-form-input"
+                    value={lat}
+                    onChange={(e) => setLat(e.target.value)}/>
+                    </label>
+                    <label> Lng
+                    <input className="spot-form-input"
+                    value={lng}
+                    onChange={(e) => setLng(e.target.value)}/>
+                    </label>
+                    <label> Name
+                    <input className="spot-form-input"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}/>
+                    </label>
+                    <label> Description
+                    <input className="spot-form-input"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}/>
+                    </label>
+                    <label> Price
+                    <input className="spot-form-input"
+                    type="number"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}/>
+                    </label>
 
-                <button className="submit-button"> Submit Changes </button>
-            </form>
+                    <button className="submit-button"> Submit Changes </button>
+                </form>
             </div>
-            )
-        }
+            )}
+
+            <div className="spot-edit-actions">
+                {isLoaded &&
+                (
+                <>
+                <button onClick={handleDelete} className="spot-item-delete" to={`/spots/${id}`}> Delete </button>  
+                <button onClick={()=> history.push(`/spots/${id}`)} className="spot-item-cancel"> Cancel </button>  
+                </>
+                )   
+                }  
+            </div>
+        </div>
         </>
     
     );

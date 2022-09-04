@@ -61,8 +61,8 @@ export const fetchUserBookings = () => async (dispatch) => {
   
   if(response.ok){
     const bookings = await response.json();
-    console.log(bookings);
-    dispatch(loadUserBookings(bookings.bookings));
+    console.log('bookings: ', bookings);
+    dispatch(loadUserBookings(bookings.Bookings));
     return bookings;
   }
 };

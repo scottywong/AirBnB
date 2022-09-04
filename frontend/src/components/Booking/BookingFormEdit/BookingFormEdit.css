@@ -1,4 +1,14 @@
-.booking-detail-actions{
+.booking-edit-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+}
+.booking-edit, .edit-booking-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
 }

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState , useEffect} from "react";
 import { fetchUserBookings , removeBooking, updateBooking} from "../../../store/booking";
 import { NavLink } from "react-router-dom";
+import './BookingFormEdit.css';
 
 const BookingFormEdit = () => {
 
@@ -12,8 +13,9 @@ const BookingFormEdit = () => {
 
     const currentUser = useSelector(state=> state.session.user);
     const booking = useSelector(state=> state.booking.booking);
-    const[isLoaded,setIsLoaded] = useState(false);
+    const[isLoaded,setIsLoaded] = useState('');
 
+    const [name,setName] = useState('');
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
 
@@ -24,13 +26,17 @@ const BookingFormEdit = () => {
             const foundBooking = bookings.Bookings.find(booking => currentUser.id === booking.userId);
             if(foundBooking){
                 const startDateObj = new Date();
-                 startDateObj.setTime(Date.parse(foundBooking.startDate));
                 const endDateObj = new Date();
-                 endDateObj.setTime(Date.parse(foundBooking.endDate));
-                // console.log('foundbooking: ', Date.parsefoundBooking);
+
+                startDateObj.setTime(Date.parse(foundBooking.startDate));
+                endDateObj.setTime(Date.parse(foundBooking.endDate));
+
                 setIsLoaded(true);
-                setStartDate(`${startDateObj.getFullYear()}-${startDateObj.getMonth()}-${startDateObj.getDate()}` );
-                setEndDate(`${endDateObj.getFullYear()}-${endDateObj.getMonth()}-${endDateObj.getDate()}` );
+                setName(foundBooking.Spot.name);
+                setStartDate(startDateObj.toISOString().split('T')[0]);
+                setEndDate(endDateObj.toISOString().split('T')[0]);
+            } else {
+                setIsLoaded(false);
             }
         })
     },[dispatch]);
@@ -56,47 +62,49 @@ const BookingFormEdit = () => {
 
     return (
         <>
-        {!isLoaded && 
-        (<p> Sorry, you don't have permission to edit this.</p>)
-        }
-        <div>
+        <div className="booking-edit-container">
             {isLoaded && 
             (
-            <div className="booking-container">
+            <div className="booking-edit">
             <h1> Booking</h1>
-            <form className="edit-booking-form" onSubmit={handleSubmit}>
-                <label> Start Date
-                    <input
-                    type='date'
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    ></input>
-                </label>
-                <label> End Date
-                    <input
-                    type='date'
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    ></input>
-                </label>
+                <form className="edit-booking-form" onSubmit={handleSubmit}>
+                    <label> Name
+                        <input type='text' readOnly value={name}/>
+                    </label>
+                    <label> Start Date
+                        <input
+                        type='date'
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        ></input>
+                    </label>
+                    <label> End Date
+                        <input
+                        type='date'
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                        ></input>
+                    </label>
 
-                <button className="submit-button"> Submit Changes </button>
-            </form>
+                    <button className="submit-button"> Submit Changes </button>
+                </form>
             </div>
             )
             }
-            <div className="booking-detail-actions">
+            <div className="booking-edit-actions">
             {isLoaded &&
             (
             <>
-            <NavLink className="booking-item-edit" to={`/bookings/${id}/edit`}> Edit </NavLink> 
-            <NavLink onClick={handleDelete} className="booking-item-delete" to={`/bookings/${id}`}> Delete </NavLink>  
-            <br/>
+            <button onClick={handleDelete} className="booking-item-delete" to={`/bookings/${id}`}> Delete </button>  
+            <button onClick={()=> history.push(`/bookings/${id}`)} className="booking-item-cancel"> Cancel </button>  
             </>
             )   
         }  
             </div>
         </div>
+        {isLoaded===false && 
+        (<p> Sorry, you don't have permission to edit this.</p>)
+        }
         </>
     );
 
