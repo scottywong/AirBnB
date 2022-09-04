@@ -10,6 +10,7 @@ import SpotFormCreate from "./components/Spot/SpotFormCreate";
 import SpotFormEdit from "./components/Spot/SpotFormEdit";
 import BookingList from "./components/Booking/BookingList";
 import BookingDetail from "./components/Booking/BookingDetail";
+import BookingFormEdit from "./components/Booking/BookingFormEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,8 +45,11 @@ function App() {
           <Route path="/users/:id/bookings">
             <BookingList />
           </Route>
-          <Route path="/bookings/:id">
+          <Route exact path="/bookings/:id">
             <BookingDetail />
+          </Route>
+          <Route path="/bookings/:id/edit">
+            <BookingFormEdit />
           </Route>
         </Switch>
       )}

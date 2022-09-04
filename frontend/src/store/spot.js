@@ -65,7 +65,7 @@ export const createSpot = (spot) => async (dispatch) => {
     if (response.ok) {
       const createdSpot = await response.json();
       dispatch(create(createdSpot));
-      return createSpot;
+      return createdSpot;
     }
 
 };

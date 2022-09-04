@@ -40,7 +40,7 @@ const SpotFormEdit = () => {
         });
     },[]);
 
-    const onSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const payload = {
@@ -72,7 +72,7 @@ const SpotFormEdit = () => {
            (
             <div className="edit-spot-form-container">
             <h1> Edit Spot</h1>
-            <form className="edit-spot-form" onSubmit={onSubmit}>
+            <form className="edit-spot-form" onSubmit={handleSubmit}>
                 <label> Address
                 <input className="spot-form-input"
                 value={address}

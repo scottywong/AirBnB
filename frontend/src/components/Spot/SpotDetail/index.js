@@ -59,19 +59,22 @@ const SpotDetail = () => {
                 <p>{price}</p>
              </>
         </div>
-        <div className="spot-detail-actions">
-        {isLoaded &&
-            (
-            <>
-            <NavLink className="spot-item-edit" to={`/spots/${id}/edit`}> Edit </NavLink> 
-            <NavLink onClick={handleDelete} className="spot-item-delete" to={`/spots/${id}`}> Delete </NavLink>  
-            <br/>
-            </>
-            )   
-        }  
+          <div className="spot-detail-actions">
+          {isLoaded &&
+              (
+              <>
+              <NavLink className="spot-item-edit" to={`/spots/${id}/edit`}> Edit </NavLink> 
+              <NavLink onClick={handleDelete} className="spot-item-delete" to={`/spots/${id}`}> Delete </NavLink>  
+              <br/>
+              </>
+              )   
+          }  
+          </div>
+
         </div>
-        </div>
-        <BookingFormCreate spotId={id} />
+        {!isLoaded &&
+        (<BookingFormCreate spotId={id} />)
+        }
         </>
     );
 };
