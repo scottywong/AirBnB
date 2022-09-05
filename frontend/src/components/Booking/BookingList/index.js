@@ -4,6 +4,8 @@ import { fetchUserBookings } from "../../../store/booking";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import './BookingList.css';
+
 const BookingList = () => {
 
     const dispatch = useDispatch();
@@ -18,18 +20,23 @@ const BookingList = () => {
     },[dispatch]);
 
     return (
-         <>
-        { bookings && 
-        bookings.map(booking => {
+        <div className="booking-list-container">
+         <h1>Your Bookings</h1>
+            { bookings && 
+            bookings.map(booking => {
 
 
-            console.log('booking: ', booking);
-            return <BookingListItem booking={booking}/>
+                console.log('booking: ', booking);
+                return <BookingListItem booking={booking}/>
 
-        })
+            })
+            }
 
-        }
-        </>
+            {!(bookings?.length) && (
+
+                <p> No Bookings found.</p>
+            )}
+        </div>
 
 
     );

@@ -68,6 +68,7 @@ const BookingListItem = ({booking}) => {
 
     return (
         <div className="booking-item-container">
+        
             <div className="booking-item-detail">
                 {/* <br/>
                 <p><b>{name}</b></p>

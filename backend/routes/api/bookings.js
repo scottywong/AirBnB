@@ -47,12 +47,6 @@ async (req, res, next) => {
 
     const otherBookings = await Booking.findOne({
         where:{
-            // [Op.and]: [
-            // {id:{[Op.ne]:id}},
-            // {spotId: {[Op.eq]: booking.spotId}},
-            // {startDate: {[Op.lte]: endDate}},
-            // {endDate: {[Op.gte]: startDate}}
-            // ]
             [Op.and]: [
                 {id:{[Op.ne]:id}},
                 {spotId: booking.spotId},
