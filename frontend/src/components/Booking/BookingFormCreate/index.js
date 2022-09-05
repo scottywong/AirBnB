@@ -9,8 +9,6 @@ const BookingFormCreate = ({spotId}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-//     "startDate": "2021-11-19",
-// "endDate": "2021-11-20"
 
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');

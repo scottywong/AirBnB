@@ -19,7 +19,7 @@ const [isLoaded,setIsLoaded] = useState(false);
 useEffect(()=> {
   dispatch(fetchSpots());
   if(currentUser && currentUser.id === parseInt(id)) setIsLoaded(true);
-},[dispatch]);
+},[]);
 
 if(id && spots && Array.isArray(spots)){
   spots = spots.filter(spot => spot.ownerId === parseInt(id));
@@ -50,7 +50,7 @@ const handleCreateButton = () => {
               }
             </ol>
         </div>
-        {id && !isLoaded && currentUser && (<p> Sorry, we were unable to find any data.</p>)}
+        {id && !isLoaded && !spots && (<p> Sorry, we were unable to find any data.</p>)}
       </div>
   );
   

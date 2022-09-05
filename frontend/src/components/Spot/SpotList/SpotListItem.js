@@ -25,6 +25,7 @@ const SpotListItem = ({spot}) => {
     return(
         <div className="spot-item-container">
             <br/>
+            <img className="spot-previewImage" src={spot.previewImage}></img>
             <NavLink className="spot-item-name" to={`/spots/${spot.id}`}>{spot.name}</NavLink>
             <p>{spot.city}, {spot.country} </p>
             <p><b>${spot.price}</b> night</p>

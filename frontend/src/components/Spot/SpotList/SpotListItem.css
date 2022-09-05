@@ -1,10 +1,19 @@
 .spot-item-container{
     display:block;
     padding: 10px 10px 10px 10px;
+    height: max-content;
     
 
 }
+
+
 .spot-item-name{
     display:block;
     font-weight: bold;
+}
+
+.spot-previewImage{
+
+    width: 200px;
+    height: 200px;
 }

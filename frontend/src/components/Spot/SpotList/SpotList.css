@@ -4,22 +4,25 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
 
 }
 
 .spot-list-container{
-
+    display: inline-block;
     margin-top: 50px;
     border:5px double #717171;
+
 }
 .spot-list{
 
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: 200px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: auto;
     justify-content: center;
     overflow: auto;
- 
+    height: auto;
+
 }
 
 .spot-button-create{

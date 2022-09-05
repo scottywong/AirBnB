@@ -9,31 +9,19 @@ const BookingListItem = ({booking}) => {
 
     const dispatch = useDispatch();
     const currentUser = useSelector(state=> state.session.user);
-    const theBooking = useSelector(state=> state.booking.booking);
 
     const [isLoaded,setIsLoaded] = useState(false);
     const [showSubmit,setShowSubmit] = useState(false);
-    const history = useHistory();
-
     const [name,setName] = useState(booking.Spot.name);
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
 
-
     useEffect(()=> {
-        if(currentUser && currentUser.id === booking.userId) setIsLoaded(true);
+        if(currentUser && currentUser.id === booking.userId) setIsLoaded(true);        
+        setStartDate(booking.startDate);
+        setEndDate(booking.endDate);
 
-        const startDateObj = new Date();
-        const endDateObj = new Date();
-            
-        startDateObj.setTime(Date.parse(booking.startDate));
-        endDateObj.setTime(Date.parse(booking.endDate));
-        
-        setStartDate(startDateObj.toISOString().split('T')[0]);
-        setEndDate(endDateObj.toISOString().split('T')[0]);
-
-        
-    },[booking])
+    },[booking]);
 
     const handleClick = () => {
 
@@ -67,19 +55,8 @@ const BookingListItem = ({booking}) => {
     }
 
     return (
-        <div className="booking-item-container">
-        
+        <div className="booking-item-container">        
             <div className="booking-item-detail">
-                {/* <br/>
-                <p><b>{name}</b></p>
-                <label> Start Date:  
-                    <input type='date' readOnly value={startDate}/>
-                </label>
-                <label> End Date: 
-                    <input type='date' readOnly value={endDate}/>
-                </label>
-                <br/> */}
-
                 <form className="edit-booking-form" onSubmit={handleSubmit}>
                     <label> Name
                         <input type='text' readOnly value={name}/>
@@ -114,7 +91,6 @@ const BookingListItem = ({booking}) => {
                 (
                 <>
                 <button className="booking-item-edit" onClick={handleClick}> Edit </button> 
-                {/* <button className="booking-item-edit" onClick={()=> history.push(`/bookings/${booking.id}/edit`)}> Edit </button>  */}
                 <button onClick={handleDelete} className="booking-item-delete" to={`/users/${currentUser.id}/bookings`}> Delete </button>  
                 <br/>
                 </>

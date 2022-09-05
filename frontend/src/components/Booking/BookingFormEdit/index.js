@@ -26,18 +26,14 @@ const BookingFormEdit = () => {
             console.log('bookings after fetch: ', bookings);
             const foundBooking = bookings.find(booking => booking.id === parseInt(id));
             console.log('foundBooking: ', foundBooking);
-            const startDateObj = new Date();
-            const endDateObj = new Date();
 
             if(foundBooking){
                 
-                startDateObj.setTime(Date.parse(foundBooking.startDate));
-                endDateObj.setTime(Date.parse(foundBooking.endDate));
-
                 setIsLoaded(true);
                 setName(foundBooking.Spot.name);
-                setStartDate(startDateObj.toISOString().split('T')[0]);
-                setEndDate(endDateObj.toISOString().split('T')[0]);
+                setStartDate(foundBooking.startDate);
+                setEndDate(foundBooking.endDate);
+  
             } else {
                 setIsLoaded(false);
             }
