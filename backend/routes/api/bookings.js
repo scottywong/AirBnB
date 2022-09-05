@@ -47,11 +47,19 @@ async (req, res, next) => {
 
     const otherBookings = await Booking.findOne({
         where:{
+            // [Op.and]: [
+            // {id:{[Op.ne]:id}},
+            // {spotId: {[Op.eq]: booking.spotId}},
+            // {startDate: {[Op.lte]: endDate}},
+            // {endDate: {[Op.gte]: startDate}}
+            // ]
             [Op.and]: [
-            {id:{[Op.ne]: id}},
-            {startDate: {[Op.lte]: endDate}},
-            {endDate: {[Op.gte]: startDate}}
-            ]
+                {id:{[Op.ne]:id}},
+                {spotId: booking.spotId},
+                {[Op.or]: [
+                    { startDate: { [Op.between]: [req.body.startDate, req.body.endDate] } },
+                    { endDate: { [Op.between]: [req.body.startDate, req.body.endDate] } }
+                ]}]
         }
     });
  
@@ -61,14 +69,6 @@ async (req, res, next) => {
         today = new Date();
         bookingDate = new Date(booking.endDate);
     }
-
-    // console.log('booking Date', booking.endDate)
-    // console.log('bookingDate')
-    // console.log(bookingDate.valueOf())
-    // console.log('today')
-    // console.log( today.valueOf())
-    // console.log('bookingdate - today')
-    // console.log(bookingDate.valueOf() - today.valueOf());
 
     if(!booking){
 
@@ -96,6 +96,7 @@ async (req, res, next) => {
 
     } else if(otherBookings){
 
+        console.log('the other Bookings: ', otherBookings);
         const err = new Error(`Sorry, this spot is already booked for the specified dates`);
         err.status = 403;
         err.message = `Sorry, this spot is already booked for the specified dates`;

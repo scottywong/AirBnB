@@ -23,11 +23,14 @@ const BookingFormEdit = () => {
     
         dispatch(fetchUserBookings()).then((bookings)=> {
         
-            const foundBooking = bookings.Bookings.find(booking => currentUser.id === booking.userId);
-            if(foundBooking){
-                const startDateObj = new Date();
-                const endDateObj = new Date();
+            console.log('bookings after fetch: ', bookings);
+            const foundBooking = bookings.find(booking => booking.id === parseInt(id));
+            console.log('foundBooking: ', foundBooking);
+            const startDateObj = new Date();
+            const endDateObj = new Date();
 
+            if(foundBooking){
+                
                 startDateObj.setTime(Date.parse(foundBooking.startDate));
                 endDateObj.setTime(Date.parse(foundBooking.endDate));
 
@@ -43,7 +46,7 @@ const BookingFormEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         const payload = {
             startDate,
             endDate

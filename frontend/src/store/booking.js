@@ -13,7 +13,7 @@ export const loadBookings = (bookings) => ({
 
 export const loadUserBookings = (bookings) => ({
   type: LOAD_USERBOOKINGS,
-  payload: bookings
+    payload: bookings
 });
   
   
@@ -63,7 +63,7 @@ export const fetchUserBookings = () => async (dispatch) => {
     const bookings = await response.json();
     console.log('bookings: ', bookings);
     dispatch(loadUserBookings(bookings.Bookings));
-    return bookings;
+    return bookings.Bookings;
   }
 };
 
@@ -147,7 +147,11 @@ const bookingReducer = (state = initialState, action) => {
         return newState;
     case UPDATE_BOOKING:
         newState = Object.assign({}, state);
-        newState.booking = action.payload;
+
+        if(Array.isArray(newState.booking)){
+          let updatedBooking = newState.booking.find(booking => booking.id === action.payload.id)
+          updatedBooking = action.payload;
+        }
         return newState;
     case REMOVE_BOOKING:
         newState = Object.assign({}, state);

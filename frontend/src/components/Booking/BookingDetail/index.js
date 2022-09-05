@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { fetchUserBookings, removeBooking } from "../../../store/booking";
-import { NavLink } from "react-router-dom";
-import Calendar from "../../Calendar";
 import './BookingDetail.css';
 
 const BookingDetail = () => {
@@ -22,15 +20,15 @@ const BookingDetail = () => {
     useEffect(()=> {
 
         dispatch(fetchUserBookings()).then((bookings)=> {
-           
-            const foundBooking = bookings.Bookings.find(booking => parseInt(id) === booking.id);
+            console.log('bookings after fetch: ', bookings);
+            const foundBooking = bookings.find(booking => booking.id === parseInt(id));
+            console.log('foundBooking: ', foundBooking);
             const startDateObj = new Date();
             const endDateObj = new Date();
             
-            startDateObj.setTime(Date.parse(foundBooking.startDate));
-            endDateObj.setTime(Date.parse(foundBooking.endDate));
-
             if(foundBooking){
+                startDateObj.setTime(Date.parse(foundBooking.startDate));
+                endDateObj.setTime(Date.parse(foundBooking.endDate));
                 setIsLoaded(true);
                 setName(foundBooking.Spot.name);
                 setStartDate(startDateObj.toISOString().split('T')[0]);
@@ -71,17 +69,17 @@ const BookingDetail = () => {
         
             )
             }
-            <div className="booking-detail-actions">
+            <div className="booking-list-actions">
             {isLoaded &&
-            (
-            <>
-            <button className="booking-item-edit" onClick={()=> history.push(`/bookings/${id}/edit`)}> Edit </button> 
-            <button onClick={handleDelete} className="booking-item-delete" to={`/bookings/${id}`}> Delete </button>  
-            <br/>
-            
-            </>
-            )   
-        }  
+                (
+                <>
+                <button className="booking-item-edit" onClick={()=> history.push(`/bookings/${id}/edit`)}> Edit </button> 
+                <button onClick={handleDelete} className="booking-item-delete" to={`/bookings/${id}`}> Delete </button>  
+                <br/>
+                
+                </>
+                )   
+            }  
             </div>
         </div>
 
