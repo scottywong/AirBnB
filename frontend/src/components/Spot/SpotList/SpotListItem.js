@@ -1,23 +1,25 @@
-import { NavLink } from 'react-router-dom';
-import './SpotListItem.css';
+import { useState,useEffect } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSpot } from '../../../store/spot';
+
+import './SpotListItem.css';
 
 const SpotListItem = ({spot}) => {
 
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const currentUser = useSelector(state=> state.session.user);
-  let isLoaded = false;
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  /**** Check if you own Spot, if so load "Edit" + "Delete" Nav Links */
-  if(currentUser && currentUser.id === spot.ownerId){
-    isLoaded = true;
-  }
-
+  useEffect(()=> {
+    /**** Check if you own Spot, if so load "Edit" + "Delete" Buttons */
+    if(currentUser && currentUser.id === spot.ownerId) setIsLoaded(true);
+  },[]);
+  
   const handleDelete = (e) => {
-
     e.preventDefault();
-    
     return dispatch(removeSpot(spot.id));
   }
     return(
@@ -30,8 +32,8 @@ const SpotListItem = ({spot}) => {
         {isLoaded &&
             (
             <>
-            <NavLink className="spot-item-edit" to={`/spots/${spot.id}/edit`}> Edit </NavLink> 
-            <NavLink onClick={handleDelete} className="spot-item-delete" to={`/spots/${spot.id}`}> Delete </NavLink>  
+            <button className="spot-item-edit" onClick={()=>history.push(`/spots/${spot.id}/edit`)}> Edit </button> 
+            <button onClick={handleDelete} className="spot-item-delete"> Delete </button>  
             <br/>
             </>
             )   

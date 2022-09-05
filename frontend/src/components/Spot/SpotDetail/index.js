@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useSelector,useDispatch} from "react-redux";
 import { fetchSpotById} from "../../../store/spot";
 import { useEffect , useState} from "react";
-import { NavLink } from "react-router-dom";
 import { removeSpot } from "../../../store/spot";
 import { useHistory } from "react-router-dom";
 import BookingFormCreate from '../../Booking/BookingFormCreate';
@@ -28,7 +27,7 @@ const SpotDetail = () => {
     useEffect(()=> {
       dispatch(fetchSpotById(id))
         .then((spot)=> {
-                if(currentUser.id === spot.ownerId) setIsLoaded(true);
+                if(currentUser && currentUser.id === spot.ownerId) setIsLoaded(true);
                 setAddress(spot.address);
                 setCity(spot.city);
                 setState(spot.state);
@@ -51,30 +50,35 @@ const SpotDetail = () => {
         <div className="spot-detail-container">
           <div className="spot-detail">
             <>
-                <p><b>{name}</b></p>
+                <h1>{name}</h1>
                 <p>{address}</p>
                 <p>{city}</p>
                 <p>{state}</p>
                 <p>{country}</p>
                 <p>{price}</p>
              </>
-        </div>
+          </div>
           <div className="spot-detail-actions">
           {isLoaded &&
               (
               <>
-              <NavLink className="spot-item-edit" to={`/spots/${id}/edit`}> Edit </NavLink> 
-              <NavLink onClick={handleDelete} className="spot-item-delete" to={`/spots/${id}`}> Delete </NavLink>  
+              <button className="spot-item-edit" onClick={()=>{history.push(`/spots/${id}/edit`)}}> Edit </button> 
+              <button onClick={handleDelete} className="spot-item-delete"> Delete </button>  
               <br/>
               </>
               )   
           }  
           </div>
 
+          {!isLoaded && currentUser &&
+          (<BookingFormCreate spotId={id} />)
+          }
+          {
+            !currentUser && (<p>You must be logged in to make a booking.</p>)
+          }
+
         </div>
-        {!isLoaded &&
-        (<BookingFormCreate spotId={id} />)
-        }
+       
         </>
     );
 };

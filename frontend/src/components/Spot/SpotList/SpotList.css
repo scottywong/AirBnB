@@ -1,14 +1,16 @@
-.spot-list-container{
+.spot-listpage-container{
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
 }
-.spot-list-header{
 
-    margin-left: auto;
-    margin-right: auto;
-    width: 8em;
-    
-    
+.spot-list-container{
+
+    margin-top: 50px;
+    border:5px double #717171;
 }
 .spot-list{
 
