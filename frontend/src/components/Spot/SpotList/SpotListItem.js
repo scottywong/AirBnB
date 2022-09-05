@@ -12,10 +12,18 @@ const SpotListItem = ({spot}) => {
 
   const currentUser = useSelector(state=> state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [previewImage,setPreviewImage] = useState("");
 
   useEffect(()=> {
     /**** Check if you own Spot, if so load "Edit" + "Delete" Buttons */
-    if(currentUser && currentUser.id === spot.ownerId) setIsLoaded(true);
+    if(currentUser && currentUser.id === spot.ownerId) {
+      setIsLoaded(true);
+    }
+    if(!spot.previewImage){
+      setPreviewImage('https://media.gettyimages.com/id/1255835530/photo/modern-custom-suburban-home-exterior.webp?s=2048x2048&w=gi&k=20&c=aJN8I5LYNsnKsCbp-D-a9nySQAjabZLaNHOQMSFBYnE=');
+    } else {
+      setPreviewImage(spot.previewImage);
+    }
   },[]);
   
   const handleDelete = (e) => {
@@ -25,7 +33,10 @@ const SpotListItem = ({spot}) => {
     return(
         <div className="spot-item-container">
             <br/>
-            <img className="spot-previewImage" src={spot.previewImage}></img>
+            {isLoaded && <i class="fa-solid fa-house-chimney-user fa-2xl"></i>}
+            <a href={`/spots/${spot.id}`} target="_blank">
+              <img className="spot-previewImage" src={previewImage}></img>
+            </a>
             <NavLink className="spot-item-name" to={`/spots/${spot.id}`}>{spot.name}</NavLink>
             <p>{spot.city}, {spot.country} </p>
             <p><b>${spot.price}</b> night</p>
