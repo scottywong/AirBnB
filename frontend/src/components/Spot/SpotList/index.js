@@ -17,12 +17,14 @@ let spots = useSelector(state=> state.spot.spot);
 const [isLoaded,setIsLoaded] = useState(false);
 
 useEffect(()=> {
-  dispatch(fetchSpots());
   if(currentUser && currentUser.id === parseInt(id)) setIsLoaded(true);
-},[]);
+  dispatch(fetchSpots());   
+},[dispatch]);
+
 
 if(id && spots && Array.isArray(spots)){
   spots = spots.filter(spot => spot.ownerId === parseInt(id));
+  
 }
 
 const handleCreateButton = () => {

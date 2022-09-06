@@ -71,7 +71,11 @@ const SpotDetail = () => {
           </div>
 
           {!isLoaded && currentUser &&
-          (<BookingFormCreate spotId={id} />)
+          (
+          <div  className="booking-form-create-container">
+            <BookingFormCreate spotId={id} />
+          </div>
+          )
           }
           {
             !currentUser && (<p>You must be logged in to make a booking.</p>)

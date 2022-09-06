@@ -12,7 +12,7 @@ const SpotFormEdit = () => {
     const {id} = useParams();
 
     const currentUser = useSelector(state=> state.session.user);
-    const spot = useSelector(state=> state.spot.spot);
+    
     const[isLoaded,setIsLoaded] = useState(false);
     const [address,setAddress] = useState('');
     const [city,setCity] = useState('');
@@ -40,7 +40,7 @@ const SpotFormEdit = () => {
         });
     },[]);
 
-    const handleSubmit = async (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
 
         const payload = {
@@ -79,56 +79,48 @@ const SpotFormEdit = () => {
            (
             <div className="edit-spot">
                 <h1> Edit Spot</h1>
-                <form className="edit-spot-form" onSubmit={handleSubmit}>
-                    <label> Address
+                <form className="edit-spot-form" onSubmit={onSubmit}>
+                    <label> Address </label>
                     <input className="spot-form-input"
                     value={address}
                     onChange={(e) => e.target.value}/>
-                    </label>
-                    <label> City
+                    <label> City</label>
                     <input className="spot-form-input"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}/>
-                    </label>
-                    <label> State
+                    <label> State </label>
                     <input className="spot-form-input"
                     value={state}
                     onChange={(e) => setState(e.target.value)}/>
-                    </label>
-                    <label> Country
+                    <label> Country </label>
                     <input className="spot-form-input"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}/>
-                    </label>
-                    <label> Lat
+                    <label> Lat </label>
                     <input className="spot-form-input"
                     value={lat}
                     onChange={(e) => setLat(e.target.value)}/>
-                    </label>
-                    <label> Lng
+                    
+                    <label> Lng </label>
                     <input className="spot-form-input"
                     value={lng}
                     onChange={(e) => setLng(e.target.value)}/>
-                    </label>
-                    <label> Name
+                    <label> Name </label>
                     <input className="spot-form-input"
                     value={name}
                     onChange={(e) => setName(e.target.value)}/>
-                    </label>
-                    <label> Description
+                    <label> Description </label>
                     <input className="spot-form-input"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}/>
-                    </label>
-                    <label> Price
+                    <label> Price </label>
                     <input className="spot-form-input"
                     type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}/>
-                    </label>
-
-                    <button className="submit-button"> Submit Changes </button>
                 </form>
+
+                <button onClick={onSubmit} className="submit-button"> Submit Changes </button>
             </div>
             )}
 

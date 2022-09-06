@@ -43,55 +43,47 @@ const SpotFormCreate = () => {
         <div className="create-spot-form-container">
         <h1> Create a New Spot</h1>
         <form className="create-spot-form" onSubmit={onSubmit}>
-            <label> Address
+            <label> Address </label>
             <input className="spot-form-input"
             value={address}
             onChange={(e) => setAddress(e.target.value)}/>
-            </label>
-            <label> City
+            <label> City </label>
             <input className="spot-form-input"
             value={city}
             onChange={(e) => setCity(e.target.value)}/>
-            </label>
-            <label> State
+            <label> State </label>
             <input className="spot-form-input"
             value={state}
             onChange={(e) => setState(e.target.value)}/>
-            </label>
-            <label> Country
+            <label> Country</label>
             <input className="spot-form-input"
             value={country}
             onChange={(e) => setCountry(e.target.value)}/>
-            </label>
-            <label> Lat
+            <label> Lat </label>
             <input className="spot-form-input"
             value={lat}
             onChange={(e) => setLat(e.target.value)}/>
-            </label>
-            <label> Lng
+            <label> Lng </label>
             <input className="spot-form-input"
             value={lng}
             onChange={(e) => setLng(e.target.value)}/>
-            </label>
-            <label> Name
+            <label> Name </label>
             <input className="spot-form-input"
             value={name}
             onChange={(e) => setName(e.target.value)}/>
-            </label>
-            <label> Description
+            <label> Description </label>
             <input className="spot-form-input"
             value={description}
             onChange={(e) => setDescription(e.target.value)}/>
-            </label>
-            <label> Price
+            <label> Price </label>
             <input className="spot-form-input"
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}/>
-            </label>
-
-            <button className="submit-button"> Create Spot</button>
         </form>
+
+        <button onClick={onSubmit} className="submit-button"> Create Spot</button>
+
         </div>
     )
 };

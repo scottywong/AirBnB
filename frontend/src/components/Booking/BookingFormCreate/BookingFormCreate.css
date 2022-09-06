@@ -1,0 +1,12 @@
+.create-booking-form{
+    display:grid;
+    grid-template-columns: max-content max-content;
+    grid-gap:5px;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+}
+.submit-button-booking{
+    width:100%;
+    margin-top:20px;
+}

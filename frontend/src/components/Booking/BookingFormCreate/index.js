@@ -30,19 +30,20 @@ const BookingFormCreate = ({spotId}) => {
         <div className="create-booking-form-container">
         <h1> Create a New Booking</h1>
         <form className="create-booking-form" onSubmit={onSubmit}>
-            <label> Start Date
+            <label> CHECK-IN</label>
             <input type='date' className="booking-form-input"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}/>
-            </label>
-            <label> End Date
+            
+            <label> CHECKOUT</label>
             <input type='date' className="booking-form-input"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}/>
-            </label>
+            
     
-            <button className="submit-button"> Create Booking</button>
+            
         </form>
+        <button className="submit-button-booking"> Reserve</button>
         </div>
     )
 };

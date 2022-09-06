@@ -34,6 +34,7 @@ const SpotListItem = ({spot}) => {
         <div className="spot-item-container">
             <br/>
             {isLoaded && <i class="fa-solid fa-house-chimney-user fa-2xl"></i>}
+            
             <a href={`/spots/${spot.id}`} target="_blank">
               <img className="spot-previewImage" src={previewImage}></img>
             </a>

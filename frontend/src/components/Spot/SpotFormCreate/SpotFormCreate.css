@@ -5,17 +5,16 @@
     align-items: center;
 }
 .create-spot-form{
-    display:flex;
-    width: 400px;
+    display:grid;
+    grid-template-columns: max-content max-content;
+    grid-gap:5px;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-}
+    width: max-content;
 
-.spot-form-input, label{
-    display: block;
 }
 
 .submit-button{
     margin-top: 10px;
+    justify-content: center;
 }
