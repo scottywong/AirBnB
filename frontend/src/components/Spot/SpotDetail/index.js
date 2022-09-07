@@ -23,6 +23,11 @@ const SpotDetail = () => {
     const [country,setCountry] = useState('');
     const [name,setName] = useState('');
     const [price,setPrice] = useState('');
+    const [numReviews,setNumReviews] = useState('');
+    const [avgRating, setAvgRating] = useState('');
+    const [previewImage,setPreviewImage] = useState('');
+    const [displayCopyMessage, setDisplayCopyMessage] = useState(false);
+  
 
     useEffect(()=> {
       dispatch(fetchSpotById(id))
@@ -34,6 +39,13 @@ const SpotDetail = () => {
                 setCountry(spot.country);
                 setName(spot.name);
                 setPrice(spot.price);
+                setNumReviews(spot.numReviews);
+                setAvgRating(spot.avgStarRating);
+                if(!spot.previewImage){
+                  setPreviewImage('https://media.gettyimages.com/id/1255835530/photo/modern-custom-suburban-home-exterior.webp?s=2048x2048&w=gi&k=20&c=aJN8I5LYNsnKsCbp-D-a9nySQAjabZLaNHOQMSFBYnE=');
+                } else {
+                  setPreviewImage(spot.previewImage);
+                }
       })
     },[dispatch]);
   
@@ -44,10 +56,33 @@ const SpotDetail = () => {
       return dispatch(removeSpot(id))
         .then(() => history.push(`/users/${currentUser.id}/spots`));
     }
+
+    const handleShare = (e) => {
+      e.preventDefault();
+      navigator.clipboard.writeText(window.location.href);
+      setDisplayCopyMessage(true);
+      setTimeout( function() {
+          setDisplayCopyMessage(false);
+      }, 1000);
+    }
   
     return (
       <>
+      <div className="spot-header">
+        <div className="spot-title"><h1>{name}</h1></div>
+        <div className="spot-subtitle">
+        <i class="fa-sharp fa-solid fa-star"></i> 
+        <span className="spot-rating">{avgRating} </span>
+        <span className="spot-reviews">{numReviews} reviews</span>
+        <span className="spot-location">{city}, {state}, {country}</span>
+        <span className="share-button-container"><button className="share-button" onClick={handleShare}><i class="fa-solid fa-share"></i> Share</button>
+        {displayCopyMessage && <span id="copy-message-container"><span id="copy-message"> Copied to clipboard!</span></span>}
+        </span>
+        </div>
+      </div>
+      <img className="spot-detail-previewImage" src={previewImage}></img>
         <div className="spot-detail-container">
+    
           <div className="spot-detail">
             <>
                 <h1>{name}</h1>

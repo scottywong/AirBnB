@@ -36,7 +36,7 @@ const SpotListItem = ({spot}) => {
             {isLoaded && <i class="fa-solid fa-house-chimney-user fa-2xl"></i>}
             
             <a href={`/spots/${spot.id}`} target="_blank">
-              <img className="spot-previewImage" src={previewImage}></img>
+              <img className="spot-item-previewImage" src={previewImage}></img>
             </a>
             <NavLink className="spot-item-name" to={`/spots/${spot.id}`}>{spot.name}</NavLink>
             <p>{spot.city}, {spot.country} </p>

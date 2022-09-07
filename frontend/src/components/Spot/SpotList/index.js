@@ -17,10 +17,9 @@ let spots = useSelector(state=> state.spot.spot);
 const [isLoaded,setIsLoaded] = useState(false);
 
 useEffect(()=> {
-  if(currentUser && currentUser.id === parseInt(id)) setIsLoaded(true);
   dispatch(fetchSpots());   
-},[dispatch]);
-
+  if(currentUser && currentUser.id === parseInt(id)) setIsLoaded(true);
+},[dispatch,isLoaded]);
 
 if(id && spots && Array.isArray(spots)){
   spots = spots.filter(spot => spot.ownerId === parseInt(id));
@@ -34,7 +33,7 @@ const handleCreateButton = () => {
   return (
     <div className="spot-listpage-container"> 
         {!id && (<h1 className="spot-list-header">Spot List</h1>)}
-        {id && isLoaded && (
+        {id && (
         <>
         <h1 className="spot-list-header">Owned Spots</h1>
         <button onClick={handleCreateButton} className="spot-button-create">Create New Spot</button>
