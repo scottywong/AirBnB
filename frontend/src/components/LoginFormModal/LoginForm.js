@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
-// import { Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
 
 import './LoginForm.css';
 
@@ -30,32 +31,36 @@ function LoginForm() {
   return (
     
  
-    <>
+    <div className='login-form-container'>
+      <h1>Log into Airbnb</h1>
+      <ul>
+       {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+      </ul>
         <form className="login-form" onSubmit={handleSubmit}>
-          <ul>
-            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-          </ul>
-          <label>
+         
+          
+          <label className='login-label'>
             Email
-            <input
+          </label>
+          <input
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-          </label>
-          <label>
+          <label className='login-label'>
             Password
-            <input
+          </label>
+          <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </label>
-          <button type="submit">Log In</button>
         </form>
-    </>
+        <button className='login-submit' onClick={handleSubmit} type="submit">Log In</button>
+
+    </div>
     );
 
 }

@@ -33,66 +33,61 @@ function SignupFormPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <ul>
+    <div className="signup-form-container">
+     <h1> Sign up for Airbnb </h1>
+     <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
+    <form className="signup-form" onSubmit={handleSubmit}>
       <label>
         First Name
-        <input
+      </label>
+      <input
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
-      </label>
       <label>
         Last Name
-        <input
+      </label>
+      <input
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           required
         />
-      </label>
       <label>
         Email
-        <input
+      </label>
+      <input
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-      </label>
-      {/* <label>
-        Username
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </label> */}
       <label>
         Password
-        <input
+      </label>
+      <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </label>
       <label>
         Confirm Password
-        <input
+      </label>
+      <input
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-      </label>
-      <button type="submit">Sign Up</button>
+    
     </form>
+    <button onClick={handleSubmit} type="submit">Sign Up</button>
+    </div>
   );
 }
 
