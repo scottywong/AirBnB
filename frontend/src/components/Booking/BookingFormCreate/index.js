@@ -8,10 +8,9 @@ const BookingFormCreate = ({spotId}) => {
 
     const dispatch = useDispatch();
     const history = useHistory();
-
-
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [errors,setErrors] = useState([]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -22,12 +21,22 @@ const BookingFormCreate = ({spotId}) => {
         }
 
         return dispatch(createBooking(payload,spotId))
-        .then((booking) => history.push(`/bookings/${booking.id}`));
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+          }).then((booking) => {
+            if(errors.length == 0){
+                history.push(`/bookings/${booking.id}`);
+            }
+        });
         
     }
 
     return (
         <div className="create-booking-form-container">
+       <ul>
+        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+       </ul>
         <h1> Create a New Booking</h1>
         <form className="create-booking-form" onSubmit={onSubmit}>
             <label> CHECK-IN</label>
@@ -43,7 +52,7 @@ const BookingFormCreate = ({spotId}) => {
     
             
         </form>
-        <button className="submit-button-booking"> Reserve</button>
+        <button onClick={onSubmit} className="submit-button-booking"> Reserve</button>
         </div>
     )
 };

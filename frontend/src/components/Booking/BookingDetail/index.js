@@ -14,6 +14,7 @@ const BookingDetail = () => {
     const [name,setName] = useState('');
     const [startDate,setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [errors,setErrors] = useState([]);
 
     const currentUser = useSelector(state=> state.session.user);
 
@@ -42,8 +43,17 @@ const BookingDetail = () => {
     const handleDelete = (e) => {
         e.preventDefault();
       
-        return dispatch(removeBooking(id))
-          .then(() => history.push(`/users/${currentUser.id}/bookings`));
+        dispatch(removeBooking(id))
+        .catch(async (res) => {
+            const data = await res.json();
+            console.log(data.errors);
+            if (data && data.errors) setErrors(data.errors);
+          }).then(() => {
+            if(errors.length == 0){
+                console.log('inside errors')
+            // history.push(`/users/${currentUser.id}/bookings`)
+            }
+        });
     }
     
     
@@ -51,6 +61,9 @@ const BookingDetail = () => {
         <>
 
         <div className="booking-container">
+        <ul>
+        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        </ul>
             {isLoaded && 
             (
             <div className="booking-detail">

@@ -34,6 +34,9 @@ export const fetchSpots = () => async (dispatch) => {
       const spots = await response.json();
       dispatch(loadSpots(spots.spots));
       return spots;
+    } else {
+
+      return response;
     }
   };
 
@@ -45,7 +48,10 @@ export const fetchSpotById = (spotId) => async (dispatch) => {
       const oneSpot = await response.json();
       dispatch(loadSpots(oneSpot));
       return oneSpot;
-    }
+    } else {
+
+      return response;
+  }
     
 };
 
@@ -66,6 +72,9 @@ export const createSpot = (spot) => async (dispatch) => {
       const createdSpot = await response.json();
       dispatch(create(createdSpot));
       return createdSpot;
+    } else {
+
+        return response;
     }
 
 };
@@ -86,6 +95,8 @@ export const updateSpot = (spot,spotId) => async (dispatch) => {
     const updatedSpot = await response.json();
     dispatch(update(updatedSpot));
     return updatedSpot;
+  } else {
+      return response;
   }
 
 };
@@ -103,6 +114,8 @@ export const removeSpot = (id) => async (dispatch) => {
 
   if (response.ok) {
     return dispatch(remove(id));
+  } else {
+    return response;
   }
 
 };

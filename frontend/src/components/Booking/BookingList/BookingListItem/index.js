@@ -15,6 +15,7 @@ const BookingListItem = ({booking}) => {
     const [name,setName] = useState(booking.Spot.name);
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [errors,setErrors] = useState([]);
 
     useEffect(()=> {
         if(currentUser && currentUser.id === booking.userId) setIsLoaded(true);        
@@ -27,6 +28,7 @@ const BookingListItem = ({booking}) => {
 
        document.getElementById(`startDate-input-${booking.id}`).readOnly = false;
        document.getElementById(`endDate-input-${booking.id}`).readOnly = false;
+       setIsLoaded(false);
        setShowSubmit(true);
 
     }
@@ -44,8 +46,12 @@ const BookingListItem = ({booking}) => {
             document.getElementById(`startDate-input-${booking.id}`).readOnly = false;
             document.getElementById(`endDate-input-${booking.id}`).readOnly = false;
             setShowSubmit(false);
+            setIsLoaded(true);
         }
-       );
+       ).catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
     }
 
     const handleDelete = (e) => {

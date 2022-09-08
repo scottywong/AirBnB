@@ -19,7 +19,7 @@ const [isLoaded,setIsLoaded] = useState(false);
 useEffect(()=> {
   dispatch(fetchSpots());   
   if(currentUser && currentUser.id === parseInt(id)) setIsLoaded(true);
-},[dispatch,isLoaded]);
+},[dispatch,isLoaded,currentUser]);
 
 if(id && spots && Array.isArray(spots)){
   spots = spots.filter(spot => spot.ownerId === parseInt(id));

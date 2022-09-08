@@ -18,13 +18,15 @@ const SpotListItem = ({spot}) => {
     /**** Check if you own Spot, if so load "Edit" + "Delete" Buttons */
     if(currentUser && currentUser.id === spot.ownerId) {
       setIsLoaded(true);
+    } else {
+      setIsLoaded(false);
     }
     if(!spot.previewImage){
       setPreviewImage('https://media.gettyimages.com/id/1255835530/photo/modern-custom-suburban-home-exterior.webp?s=2048x2048&w=gi&k=20&c=aJN8I5LYNsnKsCbp-D-a9nySQAjabZLaNHOQMSFBYnE=');
     } else {
       setPreviewImage(spot.previewImage);
     }
-  },[]);
+  },[currentUser,isLoaded]);
   
   const handleDelete = (e) => {
     e.preventDefault();

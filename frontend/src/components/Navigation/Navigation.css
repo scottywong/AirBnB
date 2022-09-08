@@ -1,12 +1,12 @@
 .nav-container{
 
     border-bottom: 1px grey dotted;
-    width:80%;
+
     margin:auto;
 }
 .link-container{
 
-    display: inline;
+    display: flex;
     float: right;
     padding: 25px 20px 5px 5px;
 

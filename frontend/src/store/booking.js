@@ -40,6 +40,9 @@ export const fetchBookings = () => async (dispatch) => {
       const bookings = await response.json();
       dispatch(loadBookings(bookings.bookings));
       return bookings;
+    } else {
+
+      return response;
     }
   };
 
@@ -51,6 +54,9 @@ export const fetchBookingById = (id) => async (dispatch) => {
       const oneBooking = await response.json();
       dispatch(loadBookings(oneBooking));
       return oneBooking;
+    } else {
+
+      return response;
     }
     
 };
@@ -64,6 +70,9 @@ export const fetchUserBookings = () => async (dispatch) => {
     console.log('bookings: ', bookings);
     dispatch(loadUserBookings(bookings.Bookings));
     return bookings.Bookings;
+  } else {
+
+    return response;
   }
 };
 
@@ -83,6 +92,9 @@ export const createBooking = (booking,spotId) => async (dispatch) => {
       const createdBooking = await response.json();
       dispatch(create(createdBooking));
       return createdBooking;
+    } else {
+
+      return response;
     }
 
 };
@@ -103,24 +115,38 @@ export const updateBooking = (booking,bookingId) => async (dispatch) => {
     const updatedBooking = await response.json();
     dispatch(update(updatedBooking));
     return updatedBooking;
+  } else {
+   
+    return response;
   }
 
 };
 
 export const removeBooking = (id) => async (dispatch) => {
   let response;
-  response = await csrfFetch(`/api/bookings/${id}`,
-  {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  );
+  try{
 
-  if (response.ok) {
+    response = await csrfFetch(`/api/bookings/${id}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
     return dispatch(remove(id));
+
+   } catch(errors){
+
+     console.log(response.errors);
   }
+
+  // if (response.ok) {
+  //   return dispatch(remove(id));
+  // } else {
+  //   console.log('did it return this error response?', response)
+  //   return response;
+  // }
 
 };
 

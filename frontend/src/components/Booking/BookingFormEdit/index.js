@@ -18,6 +18,7 @@ const BookingFormEdit = () => {
     const [name,setName] = useState('');
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [errors,setErrors] = useState([]);
 
     useEffect(()=>{
     
@@ -49,19 +50,35 @@ const BookingFormEdit = () => {
         };
 
         return dispatch(updateBooking(payload,id))
-        .then((res) => history.push(`/bookings/${id}`));
+        .catch(async (res) => {
+            const data = await res.json();
+            console.log('data: ', data.errors);
+            if (data && data.errors) setErrors(data.errors);
+          }).then((res) => 
+          {if(!errors){
+                history.push(`/bookings/${id}`);
+            }
+          });
     }
 
     const handleDelete = (e) => {
         e.preventDefault();
       
         return dispatch(removeBooking(id))
-          .then(() => history.push(`/users/${currentUser.id}/bookings`));
+        .catch(async (res) => {
+            const data = await res.json();
+            console.log('data: 1 ', data.errors);
+            if (data && data.errors) setErrors(data.errors);
+            console.log(errors)
+          }).then(() => {if(!errors) history.push(`/users/${currentUser.id}/bookings`)});
     }
 
     return (
         <>
         <div className="booking-edit-container">
+        <ul>
+        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+       </ul>
             {isLoaded && 
             (
             <div className="booking-edit">
