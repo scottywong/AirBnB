@@ -18,3 +18,12 @@
     margin-top: 10px;
     justify-content: center;
 }
+
+label:after{
+    content:" *";
+    color: red;
+  }
+
+#label-previewImage:after{
+    display: none;
+}
