@@ -17,6 +17,7 @@ const SpotDetail = () => {
     let spots = useSelector(state=> state.spot.spot);
 
     const [isLoaded,setIsLoaded] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
     const [address,setAddress] = useState('');
     const [city,setCity] = useState('');
     const [state, setState] = useState('');
@@ -27,12 +28,16 @@ const SpotDetail = () => {
     const [avgRating, setAvgRating] = useState('');
     const [previewImage,setPreviewImage] = useState('');
     const [displayCopyMessage, setDisplayCopyMessage] = useState(false);
-  
 
     useEffect(()=> {
       dispatch(fetchSpotById(id))
         .then((spot)=> {
-                if(currentUser && currentUser.id === spot.ownerId) setIsLoaded(true);
+                if(currentUser && currentUser.id === spot.ownerId){
+                  setIsOwner(true);
+                } else {
+                  setIsOwner(false);
+                }
+                if(spot) setIsLoaded(true);
                 setAddress(spot.address);
                 setCity(spot.city);
                 setState(spot.state);
@@ -47,7 +52,7 @@ const SpotDetail = () => {
                   setPreviewImage(spot.previewImage);
                 }
       })
-    },[dispatch]);
+    },[dispatch,isLoaded, isOwner]);
   
     const handleDelete = (e) => {
 
@@ -68,6 +73,7 @@ const SpotDetail = () => {
   
     return (
       <>
+      {isLoaded &&(
       <div className="spot-header">
         <div className="spot-title"><h1>{name}</h1></div>
         <div className="spot-subtitle">
@@ -80,6 +86,7 @@ const SpotDetail = () => {
         </span>
         </div>
       </div>
+      )}
       <img className="spot-detail-previewImage" src={previewImage}></img>
         <div className="spot-detail-container">
     
@@ -94,7 +101,7 @@ const SpotDetail = () => {
              </>
           </div>
           <div className="spot-detail-actions">
-          {isLoaded &&
+          {isOwner &&
               (
               <>
               <button className="spot-item-edit" onClick={()=>{history.push(`/spots/${id}/edit`)}}> Edit </button> 
@@ -105,7 +112,7 @@ const SpotDetail = () => {
           }  
           </div>
 
-          {!isLoaded && currentUser &&
+          {isLoaded && currentUser && !isOwner &&
           (
           <div  className="booking-form-create-container">
             <BookingFormCreate spotId={id} />
@@ -113,8 +120,9 @@ const SpotDetail = () => {
           )
           }
           {
-            !currentUser && (<p>You must be logged in to make a booking.</p>)
+            isLoaded && !currentUser && (<p>You must be logged in to make a booking.</p>)
           }
+           {!isLoaded && (<p>Page not found.</p>)}
 
         </div>
        

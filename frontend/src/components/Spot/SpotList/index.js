@@ -15,15 +15,22 @@ const currentUser = useSelector(state=> state.session.user);
 
 let spots = useSelector(state=> state.spot.spot);
 const [isLoaded,setIsLoaded] = useState(false);
+const [isOwner,setIsOwner] = useState(false);
+const [allSpots,setAllSpots] = useState(null);
 
 useEffect(()=> {
-  dispatch(fetchSpots());   
-  if(currentUser && currentUser.id === parseInt(id)) setIsLoaded(true);
-},[dispatch,isLoaded]);
+  dispatch(fetchSpots())
+  .then((res) => setAllSpots(res.spots));
 
-if(id && spots && Array.isArray(spots)){
-  spots = spots.filter(spot => spot.ownerId === parseInt(id));
-  
+  if(currentUser && currentUser.id === parseInt(id)){
+    setIsOwner(true)
+  } else {
+    setIsOwner(false);
+  }
+},[dispatch,isLoaded,isOwner,allSpots]);
+
+if(id && allSpots && Array.isArray(allSpots)){
+  setAllSpots(allSpots.filter(spot => spot.ownerId === parseInt(id)));
 }
 
 const handleCreateButton = () => {
@@ -32,8 +39,8 @@ const handleCreateButton = () => {
 
   return (
     <div className="spot-listpage-container"> 
-        {!id && (<h1 className="spot-list-header">Spot List</h1>)}
-        {id && (
+        {!id && allSpots?.length > 0 &&(<h1 className="spot-list-header">Spot List</h1>)}
+        {id && allSpots?.length > 0 && (
         <>
         <h1 className="spot-list-header">Owned Spots</h1>
         <button onClick={handleCreateButton} className="spot-button-create">Create New Spot</button>
@@ -41,8 +48,8 @@ const handleCreateButton = () => {
 
         <div className="spot-list-container">
             <ol className="spot-list">
-              {spots && Array.isArray(spots) && 
-                (spots.map((spot) => {          
+              {allSpots && Array.isArray(allSpots) && 
+                (allSpots.map((spot) => {          
                   return <li key={spot.id}>
                             <SpotListItem spot={spot}/>
                         </li>
@@ -51,7 +58,7 @@ const handleCreateButton = () => {
               }
             </ol>
         </div>
-        {id && !isLoaded && !spots && (<p> Sorry, we were unable to find any data.</p>)}
+        {id && allSpots?.length === 0 && (<p> Sorry, we were unable to find any data.</p>)}
       </div>
   );
   

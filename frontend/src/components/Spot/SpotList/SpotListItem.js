@@ -12,21 +12,28 @@ const SpotListItem = ({spot}) => {
 
   const currentUser = useSelector(state=> state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
   const [previewImage,setPreviewImage] = useState("");
 
   useEffect(()=> {
-    /**** Check if you own Spot, if so load "Edit" + "Delete" Buttons */
-    if(currentUser && currentUser.id === spot.ownerId) {
-      setIsLoaded(true);
+    if(spot){
+      setIsLoaded(true)
     } else {
       setIsLoaded(false);
     }
+    /**** Check if you own Spot, if so load "Edit" + "Delete" Buttons */
+    if(currentUser && currentUser.id === spot.ownerId) {
+      setIsOwner(true);
+    } else {
+      setIsOwner(false);
+    }
+    
     if(!spot.previewImage){
       setPreviewImage('https://media.gettyimages.com/id/1255835530/photo/modern-custom-suburban-home-exterior.webp?s=2048x2048&w=gi&k=20&c=aJN8I5LYNsnKsCbp-D-a9nySQAjabZLaNHOQMSFBYnE=');
     } else {
       setPreviewImage(spot.previewImage);
     }
-  },[currentUser,isLoaded]);
+  },[currentUser,isLoaded,isOwner]);
   
   const handleDelete = (e) => {
     e.preventDefault();
@@ -35,7 +42,7 @@ const SpotListItem = ({spot}) => {
     return(
         <div className="spot-item-container">
             <br/>
-            {isLoaded && <i class="fa-solid fa-house-chimney-user fa-2xl"></i>}
+            {isLoaded && isOwner && <i class="fa-solid fa-house-chimney-user fa-2xl"></i>}
             
             <a href={`/spots/${spot.id}`} target="_blank">
               <img className="spot-item-previewImage" src={previewImage}></img>
@@ -44,7 +51,7 @@ const SpotListItem = ({spot}) => {
             <p>{spot.city}, {spot.country} </p>
             <p><b>${spot.price}</b> night</p>
         
-        {isLoaded &&
+        {isLoaded && isOwner &&
             (
             <>
             <button className="spot-item-edit" onClick={()=>history.push(`/spots/${spot.id}/edit`)}> Edit </button> 
