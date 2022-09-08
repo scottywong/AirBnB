@@ -27,11 +27,16 @@ useEffect(()=> {
   } else {
     setIsOwner(false);
   }
-},[dispatch,isLoaded,isOwner,allSpots]);
 
-if(id && allSpots && Array.isArray(allSpots)){
-  setAllSpots(allSpots.filter(spot => spot.ownerId === parseInt(id)));
-}
+  if(id && allSpots && Array.isArray(allSpots)){
+    const ownSpots = allSpots.filter(spot => spot.ownerId === parseInt(id));
+  
+    setAllSpots(ownSpots);
+  }
+  
+},[dispatch]);
+
+//***MOVE THIS LINE */
 
 const handleCreateButton = () => {
     history.push("/spots/new");

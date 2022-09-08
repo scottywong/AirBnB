@@ -60,7 +60,7 @@ router.post('/',
         user.dataValues['token'] = token;
         // console.log(user);
 
-        return res.json(user);
+        return res.json({user});
       
       } else {
         const err = new Error('User already exists')
