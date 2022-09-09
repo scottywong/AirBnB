@@ -63,7 +63,12 @@ const BookingFormEdit = () => {
         e.preventDefault();
       
         return dispatch(removeBooking(id))
-          .then(() => history.push(`/users/${currentUser.id}/bookings`));
+          .then(() => history.push(`/users/${currentUser.id}/bookings`))
+          .catch(async (res) => {
+            const data = await res.json();
+            console.log('data to delete from booking create: ', data);
+            if (data && data.errors) setErrors(data.errors)
+          });
     }
 
     return (
