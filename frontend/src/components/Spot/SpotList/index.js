@@ -38,13 +38,17 @@ const handleCreateButton = () => {
 };
 
   return (
-    <div className="spot-listpage-container"> 
-        {!id && spots?.length > 0 &&(<h1 className="spot-list-header">Spot List</h1>)}
-        {id && isOwner && (
+    <div className="spot-container">
+    {!id && spots?.length > 0 &&(<h1 className="spot-list-header">Spot List</h1>)}
+        
+    {id && isOwner && (
         <>
         <h1 className="spot-list-header">Owned Spots</h1>
         <button onClick={handleCreateButton} className="spot-button-create">Create New Spot</button>
         </>)}
+
+     {id && userSpots?.length === 0 && (<p> Sorry, we were unable to find any data.</p>)}
+    <div className="spot-listpage-container"> 
     
         <div className="spot-list-container">
             <ol className="spot-list">
@@ -66,7 +70,8 @@ const handleCreateButton = () => {
               }
             </ol>
         </div>
-        {id && userSpots?.length === 0 && (<p> Sorry, we were unable to find any data.</p>)}
+        
+      </div>
       </div>
   );
   

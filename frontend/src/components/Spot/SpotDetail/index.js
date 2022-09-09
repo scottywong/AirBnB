@@ -54,7 +54,7 @@ const SpotDetail = () => {
                   setPreviewImage(spot.previewImage);
                 }
       })
-    },[dispatch,isLoaded, isOwner]);
+    },[dispatch,isLoaded, isOwner,currentUser]);
   
   
     const handleDelete = (e) => {

@@ -1,16 +1,31 @@
+.spot-container{
+    display:block;
+    text-align: center;
+    
+
+}
+
+
+.spot-button-create{
+    display:block; 
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
 .spot-listpage-container{
 
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    /* flex-direction: column; */
     
 
 }
 
 .spot-list-container{
-    display: inline-block;
-    margin-top: 50px;
+ width: 50%;
+ margin: auto;
 
 }
 .spot-list{
@@ -20,12 +35,4 @@
     grid-auto-rows: auto;
     justify-content: center;
 
-}
-
-.spot-button-create{
-    display:block; 
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    display: block;
 }
