@@ -16,6 +16,7 @@ const BookingDetail = () => {
 
     const currentUser = useSelector(state=> state.session.user);
 
+    if(!currentUser) history.push('/');
     useEffect(()=> {
 
         dispatch(fetchUserBookings()).then((bookings)=> {
@@ -36,7 +37,7 @@ const BookingDetail = () => {
                 setIsLoaded(false);
             }
         });
-    },[dispatch]);
+    },[dispatch, currentUser]);
 
     const handleDelete = (e) => {
         e.preventDefault();
