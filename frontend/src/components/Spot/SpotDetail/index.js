@@ -55,6 +55,7 @@ const SpotDetail = () => {
       })
     },[dispatch,isLoaded, isOwner]);
   
+  
     const handleDelete = (e) => {
 
       e.preventDefault();
@@ -63,9 +64,10 @@ const SpotDetail = () => {
       .then(() => history.push(`/users/${currentUser.id}/spots`))
       .catch(async (res) => {
         const data = await res.json();
-        console.log(data);
-        if (data && data.errors) setErrors(data.errors);
+        console.log('data to delete from spotdetail: ', data);
+        if (data && data.errors) setErrors(data.errors)
       })
+      
     
   }
 
@@ -98,20 +100,7 @@ const SpotDetail = () => {
         </div>
       </div>
       )}
-      <img className="spot-detail-previewImage" src={previewImage}></img>
-        <div className="spot-detail-container">
-    
-          <div className="spot-detail">
-            <>
-                <h1>{name}</h1>
-                <p>{address}</p>
-                <p>{city}</p>
-                <p>{state}</p>
-                <p>{country}</p>
-                <p>{price}</p>
-             </>
-          </div>
-          <div className="spot-detail-actions">
+      <div className="spot-detail-actions">
           {isOwner &&
               (
               <>
@@ -122,6 +111,20 @@ const SpotDetail = () => {
               )   
           }  
           </div>
+      <img className="spot-detail-previewImage" src={previewImage}></img>
+        <div className="spot-detail-container">
+    
+          {/* <div className="spot-detail">
+            <>
+                <h1>{name}</h1>
+                <p>{address}</p>
+                <p>{city}</p>
+                <p>{state}</p>
+                <p>{country}</p>
+                <p>{price}</p>
+             </>
+          </div> */}
+          
 
           {isLoaded && currentUser && !isOwner &&
           (

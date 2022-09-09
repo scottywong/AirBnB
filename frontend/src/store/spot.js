@@ -149,7 +149,12 @@ const spotReducer = (state = initialState, action) => {
         return newState;
     case REMOVE_SPOT:
         newState = Object.assign({}, state);
-        newState.spot = newState.spot.filter(spot=> spot.id !== action.payload);
+        if(Array.isArray(newState.spot)){
+          newState.spot = newState.spot.filter(spot=> spot.id !== action.payload);
+        } else {
+          newState.spot = [];
+        }
+        newState.userSpot = newState.userSpot?.filter(spot=> spot.id !== action.payload);
         return newState;
     default:
         return state;

@@ -25,6 +25,11 @@ const SpotFormEdit = () => {
     const [price, setPrice] = useState('');
     const [errors,setErrors] = useState([]);
 
+    //redirect user to home page if they're logged out
+    if(!currentUser){
+        history.push('/');
+    }
+
     useEffect(()=>{
         dispatch(fetchSpotById(id))
         .then((spot)=> {
@@ -57,11 +62,11 @@ const SpotFormEdit = () => {
         }
 
         return dispatch(updateSpot(payload,id))
+        .then((spot) => history.push(`/spots/${spot.id}`))
         .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);
-          })
-        .then((spot) => history.push(`/spots/${spot.id}`));
+          });
         
     }        
 
@@ -69,7 +74,11 @@ const SpotFormEdit = () => {
         e.preventDefault();
       
         return dispatch(removeSpot(id))
-          .then(() => history.push(`/users/${currentUser.id}/spots`));
+        .then(() => history.push(`/users/${currentUser.id}/spots`))
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+          });
     }
 
     return (

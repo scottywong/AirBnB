@@ -23,7 +23,12 @@ const SpotFormCreate = () => {
 
 
     const spot = useSelector((state) => state.spot.spot);
+    const currentUser = useSelector((state) => state.session.user);
 
+    //redirect user to home page if they're logged out
+      if(!currentUser){
+        history.push('/');
+    }
     if (spot?.id) return history.push(`/spots/${spot.id}`);
 
     const onSubmit = async (e) => {
