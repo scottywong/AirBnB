@@ -33,7 +33,7 @@ function LoginForm() {
  
     <div className='login-form-container'>
       <h1>Log into Airbnb</h1>
-      <ul>
+      <ul className="errorMsg">
        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
         <form className="login-form" onSubmit={handleSubmit}>

@@ -16,35 +16,10 @@
     display: inline;
 }
 
-ul, li{
-    list-style: none;
-    margin: 10px;
-}
-
 ul.profile-dropdown > li:hover{
 
     background-color: rgb(230, 227, 227);
     cursor: pointer;
-}
-
-button {
-    color:white;
-    background-color: #FF3366;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 5px;
-    width: max-content;
-    cursor: pointer;
-    box-shadow:1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.button:hover{
-    background-color:rgb(230, 227, 227); ;
-}
-.button:active {
-    background-color: #FF3366;
-    box-shadow: 0 5px rgb(230, 227, 227);
-    transform: translateY(10px);
 }
 
 .profile-container{

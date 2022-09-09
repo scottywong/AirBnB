@@ -18,6 +18,8 @@ const BookingFormEdit = () => {
     const [name,setName] = useState('');
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [errors, setErrors] = useState([]);
+
 
     useEffect(()=>{
     
@@ -49,7 +51,12 @@ const BookingFormEdit = () => {
         };
 
         return dispatch(updateBooking(payload,id))
-        .then((res) => history.push(`/bookings/${id}`));
+        .then((res) => history.push(`/bookings/${id}`))
+        .catch(async (res) => {
+            const data = await res.json();
+            console.log('data to delete from booking edit: ', data);
+            if (data && data.errors) setErrors(data.errors)
+          });
     }
 
     const handleDelete = (e) => {
@@ -61,32 +68,33 @@ const BookingFormEdit = () => {
 
     return (
         <>
+
         <div className="booking-edit-container">
+       
             {isLoaded && 
             (
             <div className="booking-edit">
             <h1> Booking</h1>
+            <ul className="errorMsg"> 
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
                 <form className="edit-booking-form" onSubmit={handleSubmit}>
-                    <label> Name
-                        <input type='text' readOnly value={name}/>
-                    </label>
-                    <label> Start Date
-                        <input
+                    <label> Name </label>
+                    <input type='text' readOnly value={name}/>
+                    <label> Start Date</label>
+                    <input
                         type='date'
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
-                        ></input>
-                    </label>
-                    <label> End Date
-                        <input
+                    />
+                    <label> End Date </label>
+                    <input
                         type='date'
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
-                        ></input>
-                    </label>
-
-                    <button className="submit-button"> Submit Changes </button>
+                    />
                 </form>
+                <button onClick={handleSubmit} className="submit-button"> Submit Changes </button>
             </div>
             )
             }

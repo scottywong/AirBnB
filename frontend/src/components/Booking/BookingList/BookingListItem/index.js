@@ -15,6 +15,7 @@ const BookingListItem = ({booking}) => {
     const [name,setName] = useState(booking.Spot.name);
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [errors,setErrors] = useState([]);
 
     useEffect(()=> {
         if(currentUser && currentUser.id === booking.userId) setIsLoaded(true);        
@@ -51,11 +52,20 @@ const BookingListItem = ({booking}) => {
     const handleDelete = (e) => {
 
         e.preventDefault();
-        return dispatch(removeBooking(booking.id));
+        return dispatch(removeBooking(booking.id))
+        .catch(async (res) => {
+            const data = await res.json();
+            console.log('data to delete from booking list item: ', data);
+            if (data && data.errors) setErrors(data.errors);
+          });
     }
 
     return (
-        <div className="booking-item-container">        
+        
+        <div className="booking-item-container">   
+          <ul className="errorMsg"> 
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          </ul>     
             <div className="booking-item-detail">
                 <form className="edit-booking-form" onSubmit={handleSubmit}>
                     <label> Name

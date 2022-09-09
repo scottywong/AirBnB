@@ -92,7 +92,7 @@ const SpotFormEdit = () => {
            &&
            (
             <>
-             <ul>
+             <ul className="errorMsg">
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
             

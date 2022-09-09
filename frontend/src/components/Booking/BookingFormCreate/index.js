@@ -8,10 +8,9 @@ const BookingFormCreate = ({spotId}) => {
 
     const dispatch = useDispatch();
     const history = useHistory();
-
-
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [errors, setErrors] = useState([]);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -22,13 +21,21 @@ const BookingFormCreate = ({spotId}) => {
         }
 
         return dispatch(createBooking(payload,spotId))
-        .then((booking) => history.push(`/bookings/${booking.id}`));
+        .then((booking) => history.push(`/bookings/${booking.id}`))
+        .catch(async (res) => {
+            const data = await res.json();
+            console.log('data to delete from booking create: ', data);
+            if (data && data.errors) setErrors(data.errors)
+          })
         
     }
 
     return (
         <div className="create-booking-form-container">
         <h1> Create a New Booking</h1>
+        <ul className="errorMsg">
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        </ul>
         <form className="create-booking-form" onSubmit={onSubmit}>
             <label> CHECK-IN</label>
             <input type='date' className="booking-form-input"
@@ -40,10 +47,9 @@ const BookingFormCreate = ({spotId}) => {
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}/>
             
-    
             
         </form>
-        <button className="submit-button-booking"> Reserve</button>
+        <button onClick={onSubmit}className="submit-button-booking"> Reserve</button>
         </div>
     )
 };

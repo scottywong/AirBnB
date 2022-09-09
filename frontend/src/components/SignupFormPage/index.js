@@ -35,7 +35,7 @@ function SignupFormPage() {
   return (
     <div className="signup-form-container">
      <h1> Sign up for Airbnb </h1>
-     <ul>
+     <ul className="errorMsg">
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
     <form className="signup-form" onSubmit={handleSubmit}>

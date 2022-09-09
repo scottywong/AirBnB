@@ -53,20 +53,19 @@ const BookingDetail = () => {
         <div className="booking-container">
             {isLoaded && 
             (
+            <>
+            <h1> Booking</h1>
             <div className="booking-detail">
-                <h1> Booking</h1>
-                <label> Name: 
-                    <input type='text' readOnly value={name}/>
-                </label>
-                <label> Start Date:  
-                    <input type='date' readOnly value={startDate}/>
-                </label>
-                <label> End Date: 
-                    <input type='date' readOnly value={endDate}/>
-                </label>
+           
+                <label> Name </label>
+                <input type='text' readOnly value={name}/>
+                <label> Start Date </label>
+                <input type='date' readOnly value={startDate}/>
+                <label> End Date </label>
+                <input type='date' readOnly value={endDate}/>
                 <br/>
             </div>
-        
+            </>
             )
             }
             <div className="booking-list-actions">

@@ -24,8 +24,6 @@ const BookingList = () => {
          <h1>Your Bookings</h1>
             { bookings && 
             bookings.map(booking => {
-
-
                 console.log('booking: ', booking);
                 return <BookingListItem booking={booking}/>
 

@@ -58,7 +58,7 @@ const SpotFormCreate = () => {
 
     return (
         <div className="create-spot-form-container">
-        <ul>
+        <ul className="errorMsg">
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <h1> Create a New Spot</h1>

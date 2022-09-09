@@ -85,7 +85,7 @@ const SpotDetail = () => {
       {isLoaded &&(
         
       <div className="spot-header">
-         <ul>
+         <ul className="errorMsg">
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>
         <div className="spot-title"><h1>{name}</h1></div>

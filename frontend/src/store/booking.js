@@ -119,7 +119,8 @@ export const removeBooking = (id) => async (dispatch) => {
   );
 
   if (response.ok) {
-    return dispatch(remove(id));
+    dispatch(remove(id));
+    return response;
   }
 
 };
@@ -155,7 +156,11 @@ const bookingReducer = (state = initialState, action) => {
         return newState;
     case REMOVE_BOOKING:
         newState = Object.assign({}, state);
-        newState.booking = newState.booking.filter(booking=> booking.id !== action.payload);
+        if(Array.isArray(newState.booking)){
+        newState.booking = newState.booking?.filter(booking=> booking.id !== action.payload);
+        } else {
+        newState.booking = [];
+        }
         return newState;
     default:
         return state;

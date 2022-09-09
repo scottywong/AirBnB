@@ -129,15 +129,23 @@ async (req, res, next) => {
     }
     if(!booking){
 
+        
+  
+       
+
         const err = new Error(`Booking couldn't be found`);
+        err.errors = [];
         err.status = 404;
         err.message = `Booking couldn't be found`;
+        err.errors.push("Booking couldn't be found");
         err.statusCode = 404;
         return next(err);
 
      } else if(user.id !== booking.userId && user.id !== spot.ownerId){
 
         const err = new Error(`Booking must belong to the current user or the Spot must belong to the current user`);
+        err.errors = [];
+        err.errors.push("Booking must belong to the current user or the Spot must belong to the current user");
         err.status = 403;
         err.message = `Forbidden`;
         err.statusCode = 403;
@@ -146,6 +154,8 @@ async (req, res, next) => {
     } else if(bookingDate.valueOf() - today.valueOf() < 0){
 
         const err = new Error(`Bookings that have been started can't be deleted`);
+        err.errors = [];
+        err.errors.push(`Bookings that have been started can't be deleted`);
         err.status = 400;
         err.message = `Bookings that have been started can't be deleted`;
         err.statusCode = 400;

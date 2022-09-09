@@ -1,4 +1,5 @@
 .booking-container{
+    margin-top: 10%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,9 +7,15 @@
 }
 
 .booking-detail{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display:grid;
+    grid-template-columns: max-content max-content;
+    grid-gap:5px;
     align-items: center;
+    justify-content: center;
+    width: max-content;
 
+}
+
+div.booking-detail > input, div.booking-detail > input:focus , div.booking-detail > input:active{
+    border: none;
 }

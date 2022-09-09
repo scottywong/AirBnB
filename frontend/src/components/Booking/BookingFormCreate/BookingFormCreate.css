@@ -10,3 +10,7 @@
     width:100%;
     margin-top:20px;
 }
+
+div.booking-detail > input {
+    border: none;
+}
