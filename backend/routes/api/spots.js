@@ -257,7 +257,8 @@ async (req,res,next)=> {
     
         }
 
-        await Spot.destroy({where : {id: spot.id}});
+        await spot.destroy();
+        // await Spot.destroy({where : {id: spot.id}});
         res.json({
             message: "Successfully deleted",
             statusCode : 200
