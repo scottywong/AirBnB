@@ -39,11 +39,15 @@ async (req, res, next) => {
     const {startDate,endDate} = req.body;
     const {id} = req.params;
 
+
+    console.log('id: ', id );
+
     const booking = await Booking.findOne({
         where: {
             id: id
         }
     });
+    console.log('thebooking:', booking);
 
     const otherBookings = await Booking.findOne({
         where:{
@@ -59,10 +63,6 @@ async (req, res, next) => {
  
     let today;
     let bookingDate;
-    if(booking) {
-        today = new Date();
-        bookingDate = new Date(booking.endDate);
-    }
 
     if(!booking){
 
@@ -74,50 +74,64 @@ async (req, res, next) => {
         err.statusCode = 404;
         return next(err);
 
-    } else if(user.id !== booking.userId){
+    }
 
-        const err = new Error(`Booking must belong to the current user`);
-        err.errors = [];
-        err.errors.push("Booking must belong to the current user");
-        err.status = 403;
-        err.message = `Forbidden`;
-        err.statusCode = 403;
-        return next(err);
-
-    } else if( bookingDate.valueOf() - today.valueOf() < 0 ){
-
-        const err = new Error(`Past bookings can't be modified`);
-        err.errors = [];
-        err.errors.push("Past bookings can't be modified");
-        err.status = 400;
-        err.message = `Past bookings can't be modified`;
-        err.statusCode = 400;
-        return next(err);
-
-    } else if(otherBookings){
-
-        console.log('the other Bookings: ', otherBookings);
-        const err = new Error(`Sorry, this spot is already booked for the specified dates`);
-        err.errors = [];
-        err.errors.push("Sorry, this spot is already booked for the specified dates");
-        err.status = 403;
-        err.message = `Sorry, this spot is already booked for the specified dates`;
-        err.statusCode = 403;
-        return next(err);
-
-    } else {
+    if(booking) {
+        today = new Date();
+        bookingDate = new Date(endDate);
+        // console.log('bookingDate: ',bookingDate);
+        // console.log('bookingDate.valueof ,', bookingDate.valueOf());
+        // console.log('today.valueOf()',today.valueOf());
         
-        await Booking.update({ 
-            startDate: startDate,
-            endDate: endDate
-        },{where : {id: id}});
+        if(user.id !== booking.userId){
 
-        const updatedBooking = await Booking.findOne({where: {id: id}})
+            const err = new Error(`Booking must belong to the current user`);
+            err.errors = [];
+            err.errors.push("Booking must belong to the current user");
+            err.status = 403;
+            err.message = `Forbidden`;
+            err.statusCode = 403;
+            return next(err);
 
-        res.statusCode = 200;
-        res.json(updatedBooking);
+        } 
+        
+        if( bookingDate.valueOf() - today.valueOf() < 0 ){
+
+            const err = new Error(`Past bookings can't be modified`);
+            err.errors = [];
+            err.errors.push("Past bookings can't be modified");
+            err.status = 400;
+            err.message = `Past bookings can't be modified`;
+            err.statusCode = 400;
+            return next(err);
+
+        } 
+        
+        if(otherBookings){
+
+            console.log('the other Bookings: ', otherBookings);
+            const err = new Error(`Sorry, this spot is already booked for the specified dates`);
+            err.errors = [];
+            err.errors.push("Sorry, this spot is already booked for the specified dates");
+            err.status = 403;
+            err.message = `Sorry, this spot is already booked for the specified dates`;
+            err.statusCode = 403;
+            return next(err);
+
+        } 
+            
+            await Booking.update({ 
+                startDate: startDate,
+                endDate: endDate
+            },{where : {id: id}});
+
+            const updatedBooking = await Booking.findOne({where: {id: id}})
+
+            res.statusCode = 200;
+            res.json(updatedBooking);
 
     }
+    
 
 });
 

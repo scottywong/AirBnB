@@ -152,6 +152,8 @@ const bookingReducer = (state = initialState, action) => {
         if(Array.isArray(newState.booking)){
           let updatedBooking = newState.booking.find(booking => booking.id === action.payload.id)
           updatedBooking = action.payload;
+        } else {
+          newState = action.payload;
         }
         return newState;
     case REMOVE_BOOKING:
