@@ -1,6 +1,7 @@
 import { csrfFetch } from './csrf';
 
-const LOAD_SPOTS = 'spots/load'
+const LOAD_SPOTS = 'spots/load';
+const LOAD_USERSPOTS ='spots/userLoad';
 const CREATE_SPOT = 'spots/create';
 const UPDATE_SPOT = 'spots/update';
 const REMOVE_SPOT = 'spots/delete';
@@ -9,7 +10,10 @@ export const loadSpots = (spots) => ({
     type: LOAD_SPOTS,
     payload: spots
   });
-  
+export const loadUserSpots = (spots) => ({
+  type: LOAD_USERSPOTS,
+  payload:spots
+});
 export const create = (spot) => ({
     type: CREATE_SPOT,
     payload: spot
@@ -49,6 +53,16 @@ export const fetchSpotById = (spotId) => async (dispatch) => {
     
 };
 
+export const fetchUserSpots = () => async (dispatch) => {
+  let response;
+  response = await fetch(`/api/spots/currentUserSpots`);
+
+  if(response.ok){
+    const spots = await response.json();
+    dispatch(loadUserSpots(spots.spots));
+    return spots;
+  }
+};
 
 export const createSpot = (spot) => async (dispatch) => {
     let response;
@@ -120,6 +134,10 @@ const spotReducer = (state = initialState, action) => {
         newState = Object.assign({}, state);
         newState.spot = action.payload;
         return newState;
+    case LOAD_USERSPOTS:
+      newState = Object.assign({}, state);
+      newState.userSpot = action.payload;
+      return newState;
     case CREATE_SPOT:
         newState = Object.assign({}, state);
         newState.spot = action.payload

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSpots } from "../../../store/spot"; 
+import { fetchSpots, fetchUserSpots } from "../../../store/spot"; 
 import { useParams,  useHistory} from "react-router-dom";
 
 import './SpotList.css';
@@ -12,29 +12,25 @@ const dispatch = useDispatch();
 const history = useHistory();
 const {id} = useParams();
 const currentUser = useSelector(state=> state.session.user);
+const spots = useSelector(state=> state.spot.spot);
+const userSpots = useSelector(state=>state.spot.userSpot);
 
-let spots = useSelector(state=> state.spot.spot);
-const [isLoaded,setIsLoaded] = useState(false);
 const [isOwner,setIsOwner] = useState(false);
-const [allSpots,setAllSpots] = useState(null);
 
 useEffect(()=> {
-  dispatch(fetchSpots())
-  .then((res) => setAllSpots(res.spots));
+  dispatch(fetchSpots());
+  if(currentUser){
+    dispatch(fetchUserSpots());
+  }
 
   if(currentUser && currentUser.id === parseInt(id)){
     setIsOwner(true)
   } else {
     setIsOwner(false);
   }
-
-  if(id && allSpots && Array.isArray(allSpots)){
-    const ownSpots = allSpots.filter(spot => spot.ownerId === parseInt(id));
-  
-    setAllSpots(ownSpots);
-  }
   
 },[dispatch]);
+
 
 //redirect user to home page if they're logged out
 if(id && !currentUser){
@@ -46,17 +42,25 @@ const handleCreateButton = () => {
 
   return (
     <div className="spot-listpage-container"> 
-        {!id && allSpots?.length > 0 &&(<h1 className="spot-list-header">Spot List</h1>)}
-        {id && allSpots?.length > 0 && (
+        {!id && spots?.length > 0 &&(<h1 className="spot-list-header">Spot List</h1>)}
+        {id && isOwner && (
         <>
         <h1 className="spot-list-header">Owned Spots</h1>
         <button onClick={handleCreateButton} className="spot-button-create">Create New Spot</button>
         </>)}
-
+    
         <div className="spot-list-container">
             <ol className="spot-list">
-              {allSpots && Array.isArray(allSpots) && 
-                (allSpots.map((spot) => {          
+              {!id && spots && Array.isArray(spots) && 
+                (spots.map((spot) => {          
+                  return <li key={spot.id}>
+                            <SpotListItem spot={spot}/>
+                        </li>
+                  })
+                )
+              }
+              {id && currentUser && userSpots && Array.isArray(userSpots) && 
+                (userSpots.map((spot) => {          
                   return <li key={spot.id}>
                             <SpotListItem spot={spot}/>
                         </li>
@@ -65,7 +69,7 @@ const handleCreateButton = () => {
               }
             </ol>
         </div>
-        {id && allSpots?.length === 0 && (<p> Sorry, we were unable to find any data.</p>)}
+        {id && userSpots?.length === 0 && (<p> Sorry, we were unable to find any data.</p>)}
       </div>
   );
   
