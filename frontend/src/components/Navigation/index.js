@@ -49,7 +49,10 @@ function Navigation({ isLoaded }){
       <li className="link-container"> 
       {isLoaded &&
         (
+          <>
+          <button onClick={handleSubmit}> Try Hosting </button>
           <button onClick={handleSubmit}> Demo User </button>
+          </>
         )}
         {isLoaded && sessionLinks}
       </li>

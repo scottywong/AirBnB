@@ -7,6 +7,28 @@
     
 }
 
+.spot-detail{
+
+    margin-top: 20px;
+    width: 50%;
+}
+
+
+.aircover-detail{
+    margin-top: 20px;
+    padding-top: 20px;
+    text-align:left;
+    border-top: dotted grey 1px;
+    border-bottom: dotted grey 1px;
+}
+.spot-detail-about{
+    text-align:left;
+
+
+    border-top: dotted grey 1px;
+    border-bottom: dotted grey 1px;
+}
+
 .booking-form-create-container{
 
     display:block;
@@ -20,7 +42,7 @@
 
 }
 .spot-header{
-    width:80%;
+    width:50%;
     margin:auto;
 
 }

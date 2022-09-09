@@ -5,6 +5,7 @@ import { useEffect , useState} from "react";
 import { removeSpot } from "../../../store/spot";
 import { useHistory } from "react-router-dom";
 import BookingFormCreate from '../../Booking/BookingFormCreate';
+import aircover from '../../../assets/aircover.png';
 import './SpotDetail.css';
 
 const SpotDetail = () => {
@@ -97,10 +98,7 @@ const SpotDetail = () => {
         <span className="share-button-container"><button className="share-button" onClick={handleShare}><i class="fa-solid fa-share"></i> Share</button>
         {displayCopyMessage && <span id="copy-message-container"><span id="copy-message"> Copied to clipboard!</span></span>}
         </span>
-        </div>
-      </div>
-      )}
-      <div className="spot-detail-actions">
+        <div className="spot-detail-actions">
           {isOwner &&
               (
               <>
@@ -111,19 +109,31 @@ const SpotDetail = () => {
               )   
           }  
           </div>
+        </div>
+      </div>
+      )}
+    
       <img className="spot-detail-previewImage" src={previewImage}></img>
         <div className="spot-detail-container">
     
-          {/* <div className="spot-detail">
+          <div className="spot-detail">
             <>
-                <h1>{name}</h1>
+                {/* <h1>{name}</h1>
                 <p>{address}</p>
                 <p>{city}</p>
                 <p>{state}</p>
                 <p>{country}</p>
-                <p>{price}</p>
+                <p>{price}</p> */}
+                <div className="aircover-detail" >
+                  <img src={aircover} width="200px"></img>
+                  <p>Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
+                </div>
+                <div className="spot-detail-about">
+                <h2>About the Space</h2>
+                <p>Unwind in a stylish and peaceful retreat full of light and good vibes. Soak in the outdoors from our two spacious decks and cozy fire pit. Designed with fun, comfort and families in mind. The house is set up for entertaining, a fully stocked kitchen and a living room that invites gathering. The Lakeside Love Shack is the ultimate escape for family, friends and pups to create lasting memories at the lake.</p>
+                </div>
              </>
-          </div> */}
+          </div>
           
 
           {isLoaded && currentUser && !isOwner &&
