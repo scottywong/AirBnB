@@ -36,8 +36,10 @@ useEffect(()=> {
   
 },[dispatch]);
 
-//***MOVE THIS LINE */
-
+//redirect user to home page if they're logged out
+if(id && !currentUser){
+  history.push('/');
+}
 const handleCreateButton = () => {
     history.push("/spots/new");
 };

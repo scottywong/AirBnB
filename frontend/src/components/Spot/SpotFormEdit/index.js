@@ -23,6 +23,7 @@ const SpotFormEdit = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [errors,setErrors] = useState([]);
 
     useEffect(()=>{
         dispatch(fetchSpotById(id))
@@ -56,9 +57,12 @@ const SpotFormEdit = () => {
         }
 
         return dispatch(updateSpot(payload,id))
-        .then((res) => history.push(`/spots/${id}`));
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+          }).then((spot) => history.push(`/spots/${spot.id}`));
         
-    }
+    }        
 
     const handleDelete = (e) => {
         e.preventDefault();
@@ -77,6 +81,11 @@ const SpotFormEdit = () => {
             {isLoaded 
            &&
            (
+            <>
+             <ul>
+            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
+            
             <div className="edit-spot">
                 <h1> Edit Spot</h1>
                 <form className="edit-spot-form" onSubmit={onSubmit}>
@@ -122,6 +131,7 @@ const SpotFormEdit = () => {
 
                 <button onClick={onSubmit} className="submit-button"> Submit Changes </button>
             </div>
+            </>
             )}
 
             <div className="spot-edit-actions">
