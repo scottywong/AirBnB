@@ -50,7 +50,7 @@ const SpotListItem = ({spot}) => {
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>
             <br/>
-            {isLoaded && isOwner && <i class="fa-solid fa-house-chimney-user fa-2xl"></i>}
+            {isLoaded && isOwner && <i className="fa-solid fa-house-chimney-user fa-2xl"></i>}
             
             <a href={`/spots/${spot.id}`} target="_blank">
               <img className="spot-item-previewImage" src={previewImage}></img>

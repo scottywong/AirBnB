@@ -44,9 +44,7 @@ function Navigation({ isLoaded }){
   return (
     <ul className="nav-container" >
       <NavLink exact to="/" className="home-button">
-        <a href="" className="airbnb-logo">
           <img height="80px"className="airbnb-logo" src={logo}/>
-        </a>
       </NavLink> 
       <li className="link-container"> 
       {isLoaded &&

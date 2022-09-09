@@ -9,7 +9,6 @@ const BookingDetail = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const {id} = useParams();
-
     const [isLoaded,setIsLoaded] = useState('');
     const [name,setName] = useState('');
     const [startDate,setStartDate] = useState('');
@@ -46,10 +45,8 @@ const BookingDetail = () => {
           .then(() => history.push(`/users/${currentUser.id}/bookings`));
     }
     
-    
     return(
         <>
-
         <div className="booking-container">
             {isLoaded && 
             (

@@ -67,6 +67,8 @@ async (req, res, next) => {
     if(!booking){
 
         const err = new Error(`Booking couldn't be found`);
+        err.errors = [];
+        err.errors.push("Booking couldn't be found");
         err.status = 404;
         err.message = `Booking couldn't be found`;
         err.statusCode = 404;
@@ -75,14 +77,18 @@ async (req, res, next) => {
     } else if(user.id !== booking.userId){
 
         const err = new Error(`Booking must belong to the current user`);
+        err.errors = [];
+        err.errors.push("Booking must belong to the current user");
         err.status = 403;
         err.message = `Forbidden`;
         err.statusCode = 403;
         return next(err);
 
-    } else if(bookingDate.valueOf() - today.valueOf() < 0){
+    } else if( bookingDate.valueOf() - today.valueOf() < 0 ){
 
         const err = new Error(`Past bookings can't be modified`);
+        err.errors = [];
+        err.errors.push("Past bookings can't be modified");
         err.status = 400;
         err.message = `Past bookings can't be modified`;
         err.statusCode = 400;
@@ -92,6 +98,8 @@ async (req, res, next) => {
 
         console.log('the other Bookings: ', otherBookings);
         const err = new Error(`Sorry, this spot is already booked for the specified dates`);
+        err.errors = [];
+        err.errors.push("Sorry, this spot is already booked for the specified dates");
         err.status = 403;
         err.message = `Sorry, this spot is already booked for the specified dates`;
         err.statusCode = 403;
@@ -128,10 +136,6 @@ async (req, res, next) => {
         spot = await Spot.findByPk(booking.spotId);
     }
     if(!booking){
-
-        
-  
-       
 
         const err = new Error(`Booking couldn't be found`);
         err.errors = [];

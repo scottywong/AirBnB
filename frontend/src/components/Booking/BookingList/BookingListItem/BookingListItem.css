@@ -1,7 +1,33 @@
-.booking-item-container, .booking-item-detail{
-
+.booking-item-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+    margin: auto;
+    margin-bottom: 10%;
+    padding: 10%;
+
+}
+ .booking-item-detail{
+
+    display:grid;
+    grid-template-columns: max-content max-content;
+    grid-gap:20px;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+}
+.booking-item-edit-actions{
+
+    display: inline;
+}
+.submit-button-booking-item{
+
+    margin-top:10px;
+}
+.edit-booking-form > input {
+
+    border: '';
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeBooking, updateBooking } from "../../../../store/booking";
-import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './BookingListItem.css';
 
 
@@ -24,10 +24,13 @@ const BookingListItem = ({booking}) => {
 
     },[booking]);
 
-    const handleClick = () => {
+    
+    const handleEdit = () => {
 
        document.getElementById(`startDate-input-${booking.id}`).readOnly = false;
        document.getElementById(`endDate-input-${booking.id}`).readOnly = false;
+    //    document.getElementById(`startDate-input-${booking.id}`).style.border = '';
+    //    document.getElementById(`endDate-input-${booking.id}`).style.border = '';
        setShowSubmit(true);
 
     }
@@ -44,10 +47,27 @@ const BookingListItem = ({booking}) => {
         .then((res) => {
             document.getElementById(`startDate-input-${booking.id}`).readOnly = false;
             document.getElementById(`endDate-input-${booking.id}`).readOnly = false;
+            // document.getElementById(`startDate-input-${booking.id}`).style.border = 'none';
+            // document.getElementById(`endDate-input-${booking.id}`).style.border = 'none';
             setShowSubmit(false);
-        }
-       );
+        }).catch(async (res) => {
+            const data = await res.json();
+            console.log('data to delete from booking list item: ', data);
+            if (data && data.errors) setErrors(data.errors);
+          });
     }
+
+   
+    const handleCancel = () => {
+
+        document.getElementById(`startDate-input-${booking.id}`).readOnly = true;
+        document.getElementById(`endDate-input-${booking.id}`).readOnly = true;
+        // document.getElementById(`startDate-input-${booking.id}`).style.border = 'none';
+        // document.getElementById(`endDate-input-${booking.id}`).style.border = 'none';
+        setShowSubmit(false);
+        setErrors([]);
+ 
+    };
 
     const handleDelete = (e) => {
 
@@ -66,42 +86,46 @@ const BookingListItem = ({booking}) => {
           <ul className="errorMsg"> 
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>     
+          
+          <NavLink to={`/bookings/${booking.id}`}>{name}</NavLink>
+          <br/>
             <div className="booking-item-detail">
+           
                 <form className="edit-booking-form" onSubmit={handleSubmit}>
-                    <label> Name
-                        <input type='text' readOnly value={name}/>
-                    </label>
-                    <label> Start Date
-                        <input
+                    
+                    {/* <label> Name </label> 
+                    <input type='text' readOnly value={name}/> */}
+                    <label> Start Date </label>
+                    <input
                         id={`startDate-input-${booking.id}`}
                         type='date'
                         value={startDate}
                         readOnly
                         onChange={(e) => setStartDate(e.target.value)}
-                        ></input>
-                    </label>
-                    <label> End Date
-                        <input
+                       />
+                    <label> End Date </label>
+                    <input
                         id={`endDate-input-${booking.id}`}
                         type='date'
                         value={endDate}
                         readOnly
                         onChange={(e) => setEndDate(e.target.value)}
-                        ></input>
-                    </label>
-                    {showSubmit &&
-                    <button id={`submit-button-${booking.id}`}> Submit Changes </button>
-                    }
+                    />
                 </form>
             </div>
-
-            <div className="booking-item-actions">
+            {showSubmit &&
+            <div className="booking-item-edit-actions">
+                <button onClick={handleSubmit} className="submit-button-booking-item" id={`submit-button-${booking.id}`}> Submit </button>  
+                <button onClick={handleCancel}> Cancel </button>    
+            </div>               
+                }
+          <div className="booking-item-actions">
 
             {isLoaded &&
                 (
                 <>
-                <button className="booking-item-edit" onClick={handleClick}> Edit </button> 
-                <button onClick={handleDelete} className="booking-item-delete" to={`/users/${currentUser.id}/bookings`}> Delete </button>  
+                <button className="booking-item-edit" onClick={handleEdit}> Edit </button> 
+                <button onClick={handleDelete} className="booking-item-delete" to={`/users/${currentUser?.id}/bookings`}> Delete </button>  
                 <br/>
                 </>
                 )   

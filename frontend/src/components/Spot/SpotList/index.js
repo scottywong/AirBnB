@@ -27,7 +27,7 @@ useEffect(()=> {
     setIsOwner(false);
   }
   
-},[dispatch,id]);
+},[dispatch,id,currentUser]);
 
 //redirect user to home page if they're logged out
 if(id && !currentUser){
