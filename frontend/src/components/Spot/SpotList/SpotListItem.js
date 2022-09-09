@@ -14,6 +14,7 @@ const SpotListItem = ({spot}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [previewImage,setPreviewImage] = useState("");
+  const [errors, setErrors] = useState([]);
 
   useEffect(()=> {
     if(spot){
@@ -33,14 +34,21 @@ const SpotListItem = ({spot}) => {
     } else {
       setPreviewImage(spot.previewImage);
     }
-  },[currentUser,isLoaded,isOwner]);
+  },[dispatch,currentUser,isLoaded,isOwner]);
   
   const handleDelete = (e) => {
     e.preventDefault();
-    return dispatch(removeSpot(spot.id));
+    return dispatch(removeSpot(spot.id))
+    .catch(async (res) => {
+      const data = await res.json();
+      if (data && data.errors) setErrors(data.errors);
+    });
   }
     return(
         <div className="spot-item-container">
+          <ul>
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          </ul>
             <br/>
             {isLoaded && isOwner && <i class="fa-solid fa-house-chimney-user fa-2xl"></i>}
             

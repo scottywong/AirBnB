@@ -19,9 +19,7 @@ const [isOwner,setIsOwner] = useState(false);
 
 useEffect(()=> {
   dispatch(fetchSpots());
-  if(currentUser){
-    dispatch(fetchUserSpots());
-  }
+  dispatch(fetchUserSpots());
 
   if(currentUser && currentUser.id === parseInt(id)){
     setIsOwner(true)
@@ -29,8 +27,7 @@ useEffect(()=> {
     setIsOwner(false);
   }
   
-},[dispatch]);
-
+},[dispatch,id]);
 
 //redirect user to home page if they're logged out
 if(id && !currentUser){

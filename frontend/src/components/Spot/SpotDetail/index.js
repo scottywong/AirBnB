@@ -28,7 +28,8 @@ const SpotDetail = () => {
     const [avgRating, setAvgRating] = useState('');
     const [previewImage,setPreviewImage] = useState('');
     const [displayCopyMessage, setDisplayCopyMessage] = useState(false);
-
+    const [errors, setErrors] = useState([]);
+    
     useEffect(()=> {
       dispatch(fetchSpotById(id))
         .then((spot)=> {
@@ -59,8 +60,14 @@ const SpotDetail = () => {
       e.preventDefault();
       
       return dispatch(removeSpot(id))
-        .then(() => history.push(`/users/${currentUser.id}/spots`));
-    }
+      .then(() => history.push(`/users/${currentUser.id}/spots`))
+      .catch(async (res) => {
+        const data = await res.json();
+        console.log(data);
+        if (data && data.errors) setErrors(data.errors);
+      })
+    
+  }
 
     const handleShare = (e) => {
       e.preventDefault();
@@ -74,7 +81,11 @@ const SpotDetail = () => {
     return (
       <>
       {isLoaded &&(
+        
       <div className="spot-header">
+         <ul>
+            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          </ul>
         <div className="spot-title"><h1>{name}</h1></div>
         <div className="spot-subtitle">
         <i class="fa-sharp fa-solid fa-star"></i> 

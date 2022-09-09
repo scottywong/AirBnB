@@ -116,7 +116,8 @@ export const removeSpot = (id) => async (dispatch) => {
   );
 
   if (response.ok) {
-    return dispatch(remove(id));
+    dispatch(remove(id));
+    return response;
   }
 
 };

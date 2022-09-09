@@ -60,7 +60,8 @@ const SpotFormEdit = () => {
         .catch(async (res) => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);
-          }).then((spot) => history.push(`/spots/${spot.id}`));
+          })
+        .then((spot) => history.push(`/spots/${spot.id}`));
         
     }        
 
