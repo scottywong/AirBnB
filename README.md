@@ -10,17 +10,17 @@ Features:
 * Demo User Login
 
 Instructions to Clone Project
-* Open your terminal (backend)
-* Run `git clone https://github.com/scottywong/AirBnB.git`
-* Change directory to `cd/backend/`
-* Run `npm install` to install dependencies
-* Open a second terminal tab (frontend) - remember to keep youre backend terminal open)
-* Change directory to `cd/frontend/` 
-* Run `npm install` to install dependencies
-* Create .env file within `backend`
-* Run Migrations with `npx sequelize db:migrate`
-* Seed Database with `npx sequelize db:seed:all`
-* Run `npm start` in both frontend and backend terminals
+1. Open your terminal (backend)
+2. Run `git clone https://github.com/scottywong/AirBnB.git`
+3. Change directory to `cd/backend/`
+4. Run `npm install` to install dependencies
+5. Open a second terminal tab (frontend) - remember to keep youre backend terminal open)
+6. Change directory to `cd/frontend/` 
+7. Run `npm install` to install dependencies
+8. Create .env file within `backend`
+9. Run Migrations with `npx sequelize db:migrate`
+10. Seed Database with `npx sequelize db:seed:all`
+11. Run `npm start` in both frontend and backend terminals
 * Your frontend should show at `localhost:3000`
 * Your backend will be at `localhost:8000`
 
