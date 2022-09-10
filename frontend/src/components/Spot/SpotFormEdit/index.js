@@ -85,9 +85,7 @@ const SpotFormEdit = () => {
     return (
         <>
         
-        {!isLoaded &&
-          <p>  Sorry, but you don't have the right permissions to edit this. </p>
-        }
+
         <div  className="edit-spot-form-container">
             {isLoaded 
            &&
@@ -147,6 +145,9 @@ const SpotFormEdit = () => {
 
                 <button onClick={onSubmit} className="submit-button"> Submit Changes </button>
             </div>
+            {!isLoaded &&
+            <p>  Sorry, but you don't have the right permissions to edit this. </p>
+             }
             </>
             )}
 
