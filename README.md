@@ -1,11 +1,20 @@
-# AirBnB
-## Database Schema Design
+# AirBnB MVP
+## Overview
+Airbnb MVP is a travel hosting and site where people can sign up to host spots and make booking on other hosts. At this point, only hosts can make bookings.
+## ACCESS INSTRUCTIONS
+To access, go to: https://appacademy-airbnb.herokuapp.com/
 
+Features: 
+* Create/Manage Spots
+* Create/Manage Bookings
+
+Test Suite: https://docs.google.com/spreadsheets/d/1Kubk0WkmIC_BQSEYQLmNbFSgVPqciAsiIRbaVS16x1w/edit#gid=1712141062&range=I2:L2
+
+## API DOCUMENTATION
+## Database Schema Design
 Schema: https://a.cl.ly/04uQxw0B
 Miro Whiteboard: https://miro.com/app/board/uXjVOuzz6YE=/?share_link_id=361731173926
 Checklist: https://docs.google.com/spreadsheets/d/1N8PdZmKN51kl-ENZ5w-1ldv1H-Ii09kevDi8KvQBUIM/edit#gid=360708892
-
-## API Documentation
 
 ## FEATURE 0: USER AUTHORIZATION
 ## All endpoints that require authentication

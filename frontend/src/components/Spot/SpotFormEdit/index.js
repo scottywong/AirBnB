@@ -23,12 +23,11 @@ const SpotFormEdit = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [previewImage,setPreviewImage] = useState('');
     const [errors,setErrors] = useState([]);
 
     //redirect user to home page if they're logged out
-    if(!currentUser){
-        history.push('/');
-    }
+    if(!currentUser) history.push('/');
 
     useEffect(()=>{
         dispatch(fetchSpotById(id))
@@ -43,6 +42,7 @@ const SpotFormEdit = () => {
                     setName(spot.name);
                     setDescription(spot.description);
                     setPrice(spot.price);
+                    setPreviewImage(spot.previewImage);
         });
     },[]);
 
@@ -58,7 +58,8 @@ const SpotFormEdit = () => {
             lng,
             name,
             description,
-            price
+            price,
+            previewImage
         }
 
         return dispatch(updateSpot(payload,id))
@@ -137,6 +138,11 @@ const SpotFormEdit = () => {
                     type="number"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}/>
+                    <label> Preview Image </label>
+                    <input className="spot-form-input"
+                    type="text"
+                    value={previewImage}
+                    onChange={(e) => setPreviewImage(e.target.value)}/>
                 </form>
 
                 <button onClick={onSubmit} className="submit-button"> Submit Changes </button>

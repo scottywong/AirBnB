@@ -21,15 +21,12 @@ const SpotFormCreate = () => {
     const [previewImage,setPreviewImage] = useState('');
     const [errors, setErrors] = useState([]);
 
-
     const spot = useSelector((state) => state.spot.spot);
     const currentUser = useSelector((state) => state.session.user);
 
     //redirect user to home page if they're logged out
-      if(!currentUser){
-        history.push('/');
-    }
-    if (spot?.id) return history.push(`/spots/${spot.id}`);
+    if(!currentUser) history.push('/');
+    if (spot?.id) history.push(`/spots/${spot.id}`);
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -52,7 +49,6 @@ const SpotFormCreate = () => {
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);
           });
-        // .then((spot) => history.push(`/spots/${spot.id}`));
         
     }
 

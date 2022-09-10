@@ -17,23 +17,13 @@ const SpotListItem = ({spot}) => {
   const [errors, setErrors] = useState([]);
 
   useEffect(()=> {
-    if(spot){
-      setIsLoaded(true)
-    } else {
-      setIsLoaded(false);
-    }
+    spot? setIsLoaded(true) : setIsLoaded(false);
     /**** Check if you own Spot, if so load "Edit" + "Delete" Buttons */
-    if(currentUser && currentUser.id === spot.ownerId) {
-      setIsOwner(true);
-    } else {
-      setIsOwner(false);
-    }
-    
-    if(!spot.previewImage){
-      setPreviewImage('https://media.gettyimages.com/id/1255835530/photo/modern-custom-suburban-home-exterior.webp?s=2048x2048&w=gi&k=20&c=aJN8I5LYNsnKsCbp-D-a9nySQAjabZLaNHOQMSFBYnE=');
-    } else {
+    currentUser?.id === spot?.ownerId ? setIsOwner(true):setIsOwner(false);
+  
+    !spot.previewImage ? setPreviewImage('https://media.gettyimages.com/id/1255835530/photo/modern-custom-suburban-home-exterior.webp?s=2048x2048&w=gi&k=20&c=aJN8I5LYNsnKsCbp-D-a9nySQAjabZLaNHOQMSFBYnE='):
       setPreviewImage(spot.previewImage);
-    }
+
   },[dispatch,currentUser,isLoaded,isOwner]);
   
   const handleDelete = (e) => {

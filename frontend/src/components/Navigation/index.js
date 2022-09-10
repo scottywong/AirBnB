@@ -7,7 +7,7 @@ import './Navigation.css';
 import logo from '../../assets/airbnb.png';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function Navigation({ isLoaded }){
@@ -15,11 +15,9 @@ function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState([]);
-
+  
   const handleHost = (e) => {
     e.preventDefault();
-    isLoaded=false;
-    document.querySelector('.nav-container').style.display = 'none';
     history.push('/host');
   }
   const handleSubmit = (e) => {
@@ -47,21 +45,22 @@ function Navigation({ isLoaded }){
   }
 
   return (
+    isLoaded &&(
     <ul className="nav-container" >
       <NavLink exact to="/" className="home-button">
           <img height="80px"className="airbnb-logo" src={logo}/>
       </NavLink> 
       <li className="link-container"> 
-      {isLoaded &&
-        (
+        
           <>
           <button onClick={handleHost}> Become a Host </button>
           <button onClick={handleSubmit}> Demo User </button>
           </>
-        )}
-        {isLoaded && sessionLinks}
+        {sessionLinks}
       </li>
     </ul>
+  )
+    
   );
 }
 

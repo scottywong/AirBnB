@@ -12,17 +12,31 @@ import BookingList from "./components/Booking/BookingList";
 import BookingDetail from "./components/Booking/BookingDetail";
 import BookingFormEdit from "./components/Booking/BookingFormEdit";
 import HostPage from "./components/HostPage";
+import { useContext } from "react";
+import { NavContext } from "./context/Navigation";
+import { useLocation } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const [isLoaded, setIsLoaded] = useState(false);
+  const {showNav, setShowNav} = useContext(NavContext);
+
+  if(location.pathname ==='/host'){
+    setShowNav(false)
+  }else {
+    setShowNav(true)
+  }
+  
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+
   }, [dispatch]);
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      <Navigation isLoaded={showNav} />
       {isLoaded && (
         <Switch>
           <Route exact path="/">

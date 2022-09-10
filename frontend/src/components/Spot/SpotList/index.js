@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots, fetchUserSpots } from "../../../store/spot"; 
 import { useParams,  useHistory} from "react-router-dom";
-
 import './SpotList.css';
 import SpotListItem from './SpotListItem';
 
 const SpotList = () => {
-
+  
 const dispatch = useDispatch();
 const history = useHistory();
 const {id} = useParams();
+
 const currentUser = useSelector(state=> state.session.user);
 const spots = useSelector(state=> state.spot.spot);
 const userSpots = useSelector(state=>state.spot.userSpot);
@@ -20,19 +20,12 @@ const [isOwner,setIsOwner] = useState(false);
 useEffect(()=> {
   dispatch(fetchSpots());
   dispatch(fetchUserSpots());
-
-  if(currentUser && currentUser.id === parseInt(id)){
-    setIsOwner(true)
-  } else {
-    setIsOwner(false);
-  }
-  
+  currentUser?.id === parseInt(id)?  setIsOwner(true): setIsOwner(false); //check if user is owner of spot
 },[dispatch,id,currentUser]);
 
-//redirect user to home page if they're logged out
-if(id && !currentUser){
-  history.push('/');
-}
+if(!currentUser && id) history.push('/'); //redirect user to home page if they're logged out
+
+
 const handleCreateButton = () => {
     history.push("/spots/new");
 };

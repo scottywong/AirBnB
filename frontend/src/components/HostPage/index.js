@@ -12,19 +12,14 @@ useEffect(()=> {
 
 if(hostPageVideo.current){
 
-    hostPageVideo.current.play().then(function () {
-        // autoplay was successful!
-    }).catch(function (error) {
-        // do something if you want to handle or track this error
+    hostPageVideo.current.play().catch(function (error) {
     });   
 }
 
-});
+},[]);
 
 const handleTryHost = (e) => {
-
     e.preventDefault();
-    document.querySelector('.nav-container').style.display = 'block';
     history.push('/signup');
 
 };

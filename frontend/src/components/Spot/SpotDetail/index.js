@@ -48,11 +48,7 @@ const SpotDetail = () => {
                 setPrice(spot.price);
                 setNumReviews(spot.numReviews);
                 setAvgRating(spot.avgStarRating);
-                if(!spot.previewImage){
-                  setPreviewImage('https://media.gettyimages.com/id/1255835530/photo/modern-custom-suburban-home-exterior.webp?s=2048x2048&w=gi&k=20&c=aJN8I5LYNsnKsCbp-D-a9nySQAjabZLaNHOQMSFBYnE=');
-                } else {
-                  setPreviewImage(spot.previewImage);
-                }
+                setPreviewImage(spot.previewImage);
       })
     },[dispatch,isLoaded, isOwner,currentUser]);
   

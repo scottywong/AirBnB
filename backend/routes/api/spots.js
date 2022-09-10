@@ -1,8 +1,11 @@
 // backend/routes/api/spots.js
+
+
 const express = require('express');
 
 const { setTokenCookie, requireAuth , restoreUser} = require('../../utils/auth');
 const { User, Spot, Review, Image, Booking} = require('../../db/models');
+const {isUrl} = require('../../utils/url');
 const router = express.Router();
 
 const { check } = require('express-validator');
@@ -122,8 +125,8 @@ router.get('/:id',
 router.post('/',[restoreUser,requireAuth],
 async (req,res,next) => {
 
-    const {address,city,state,country,lat,lng,name,description,price} = req.body;
-
+    const {address,city,state,country,lat,lng,name,description,price,previewImage} = req.body;
+    
     if(!address || !city|| !state || !country || !lat || !lng || !name || !description || !price){
         const err = new Error('Validation Error');
         err.status = 400;
@@ -140,14 +143,14 @@ async (req,res,next) => {
         if(!name) err.errors.push("Name is required");
         if(!description) err.errors.push("Description is required");
         if(!price) err.errors.push("Price is required");
+        if(previewImage && !isUrl(previewImage)) err.errors.push("Preview Image needs to be valid URL.");
 
         return next(err);
       
     } else {
 
         const {user} = req;
-        const spot = await Spot.create({
-            
+        const spotObj = {          
             ownerId: user.id,
             address: address,
             city: city,
@@ -158,7 +161,14 @@ async (req,res,next) => {
             name: name,
             description: description,
             price: price
-        });
+        };
+        if(previewImage && isUrl(previewImage)){
+            spotObj['previewImage'] = previewImage;
+        } else {
+            spotObj['previewImage'] = 'https://media.gettyimages.com/photos/modern-custom-suburban-home-exterior-picture-id1255835530?s=2048x2048';
+        }
+
+        const spot = await Spot.create(spotObj);
 
         res.statusCode = 201;
         res.json(spot);
@@ -170,7 +180,7 @@ async (req,res,next) => {
 router.post('/:id',[restoreUser,requireAuth],
 async (req,res,next) => {
 
-    const {address,city,state,country,lat,lng,name,description,price} = req.body;
+    const {address,city,state,country,lat,lng,name,description,price,previewImage} = req.body;
 
     if(!address || !city|| !state || !country || !lat || !lng || !name || !description || !price){
         const err = new Error('Validation Error');
@@ -188,6 +198,7 @@ async (req,res,next) => {
         if(!name) err.errors.push("Name is required");
         if(!description) err.errors.push("Description is required");
         if(!price) err.errors.push("Price is required");
+        if(previewImage && !isUrl(previewImage)) err.errors.push("Preview Image needs to be valid URL.");
 
         return next(err);
       
@@ -213,8 +224,7 @@ async (req,res,next) => {
 
         }
 
-        //.save() ---- switch
-        await Spot.update({          
+        const spotObj = {          
             ownerId: user.id,
             address: address,
             city: city,
@@ -225,7 +235,15 @@ async (req,res,next) => {
             name: name,
             description: description,
             price: price
-        },{where : {id: spot.id}});
+        };
+        if(previewImage && isUrl(previewImage)){
+            spotObj['previewImage'] = previewImage;
+        } else {
+            spotObj['previewImage'] = 'https://media.gettyimages.com/photos/modern-custom-suburban-home-exterior-picture-id1255835530?s=2048x2048';
+        }
+
+        //.save() ---- switch
+        await Spot.update(spotObj,{where : {id: spot.id}});
 
         const updatedSpot = await Spot.findOne({where: {id: spot.id}});
 
