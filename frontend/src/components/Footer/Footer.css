@@ -1,0 +1,30 @@
+.footer-container{
+    margin-top: 50px;
+    display: flex;
+    height: 70px;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    background-color:#f7f7f7;
+}
+
+.footer-link-container{
+    display: flex;
+    align-items: center;
+    margin-left: 10%;
+    margin-right:10%;
+
+}
+
+.footer-link-container > i {
+    flex-grow: 1;
+    margin: 20px;
+
+}
+
+.footer-link-container > i:hover{
+
+    cursor: pointer;
+}
+
+

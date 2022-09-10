@@ -15,6 +15,7 @@ import HostPage from "./components/HostPage";
 import { useContext } from "react";
 import { NavContext } from "./context/Navigation";
 import { useLocation } from "react-router-dom";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
     <>
       <Navigation isLoaded={showNav} />
       {isLoaded && (
+        <>
         <Switch>
           <Route exact path="/">
             <SpotList />
@@ -70,6 +72,9 @@ function App() {
             <BookingFormEdit />
           </Route>
         </Switch>
+        <Footer />
+
+        </>
       )}
     </>
   );
