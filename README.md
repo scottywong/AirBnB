@@ -7,6 +7,24 @@ To access, go to: https://appacademy-airbnb.herokuapp.com/
 Features: 
 * Create/Manage Spots
 * Create/Manage Bookings
+* Demo User Login
+
+Instructions to Clone Project
+* Open your terminal (backend)
+* Run `git clone https://github.com/scottywong/AirBnB.git`
+* Change directory to `cd/backend/`
+* Run `npm install` to install dependencies
+* Open a second terminal tab (frontend) - remember to keep youre backend terminal open)
+* Change directory to `cd/frontend/` 
+* Run `npm install` to install dependencies
+* Create .env file within `backend`
+* Run Migrations with `npx sequelize db:migrate`
+* Seed Database with `npx sequelize db:seed:all`
+* Run `npm start` in both frontend and backend terminals
+* Your frontend should show at `localhost:3000`
+* Your backend will be at `localhost:8000`
+
+
 
 Test Suite: https://docs.google.com/spreadsheets/d/1Kubk0WkmIC_BQSEYQLmNbFSgVPqciAsiIRbaVS16x1w/edit#gid=1712141062&range=I2:L2
 
