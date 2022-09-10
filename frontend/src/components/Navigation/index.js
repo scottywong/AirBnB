@@ -16,6 +16,12 @@ function Navigation({ isLoaded }){
   const history = useHistory();
   const [errors, setErrors] = useState([]);
 
+  const handleHost = (e) => {
+    e.preventDefault();
+    isLoaded=false;
+    document.querySelector('.nav-container').style.display = 'none';
+    history.push('/host');
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
@@ -36,7 +42,6 @@ function Navigation({ isLoaded }){
     sessionLinks = (
       <>
         <LoginFormModal />
-        
       </>
     );
   }
@@ -50,7 +55,7 @@ function Navigation({ isLoaded }){
       {isLoaded &&
         (
           <>
-          <button onClick={handleSubmit}> Try Hosting </button>
+          <button onClick={handleHost}> Become a Host </button>
           <button onClick={handleSubmit}> Demo User </button>
           </>
         )}

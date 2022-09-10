@@ -1,0 +1,26 @@
+.host-header{
+    display:flex;
+    box-sizing: border-box;
+    width: 100%;
+    margin: auto; 
+}
+.host-hero-cta{
+    background-color: black;
+    color:white;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#hero-text{
+
+    font-size:  60px;
+}
+
+#try-hosting-button{
+
+    width: 30%;
+    height:5%;
+}

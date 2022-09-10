@@ -11,6 +11,7 @@ import SpotFormEdit from "./components/Spot/SpotFormEdit";
 import BookingList from "./components/Booking/BookingList";
 import BookingDetail from "./components/Booking/BookingDetail";
 import BookingFormEdit from "./components/Booking/BookingFormEdit";
+import HostPage from "./components/HostPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/host">
+            <HostPage />
           </Route>
           <Route path="/spots/new">
             <SpotFormCreate />
