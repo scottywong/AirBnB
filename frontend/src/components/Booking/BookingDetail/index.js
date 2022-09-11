@@ -11,6 +11,7 @@ const BookingDetail = () => {
     const {id} = useParams();
     const [isLoaded,setIsLoaded] = useState('');
     const [name,setName] = useState('');
+    const [previewImage,setPreviewImage] = useState('');
     const [startDate,setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [errors, setErrors] = useState([]);
@@ -32,6 +33,7 @@ const BookingDetail = () => {
                 endDateObj.setTime(Date.parse(foundBooking.endDate));
                 setIsLoaded(true);
                 setName(foundBooking.Spot.name);
+                setPreviewImage(foundBooking.Spot.previewImage);
                 setStartDate(startDateObj.toISOString().split('T')[0]);
                 setEndDate(endDateObj.toISOString().split('T')[0]);
             } else {
@@ -63,8 +65,9 @@ const BookingDetail = () => {
             <ul className="errorMsg">
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
+            <img className="booking-detail-image" src={previewImage}></img>
             <div className="booking-detail">
-           
+                
                 <label> Name </label>
                 <input type='text' readOnly value={name}/>
                 <label> Start Date </label>

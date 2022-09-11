@@ -53,7 +53,7 @@ function Navigation({ isLoaded }){
       <li className="link-container"> 
         
           <>
-          <button onClick={handleHost}> Become a Host </button>
+          {!sessionUser && <button onClick={handleHost}> Become a Host </button>}
           <button onClick={handleSubmit}> Demo User </button>
           </>
         {sessionLinks}

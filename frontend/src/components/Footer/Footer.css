@@ -1,12 +1,23 @@
 .footer-container{
-    margin-top: 50px;
     display: flex;
-    height: 70px;
     width: 100%;
     justify-content: flex-end;
     align-items: center;
     background-color:#f7f7f7;
+    height: 100px;
 }
+
+.footer--pin {
+    /* position:fixed;
+    left:0;
+    bottom:0;
+    right:0; */
+
+    
+    position: relative;
+    left: 0;
+    bottom: 0;
+  }
 
 .footer-link-container{
     display: flex;
@@ -26,5 +37,6 @@
 
     cursor: pointer;
 }
+
 
 

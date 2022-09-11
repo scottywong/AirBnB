@@ -18,6 +18,7 @@ const BookingFormEdit = () => {
     const [name,setName] = useState('');
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [previewImage,setPreviewImage] = useState('');
     const [errors, setErrors] = useState([]);
 
 
@@ -35,6 +36,7 @@ const BookingFormEdit = () => {
                 setName(foundBooking.Spot.name);
                 setStartDate(foundBooking.startDate);
                 setEndDate(foundBooking.endDate);
+                setPreviewImage(foundBooking.Spot.previewImage);
   
             } else {
                 setIsLoaded(false);
@@ -79,39 +81,40 @@ const BookingFormEdit = () => {
             {isLoaded && 
             (
             <div className="booking-edit">
-            <h1> Booking</h1>
-            <ul className="errorMsg"> 
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
+                <h1> Booking</h1>
+                <ul className="errorMsg"> 
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
+                <img className="booking-detail-image" src={previewImage}></img>
                 <form className="edit-booking-form" onSubmit={handleSubmit}>
-                    <label> Name </label>
-                    <input type='text' readOnly value={name}/>
-                    <label> Start Date</label>
-                    <input
-                        type='date'
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                    />
-                    <label> End Date </label>
-                    <input
-                        type='date'
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                    />
+                        <label> Name </label>
+                        <input type='text' readOnly value={name}/>
+                        <label> Start Date</label>
+                        <input
+                            type='date'
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                        />
+                        <label> End Date </label>
+                        <input
+                            type='date'
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                        />
                 </form>
                 <button onClick={handleSubmit} className="submit-button"> Submit Changes </button>
             </div>
             )
             }
             <div className="booking-edit-actions">
-            {isLoaded &&
-            (
-            <>
-            <button onClick={handleDelete} className="booking-item-delete" to={`/bookings/${id}`}> Delete </button>  
-            <button onClick={()=> history.push(`/bookings/${id}`)} className="booking-item-cancel"> Cancel </button>  
-            </>
-            )   
-        }  
+                {isLoaded &&
+                (
+                <>
+                <button onClick={handleDelete} className="booking-item-delete" to={`/bookings/${id}`}> Delete </button>  
+                <button onClick={()=> history.push(`/bookings/${id}`)} className="booking-item-cancel"> Cancel </button>  
+                </>
+                )   
+                }  
             </div>
         </div>
         {isLoaded===false && 

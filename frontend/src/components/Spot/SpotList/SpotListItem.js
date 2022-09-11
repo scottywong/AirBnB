@@ -42,7 +42,7 @@ const SpotListItem = ({spot}) => {
             <br/>
             {isLoaded && isOwner && <i className="fa-solid fa-house-chimney-user fa-2xl"></i>}
             
-            <a href={`/spots/${spot.id}`} target="_blank">
+            <a href={`/spots/${spot.id}`}>
               <img className="spot-item-previewImage" src={previewImage}></img>
             </a>
             <NavLink className="spot-item-name" to={`/spots/${spot.id}`}>{spot.name}</NavLink>

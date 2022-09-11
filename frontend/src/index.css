@@ -1,4 +1,8 @@
 /* TODO Add site wide styles */
+#page-container {
+    min-height: calc(100vh - 100px);
+    margin-bottom: 10px;
+}
 
 ul, li{
     list-style: none;
@@ -6,7 +10,6 @@ ul, li{
 }
 
 ul.errorMsg {
-
     color:red;
     font-style: italic;
 }
@@ -21,12 +24,3 @@ button {
     cursor: pointer;
     box-shadow:1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-/* 
-button:hover{
-    background-color:rgb(230, 227, 227); ;
-} */
-/* button:active {
-    background-color: #FF3366;
-    box-shadow: 0 5px rgb(230, 227, 227);
-    transform: translateY(3px);
-} */

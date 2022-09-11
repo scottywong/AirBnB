@@ -1,9 +1,8 @@
 .booking-edit-container{
-    margin-top: 10%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    width: 100%;
 
 }
 .edit-booking-form{
@@ -12,12 +11,24 @@
     grid-gap:5px;
     align-items: center;
     justify-content: center;
-    width: max-content;
 }
 
 .booking-edit{
     
     text-align: center;
     justify-content: center;
+    width: 100%;
 
+}
+
+.booking-edit-image{
+    display: block;
+    margin-bottom: 30px;
+    max-width: 50%;
+    max-height: fit-content;
+    border-radius: 15px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }

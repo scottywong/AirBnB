@@ -17,6 +17,8 @@ import { NavContext } from "./context/Navigation";
 import { useLocation } from "react-router-dom";
 import Footer from "./components/Footer";
 
+import './index.css';
+
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -37,45 +39,46 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={showNav} />
-      {isLoaded && (
-        <>
-        <Switch>
-          <Route exact path="/">
-            <SpotList />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route exact path="/host">
-            <HostPage />
-          </Route>
-          <Route path="/spots/new">
-            <SpotFormCreate />
-          </Route>
-          <Route exact path="/spots/:id">
-            <SpotDetail />
-          </Route>
-          <Route path="/spots/:id/edit">
-            <SpotFormEdit />
-          </Route>
-          <Route path="/users/:id/spots">
-            <SpotList/>
-          </Route>
-          <Route path="/users/:id/bookings">
-            <BookingList />
-          </Route>
-          <Route exact path="/bookings/:id">
-            <BookingDetail />
-          </Route>
-          <Route path="/bookings/:id/edit">
-            <BookingFormEdit />
-          </Route>
-        </Switch>
-        <Footer />
-
-        </>
-      )}
+    <div id="page-container">
+        <Navigation isLoaded={showNav} />
+        {isLoaded && (
+          <>
+          <Switch>
+            <Route exact path="/">
+              <SpotList />
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+            <Route exact path="/host">
+              <HostPage />
+            </Route>
+            <Route path="/spots/new">
+              <SpotFormCreate />
+            </Route>
+            <Route exact path="/spots/:id">
+              <SpotDetail />
+            </Route>
+            <Route path="/spots/:id/edit">
+              <SpotFormEdit />
+            </Route>
+            <Route path="/users/:id/spots">
+              <SpotList/>
+            </Route>
+            <Route path="/users/:id/bookings">
+              <BookingList />
+            </Route>
+            <Route exact path="/bookings/:id">
+              <BookingDetail />
+            </Route>
+            <Route path="/bookings/:id/edit">
+              <BookingFormEdit />
+            </Route>
+          </Switch>
+          </>
+        )}
+    </div>
+    <Footer id="footer" />
     </>
   );
 }
