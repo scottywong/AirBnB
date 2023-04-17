@@ -1,4 +1,4 @@
-.nav-container{
+/* .nav-container{
 
     border-bottom: 1px grey dotted;
     margin:auto;
@@ -10,22 +10,22 @@
     padding: 25px 20px 5px 5px;
    
 
-}
+} */
 
-.airbnb-logo{
+/* .airbnb-logo{
     display: inline;
-}
+} */
 
-ul.profile-dropdown > li:hover{
+/* ul.profile-dropdown > li:hover{
 
     background-color: rgb(230, 227, 227);
     cursor: pointer;
-}
+} */
 
-.profile-container{
+/* .profile-container{
     display: block;
-}
-.profile-button{
+} */
+/* .profile-button{
     width: 100px;
     height: 30px;
     background-color: #FF3366;
@@ -34,8 +34,9 @@ ul.profile-dropdown > li:hover{
     border-radius: 21px;
     transition: box-shadow 0.2s ease;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.profile-dropdown{
+} */
+
+/* .profile-dropdown{
     color:#717171;
     background-color: white;
     border-radius: 5px;
@@ -45,4 +46,4 @@ ul.profile-dropdown > li:hover{
     transform: translateX(-60px);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     position: absolute;
-}
+} */

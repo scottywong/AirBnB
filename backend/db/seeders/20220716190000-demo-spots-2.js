@@ -22,7 +22,7 @@ module.exports = {
       name: 'The CHI Spot',
       description: 'This is a great spot',
       price: 150,
-      previewImage: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+      previewImage: 'https://as1.ftcdn.net/v2/jpg/02/19/71/04/1000_F_219710464_N0rrvviaF8UTaJkgBWDTq7Bnpb4yKdNY.jpg',
       numReviews: 0,
       avgStarRating: 2
    },{
@@ -36,7 +36,7 @@ module.exports = {
       name: 'The LA Spot',
       description: 'This is a really great spot',
       price: 200,
-      previewImage: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+      previewImage: 'https://as2.ftcdn.net/v2/jpg/02/04/56/69/1000_F_204566991_OxzKTOSQxG9uR4F6grhmgRgopg1CO7zd.jpg',
       numReviews: 0,
       avgStarRating: 3
    }], {});

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpots, fetchUserSpots } from "../../../store/spot"; 
 import { useParams,  useHistory} from "react-router-dom";
-import './SpotList.css';
+
 import SpotListItem from './SpotListItem';
 
 const SpotList = () => {
@@ -31,20 +31,20 @@ const handleCreateButton = () => {
 };
 
   return (
-    <div className="spot-container">
-    {!id && spots?.length > 0 &&(<h1 className="spot-list-header">Spot List</h1>)}
+    <div className="block text-center my-10 spot-container">
+    {!id && spots?.length > 0 &&(<p className="text-ared text-5xl">Spot List</p>)}
         
     {id && isOwner && (
         <>
         <h1 className="spot-list-header">Owned Spots</h1>
-        <button onClick={handleCreateButton} className="spot-button-create">Create New Spot</button>
+        <button onClick={handleCreateButton} className="block mx-auto p-10 text-center cursor-pointer spot-button-create">Create New Spot</button>
         </>)}
 
      {id && userSpots?.length === 0 && (<p> Sorry, we were unable to find any data.</p>)}
-    <div className="spot-listpage-container"> 
+    {/* <div className="spot-listpage-container">  */}
     
-        <div className="spot-list-container">
-            <ol className="spot-list">
+        <div className="flex justify-center items-center spot-list-container">
+            <ol className="grid sm-grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 grid-rows-auto justify-center spot-list">
               {!id && spots && Array.isArray(spots) && 
                 (spots.map((spot) => {          
                   return <li key={spot.id}>
@@ -65,7 +65,7 @@ const handleCreateButton = () => {
         </div>
         
       </div>
-      </div>
+      // </div>
   );
   
 }

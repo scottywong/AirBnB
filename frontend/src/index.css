@@ -1,10 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* TODO Add site wide styles */
 #page-container {
     min-height: calc(100vh - 100px);
     margin-bottom: 10px;
 }
 
-ul, li{
+/* ul, li{
     list-style: none;
     margin: 10px;
 }
@@ -23,4 +27,4 @@ button {
     width: max-content;
     cursor: pointer;
     box-shadow:1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
+} */

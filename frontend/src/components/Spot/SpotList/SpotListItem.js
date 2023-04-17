@@ -3,8 +3,6 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeSpot } from '../../../store/spot';
 
-import './SpotListItem.css';
-
 const SpotListItem = ({spot}) => {
 
   const dispatch = useDispatch();
@@ -35,27 +33,35 @@ const SpotListItem = ({spot}) => {
     });
   }
     return(
-        <div className="spot-item-container">
+        <div className="block mx-10 my-10 text-center w-72 h-96 shadow-md rounded-l spot-item-container">
           <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
           </ul>
-            <br/>
-            {isLoaded && isOwner && <i className="fa-solid fa-house-chimney-user fa-2xl"></i>}
-            
+
             <a href={`/spots/${spot.id}`}>
-              <img className="spot-item-previewImage" src={previewImage}></img>
+              <img className="w-full h-1/2 rounded-lg spot-item-previewImage" src={previewImage}></img>
             </a>
-            <NavLink className="spot-item-name" to={`/spots/${spot.id}`}>{spot.name}</NavLink>
-            <p>{spot.city}, {spot.country} </p>
-            <p><b>${spot.price}</b> night</p>
-        
-        {isLoaded && isOwner &&
+
+           
+            <div className='text-right mt-2 mr-3 italic h-4'>
+               {isLoaded && isOwner && <p> Your Spot</p>}
+              {/* <i className="fas fa-house-chimney-user fa-2xl"></i> */}
+            </div>
+
+           
+            <div className='mt-6 flex flex-col justify-center align-middle spot-item-detail'>
+
+              <NavLink className="text-lg sm:text-l md:text-xl spot-item-name" to={`/spots/${spot.id}`}>{spot.name}</NavLink>
+              <p>{spot.city}, {spot.country} </p>
+              <p><b>${spot.price}</b> night</p>
+
+            </div>
+        {isLoaded && isOwner && 
             (
-            <>
-            <button className="spot-item-edit" onClick={()=>history.push(`/spots/${spot.id}/edit`)}> Edit </button> 
-            <button onClick={handleDelete} className="spot-item-delete"> Delete </button>  
-            <br/>
-            </>
+            <div className='w-full mt-3 flex-row space-x-5 spot-item-button '>
+            <button className="spot-item-edit w-16 h-8 bg-ared cursor-pointer rounded-l transition-shadow shadow-md hover:shadow-lg hover:text-white" onClick={()=>history.push(`/spots/${spot.id}/edit`)}> Edit </button> 
+            <button onClick={handleDelete} className="spot-item-delete w-16 h-8 bg-ared cursor-pointer rounded-l transition-shadow shadow-md hover:shadow-lg  hover:text-white"> Delete </button>  
+            </div>
             )   
         }  
         </div>

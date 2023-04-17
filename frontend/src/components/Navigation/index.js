@@ -46,11 +46,11 @@ function Navigation({ isLoaded }){
 
   return (
     isLoaded &&(
-    <ul className="nav-container" >
-      <NavLink exact to="/" className="home-button">
-          <img height="80px"className="airbnb-logo" src={logo}/>
+    <ul className="border-b border-gray-400 dotted mx-auto" >
+      <NavLink exact to="/" className="">
+          <img className="inline-block h-20 pl-20" src={logo}/>
       </NavLink> 
-      <li className="link-container"> 
+      <li className="flex float-right p-25 pr-20 pt-5"> 
         
           <>
           {!sessionUser && <button onClick={handleHost}> Become a Host </button>}

@@ -22,7 +22,7 @@ module.exports = {
       name: 'The NY Spot',
       description: 'This is a great spot',
       price: 100,
-      previewImage: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+      previewImage: 'https://as2.ftcdn.net/v2/jpg/02/05/70/33/1000_F_205703370_cdgaQw8I6ZxvIJ1I6LK3Vr3XbjzH3zWW.jpg',
       numReviews: 0,
       avgStarRating: null
    },{
@@ -36,7 +36,7 @@ module.exports = {
       name: 'The SF Spot',
       description: 'This is a really great spot',
       price: 200,
-      previewImage: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+      previewImage: 'https://as2.ftcdn.net/v2/jpg/03/33/03/19/1000_F_333031995_KbrUWup1EWl59nVB1e41AL0HsL5qEFVO.jpg',
       numReviews: 0,
       avgStarRating: 4.5
    }], {});

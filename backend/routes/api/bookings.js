@@ -79,9 +79,6 @@ async (req, res, next) => {
     if(booking) {
         today = new Date();
         bookingDate = new Date(endDate);
-        // console.log('bookingDate: ',bookingDate);
-        // console.log('bookingDate.valueof ,', bookingDate.valueOf());
-        // console.log('today.valueOf()',today.valueOf());
         
         if(user.id !== booking.userId){
 
